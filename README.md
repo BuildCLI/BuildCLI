@@ -252,3 +252,8 @@ Quick steps to contribute:
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+
+## Familiarizing Yourself with BuildCLI
+
+To get a deeper understanding of the BuildCLI project structure, key classes, commands, and how to contribute, check out our comprehensive guide in [PROJECT_FAMILIARIZATION.md](PROJECT_FAMILIARIZATION.md).
