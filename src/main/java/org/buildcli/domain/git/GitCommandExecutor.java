@@ -9,6 +9,7 @@ import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.transport.URIish;
+import org.eclipse.jgit.transport.sshd.SshdSessionFactory;
 import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
@@ -25,6 +26,11 @@ import static org.buildcli.domain.git.GitCommandFormatter.*;
 
 public class GitCommandExecutor {
 
+    static {
+        // Set Apache MINA SSHD as the SSH session factory
+        SshdSessionFactory factory = new SshdSessionFactory();
+        SshdSessionFactory.setInstance(factory);
+    }
     private static final Logger logger = Logger.getLogger(GitCommandExecutor.class.getName());
     private static final org.slf4j.Logger log = LoggerFactory.getLogger(GitCommandExecutor.class);
 

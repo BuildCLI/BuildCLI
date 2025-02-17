@@ -1,34 +1,87 @@
-# Contribution
+# How to Contribute
 
-Contributions are welcome! Feel free to open **Issues** and submit **Pull Requests**.
+### 1\. Check for an Existing Issue (Required Before Starting Work)
 
-### How to contribute:
-1. **Check for an Existing Issue (Optional but Recommended):**
-   Before starting your work, check if there is an open issue related to the feature or bug you want to address.
-   - If an issue exists, please comment on it with a message like:
-     ```
-     I'm taking this issue.
-     ```
-     This helps prevent multiple contributors from working on the same issue simultaneously.
-2. Fork the project.
-3. Create a branch for your changes:
-   ```bash
-   git checkout -b feature/my-feature
-   ```
-4. Commit your changes:
-   ```bash
-   git commit -m "My new feature"
-   ```
-5. Push to your branch:
-   ```bash
-   git push origin feature/my-feature
-   ```
-6. Open a Pull Request in the main repository:
-- Create a new Pull Request, ensuring that the target branch is `develop`.
-- Provide a clear description of your changes and any relevant information for the review process.
-- Optional (but recommended): Use the PR template available at `.github/PULL_REQUEST_TEMPLATE/default.md` to help structure your Pull Request and include all necessary details.
+Before you begin working on an issue, ensure that it is not already assigned or actively worked on by another contributor. This helps prevent duplicate efforts and frustration.
 
-## Familiarizing Yourself with BuildCLI
+#### Steps to Follow
 
-To get a deeper understanding of the BuildCLI project structure, key classes, commands, and how to contribute
-, check out our comprehensive guide in [PROJECT_FAMILIARIZATION.md](PROJECT_FAMILIARIZATION.md).
+- Check the issue tracker to see if the issue is assigned.
+
+- If the issue is unassigned or recently assigned, comment on it with:
+
+    ```
+    Is anyone actively working on this? If not, I'd like to take it up.
+    ```
+
+- Wait for confirmation from maintainers or the assigned contributor before proceeding.
+
+If you're unsure about whether you should work on an issue, especially if the assignment is recent, ask a maintainer for clarification.
+
+### 2\. Fork the Project
+
+- Click the **Fork** button on the repository page to create a copy of the repository under your GitHub account.
+
+### 3\. Create a Branch for Your Changes
+
+- Create a new branch to work on your feature or bug fix:
+
+    ```
+    git checkout -b feature/my-feature
+    ```
+
+### 4\. Commit Your Changes
+
+- Write clear commit messages and follow the project's commit guidelines:
+
+    ```
+    git commit -m "My new feature"
+    ```
+
+### 5\. Push to Your Branch
+
+- Push your changes to your forked repository:
+
+    ```
+    git push origin feature/my-feature
+    ```
+
+### 6\. Open a Pull Request (PR)
+
+- Navigate to the main repository and create a **New Pull Request**, ensuring the target branch is `develop`.
+
+- Provide a clear description of the changes, referencing the issue number if applicable.
+
+- (Optional but Recommended) Use the PR template available at `.github/PULL_REQUEST_TEMPLATE/default.md` to structure your PR effectively.
+
+Communication & Issue Handling
+------------------------------
+
+### 1\. Avoiding Duplicate Work
+
+To ensure a smooth contribution process and prevent multiple contributors from unknowingly working on the same issue:
+
+- Always check if the issue is assigned before starting.
+
+- If an issue is not explicitly assigned but has recent activity, comment and confirm before proceeding.
+
+- If you find multiple people interested in the same issue, collaborate by discussing a potential division of tasks.
+
+### 2\. Asking for Clarifications
+
+If you have doubts regarding issue ownership, implementation details, or contribution guidelines:
+
+- Leave a comment on the issue or PR.
+
+- Reach out to the maintainers for guidance.
+
+Maintaining Visibility of Contribution Guidelines
+-------------------------------------------------
+
+- This contribution guide will be pinned as an issue for visibility.
+
+- The repository's README will include a brief mention of these guidelines with a link to this document.
+
+- A checklist will be included in new issues to remind contributors to verify issue assignments.
+
+By following these guidelines, we aim to foster a more collaborative, efficient, and positive experience for all contributors.

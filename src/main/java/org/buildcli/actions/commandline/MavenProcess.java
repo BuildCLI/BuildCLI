@@ -10,7 +10,7 @@ import java.util.List;
 
 import static org.buildcli.utils.tools.ToolChecks.checksMaven;
 
-public class MavenProcess implements CommandLineProcess {
+public class MavenProcess extends BuildTool implements CommandLineProcess {
   private final List<String> commands = new ArrayList<>();
 
   private MavenProcess() {
