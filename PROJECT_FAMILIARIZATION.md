@@ -25,6 +25,18 @@ With BuildCLI, developers can:
 
 * This tool is designed to streamline the Java development lifecycle, making it easier for developers to focus on writing code while automating repetitive tasks and ensuring smooth project management.
 
+## PicoCLI and Annotations
+
+**PicoCLI** is a powerful library used for building command-line applications in Java. In BuildCLI, PicoCLI is used to define commands and subcommands, enhancing the modularity and flexibility of the application.
+
+**Annotations** play a crucial role in defining and organizing commands in BuildCLI. For example:
+- The `@Command` annotation is used to define a command, such as `ProjectCommand`, `RmCommand`, and `AddCommand`.
+- These annotations help in managing the commands, specifying options, and linking them to their corresponding actions in a structured manner.
+
+By using PicoCLI's annotations, BuildCLI achieves an organized and maintainable way to define complex command-line operations.
+
+
+
 # Project Structure
 
    The BuildCLI project follows a modular structure to keep the code organized and maintainable. 
@@ -47,6 +59,31 @@ With BuildCLI, developers can:
    * **CONTRIBUTING.md:** Contains guidelines for contributing to the project, including how to report issues and submit pull requests.
 
       **This structure helps in organizing the different components of the tool, making it easy to navigate and extend as the project grows.**
+
+
+## Classes with Interfaces
+
+In BuildCLI, several key classes implement interfaces, allowing for modularity and flexibility in the application. For instance, the `RunCommand` class implements the `BuildCLICommand` interface.
+
+- The `RunCommand` class is responsible for executing the main build command, orchestrating other components to run the build process.
+- The interface `BuildCLICommand` ensures that all command classes have a consistent structure, making it easier to extend and maintain the project.
+
+By using interfaces, BuildCLI can easily add or replace commands without affecting the rest of the codebase, promoting scalability and adaptability.
+
+
+## Color System for Logs
+
+BuildCLI utilizes a color-coding system for logs to improve the clarity and readability of messages in the terminal.
+
+- **Info** messages are displayed in **blue**, providing general information about the build process.
+- **Warning** messages appear in **yellow**, drawing attention to potential issues or cautions.
+- **Error** messages are highlighted in **red**, indicating critical problems that need immediate attention.
+
+This color system makes it easier for developers to quickly identify different types of log messages, ensuring better troubleshooting and faster responses to issues.
+
+
+
+
 
 
 
@@ -76,6 +113,17 @@ With BuildCLI, developers can:
 *    **CICDIntegration:** This class is responsible for setting up CI/CD pipelines by generating configuration files for Jenkins, GitHub Actions, and GitLab. It automates the setup of continuous integration and deployment workflows.
 
      **Each of these classes plays a crucial role in the functionality of BuildCLI, ensuring that developers have the necessary tools to manage their Java projects efficiently from the command line.**
+
+
+## AI Functionalities
+
+BuildCLI leverages artificial intelligence to automate repetitive tasks and enhance productivity. One of the key AI-powered features is the **automated documentation generation**.
+
+- The `DocumentCommand` utilizes AI to generate documentation for the project, reducing the time spent on manual documentation and ensuring consistency across the codebase.
+- This feature automatically analyzes the code and generates relevant documentation, making it easier for developers to keep the documentation up to date.
+
+These AI features are designed to help developers focus on core tasks while automating time-consuming processes, thus enhancing overall efficiency.
+
 
 
    # Navigating Commands and Subcommands
@@ -179,50 +227,8 @@ With BuildCLI, developers can:
 
    **Steps to Contribute:**
 
-**1. Fork the repository**
+  please refer to the detailed contribution guidelines in the **[CONTRIBUTING.md](.github/CONTRIBUTING.md)** file. It includes important steps for contributing, including how to fork the project, create branches, commit your changes, and submit pull requests.
 
-   First, fork the BuildCLI repository to your own GitHub account by clicking the "Fork" button on the repository page.
-
-
-**2. Clone your fork**
- 
-   Clone your forked repository to your local machine using the following command
-   git clone https://github.com/your-username/buildcli.git
-   Replace your-username with your actual GitHub username.
-
-
-**3. Create a new branch**
- 
-   Create a new branch for your changes to keep your work isolated from the main codebase:
-
-   `git checkout -b feature/my-feature`
-
-   Replace my-feature with a descriptive name for the feature or bug fix you're working on.
-
-
-   **4. Make changes**
-
-   Make the necessary changes in the code. Be sure to follow the existing code style and add tests if applicable.
-
-
-**5. Commit your changes**
-
-   After making your changes, commit them with a clear and concise commit message. For example:
-
-   `git commit -m "Add feature to improve X functionality"`
-
-
-**6. Push to your fork**
-
-   Push your changes to your forked repository:
-
-  ` git push origin feature/my-feature`
- 
-
-**7. Open a Pull Request (PR)**
-
-   Open a Pull Request to the main BuildCLI repository. In your PR description, explain the changes you’ve made and why they are important.
-   Be as detailed as possible so that reviewers can easily understand your changes.
 
 
 **Code Style Guidelines**
