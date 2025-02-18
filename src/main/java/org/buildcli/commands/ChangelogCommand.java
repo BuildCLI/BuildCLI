@@ -3,6 +3,7 @@ package org.buildcli.commands;
 import org.buildcli.domain.BuildCLICommand;
 import org.buildcli.utils.FileTypes;
 import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.revwalk.RevCommit;
 import picocli.CommandLine.Model.CommandSpec;
@@ -96,22 +97,22 @@ public class ChangelogCommand implements BuildCLICommand {
             var releaseVersion = (version != null) ? version :  getLatestGitTag().orElse("Unreleased");
             var outputFileName = formatOutputFile(outputFile, format);
 
-            generataChangeLog(releaseVersion,  outputFileName, includeTypes);
+            generateChangeLog(releaseVersion,  outputFileName, includeTypes);
             spec.commandLine().getOut().println("Changelog generated successfully.");
         } catch (Exception e) {
             spec.commandLine().getOut().println("Failed to generate changelog.");
             e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 
-    private String formatOutputFile(String fileName, String format) {
-        Path path = Paths.get(fileName);
-        String outputFileName = path.toString().substring(0, path.toString().lastIndexOf("."));
+    protected String formatOutputFile(String fileName, String format) {
+        String outputFileName = fileName.contains(".") ? fileName.substring(0, fileName.lastIndexOf('.')) : fileName;
         String extension = FileTypes.fromExtension(format);
         return outputFile == null ? "CHANGELOG" + extension : Path.of(outputFileName + extension).toString();
     }
 
-    private void generataChangeLog(String releaseVersion, String outputFile, List<String> includeTypes) {
+    protected void generateChangeLog(String releaseVersion, String outputFile, List<String> includeTypes) throws IOException, GitAPIException {
         try(Git git = Git.open(new File("."))){
 
             Map<String, Map<String, List<String>>> versionedData = new LinkedHashMap<>();
@@ -149,11 +150,9 @@ public class ChangelogCommand implements BuildCLICommand {
             String content = generateOutput(versionedData, format);
             writeToFile(content, outputFile);
 
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
-    private Optional<String> getLatestGitTag() throws IOException {
+    protected Optional<String> getLatestGitTag() throws IOException {
         try (Git git = Git.open(new File("."))) {
             List<Ref> taglist = git.tagList().call();
             if (!taglist.isEmpty()) {
@@ -167,7 +166,7 @@ public class ChangelogCommand implements BuildCLICommand {
         return Optional.empty();
     }
 
-    private String generateOutput(Map<String, Map<String, List<String>>> data, String format) {
+    protected String generateOutput(Map<String, Map<String, List<String>>> data, String format) {
         return switch (format.toLowerCase()) {
             case "html" -> generateHtml(data);
             case "json" -> generateJson(data);
@@ -299,7 +298,7 @@ public class ChangelogCommand implements BuildCLICommand {
         return sb.toString();
     }
 
-    private void writeToFile( String content, String outputFile) throws IOException {
+    protected void writeToFile(String content, String outputFile) throws IOException {
         try (FileWriter writer = new FileWriter(outputFile)){
             writer.write(content);
         }
