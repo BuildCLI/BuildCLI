@@ -32,6 +32,7 @@ public final class GitCommands {
     public static final String EXIT_CODE = "--exit-code";
     public static final String REV_PARSE = "rev-parse";
     public static final String ONELINE = "--oneline";
+    public static final String PORCELAIN = "--porcelain";
 
     public static final String REV_LIST = "rev-list";
     public static final String COUNT = "--count";

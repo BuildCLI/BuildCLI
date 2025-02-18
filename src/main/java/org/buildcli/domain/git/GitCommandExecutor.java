@@ -19,8 +19,6 @@ import java.io.InputStreamReader;
 import java.net.URISyntaxException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.StreamSupport;
-
 import static org.buildcli.domain.git.GitCommands.*;
 import static org.buildcli.domain.git.GitCommandFormatter.*;
 
@@ -111,7 +109,7 @@ public class GitCommandExecutor {
         }
     }
 
-    protected void runGitCommandWithException(String... command) throws IOException {
+    public void runGitCommandWithException(String... command) throws IOException {
         int exitCode = runGitCommand(command);
         if (exitCode != 0) {
             throw new IOException(String.format("Git command '%s' failed. Ensure you are in a Git repository and the command is valid.", String.join(" ", command)));
@@ -245,6 +243,10 @@ public class GitCommandExecutor {
 
     public boolean hasCommits() {
         return runGitCommand(GIT, LOG, ONELINE) == 0;
+    }
+
+    public boolean hasChanges() { 
+        return runGitCommand(GIT, STATUS, PORCELAIN) != 0;
     }
 
     public boolean tagExists(String version) {

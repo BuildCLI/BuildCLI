@@ -3,13 +3,20 @@ package org.buildcli.commands.project;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import org.buildcli.core.ProjectInitializer;
 import org.buildcli.domain.BuildCLICommand;
+import org.buildcli.domain.git.GitCommandExecutor;
 import org.buildcli.exceptions.CommandExecutorRuntimeException;
 import org.buildcli.log.SystemOutLogger;
 
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
+
+import static org.buildcli.domain.git.GitCommands.*;
 
 
 @Command(
@@ -19,6 +26,10 @@ import picocli.CommandLine.Option;
     mixinStandardHelpOptions = true
 )
 public class InitCommand implements BuildCLICommand {
+  private static final Logger LOGGER = Logger.getLogger(ProjectInitializer.class.getName());
+  private final GitCommandExecutor gitExecutor = new GitCommandExecutor();
+
+
   @Option(names = {"--name", "-n"}, defaultValue = "buildcli")
   private String projectName;
   @Option(names = {"--jdk", "-j"}, defaultValue = "17")
@@ -27,6 +38,20 @@ public class InitCommand implements BuildCLICommand {
   @Override
   public void run() {
     String basePackage = "org." + projectName.toLowerCase();
+
+    if(isProjectAlreadyInitialized()){
+      LOGGER.warning("A project already exists in this directory.");
+      LOGGER.warning("Requesting user confirmation for overwrite.");
+
+      String response = getUserInput("Do you want to create a backup before overwriting? (y/n): ");
+
+      if(response.equalsIgnoreCase("y") || response.equalsIgnoreCase("yes")){
+        createGitBackup();
+        LOGGER.info("Backup completed. Proceeding with overwrite...");
+      }
+      LOGGER.info("Overwriting existing project...");
+    }
+
     String[] dirs = {
         "src/main/java/" + basePackage.replace('.', '/'),
         "src/main/resources",
@@ -141,6 +166,50 @@ public class InitCommand implements BuildCLICommand {
             """.formatted(projectName.toLowerCase(), projectName, jdkVersion, projectName.toLowerCase()));
       }
       SystemOutLogger.log("pom.xml file created with default configuration.");
+    }
+  }
+
+  private boolean isProjectAlreadyInitialized() {
+    String[] projectFiles = {"pom.xml", "buildcli.config"};
+    for (String fileName : projectFiles){
+      if(new File(fileName).exists()){
+        return true;
+      }
+    }
+    return false;
+  }
+
+  private String getUserInput(String message) {
+    LOGGER.warning(message);
+    Scanner scanner = new Scanner(System.in);
+    String input = scanner.nextLine();
+    return input;
+  }
+
+  private void createGitBackup() {
+    try {
+      if (!gitExecutor.isGitRepository()) {
+        LOGGER.info("Initializing Git repository...");
+        gitExecutor.runGitCommandWithException(GIT, INIT);
+      }
+
+      LOGGER.info("Staging all files...");
+      gitExecutor.runGitCommandWithException(GIT, ADD, ".");
+
+      if (!gitExecutor.hasCommits()) {
+        LOGGER.info("Creating initial commit...");
+        gitExecutor.runGitCommandWithException(GIT, COMMIT, "-m", "Initial commit");
+      }
+
+      if (gitExecutor.hasChanges()) {
+        LOGGER.info("Creating backup commit...");
+        gitExecutor.runGitCommandWithException(GIT, COMMIT, "-m", "Backup before overwrite");
+      } else {
+        LOGGER.info("No changes to commit. Skipping backup commit.");
+      }
+    }catch (IOException e) {
+      LOGGER.log(Level.SEVERE, "Failed to create Git backup!", e);
+      throw new RuntimeException(e);
     }
   }
 }
