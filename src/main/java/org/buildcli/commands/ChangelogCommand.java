@@ -6,16 +6,15 @@ import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.revwalk.RevCommit;
-import picocli.CommandLine.Model.CommandSpec;
-import picocli.CommandLine.Spec;
-import picocli.CommandLine.Option;
 import picocli.CommandLine.Command;
+import picocli.CommandLine.Model.CommandSpec;
+import picocli.CommandLine.Option;
+import picocli.CommandLine.Spec;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -35,7 +34,7 @@ public class ChangelogCommand implements BuildCLICommand {
 
     @Option(
             names = {"--version", "-v"},
-            description = "Versão de lançamento para rotular o changelog gerado (ex.: 1.2.3). Se não especificado, usa a última tag do Git ou 'Unreleased'."
+            description = "Release version to label the generated changelog (e.g. 1.2.3). If not specified, use the latest Git tag or 'Unreleased'."
     )
     private String version;
 
