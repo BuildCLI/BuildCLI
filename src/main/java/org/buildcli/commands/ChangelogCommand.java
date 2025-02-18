@@ -88,6 +88,8 @@ public class ChangelogCommand implements BuildCLICommand {
             Map.entry("security", "Security")
     );
 
+    private File repositoryDir = new File(".");
+
 
     @Override
     public void run() {
@@ -112,7 +114,7 @@ public class ChangelogCommand implements BuildCLICommand {
     }
 
     protected void generateChangeLog(String releaseVersion, String outputFile, List<String> includeTypes) throws IOException, GitAPIException {
-        try(Git git = Git.open(new File("."))){
+        try(Git git = Git.open(repositoryDir)){
 
             Map<String, Map<String, List<String>>> versionedData = new LinkedHashMap<>();
             versionedData.put(releaseVersion, new LinkedHashMap<>());
@@ -151,8 +153,9 @@ public class ChangelogCommand implements BuildCLICommand {
 
         }
     }
+
     protected Optional<String> getLatestGitTag() throws IOException {
-        try (Git git = Git.open(new File("."))) {
+        try (Git git = Git.open(repositoryDir)) {
             List<Ref> taglist = git.tagList().call();
             if (!taglist.isEmpty()) {
                 return taglist.stream()
