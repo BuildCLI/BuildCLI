@@ -9,6 +9,7 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.transport.URIish;
+import org.eclipse.jgit.transport.sshd.SshdSessionFactory;
 
 import java.net.URISyntaxException;
 import java.io.File;
@@ -21,6 +22,12 @@ public class GitOperations {
 
     public Git git;
     public Repository repository;
+
+    static {
+        // Set Apache MINA SSHD as the SSH session factory
+        SshdSessionFactory factory = new SshdSessionFactory();
+        SshdSessionFactory.setInstance(factory);
+    }
 
     public Git openGitRepository(String path) {
         try {
