@@ -40,7 +40,7 @@ Welcome to BuildCLI - Java Project Management!
 - **Dockerize Project**: Generates a Dockerfile for the project, allowing easy containerization.
 - **Build and Run Docker Container**: Builds and runs the Docker container using the generated Dockerfile.
 - **CI/CD Integration**: Automatically generates configuration files por CI/CD tools (e.g., Jenkins, Github Actions) and triggers pipelines based on project changes.
-
+- **Changelog Generation**: Automatically generates a structured changelog by analyzing the Git commit history, facilitating the understanding of changes between releases.
 ---
 
 ## Installation
@@ -182,6 +182,50 @@ ollama run llama3.2
 - **GitHub Actions**: Ensure your repository is hosted on GitHub with Actions enabled.
 
 ---
+
+## Changelog Generation
+
+BuildCLI now includes an automatic changelog generation feature that analyzes your Git commit history and produces a structured changelog.
+This helps developers and end-users easily track changes between releases.
+
+### Usage Instructions
+
+To generate a changelog, run:
+   ```bash
+   buildcli changelog [OPTIONS]
+   ```
+Or use the alias:
+```bash
+   buildcli cl [OPTIONS]
+   ```
+### Options:
+
+- `--version, -v <version>:`
+  Specify the release version for the changelog. If omitted, BuildCLI attempts to detect the latest Git tag. If no tag is found, it defaults to "Unreleased".
+
+- `--format, -f <format>:`
+  Specify the output format. Supported formats:
+
+   - markdown (default)
+   - html
+   - json
+- `--output, -o <file>:`
+  Specify the output file name. If not provided, defaults to CHANGELOG.<extension>.
+
+- `--include, -i <commit types>:`
+  Provide a comma-separated list of commit types to include (e.g., feat,fix,docs,refactor).
+
+### Example Command
+
+```bash
+buildcli changelog --version v1.0.0 --format markdown --include feat,fix --output CHANGELOG.md
+````
+#### or
+
+```bash
+buildcli changelog -v v1.0.0 -f markdown -i feat,fix -o CHANGELOG.md
+````
+
 
 ## Contribution
 
