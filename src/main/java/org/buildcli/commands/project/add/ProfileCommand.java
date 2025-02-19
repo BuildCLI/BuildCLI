@@ -1,20 +1,20 @@
 package org.buildcli.commands.project.add;
 
 import org.buildcli.domain.BuildCLICommand;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 @Command(name = "profile", aliases = {"p"}, description = "Adds a new dependency to the project. Alias: 'p'. "
         + "This command allows adding profile file (e.g., test, dev, production) with extension .properties.",
         mixinStandardHelpOptions = true)
 public class ProfileCommand implements BuildCLICommand {
-  private final Logger LOGGER = Logger.getLogger(ProfileCommand.class.getName());
+  private final Logger LOGGER = LoggerFactory.getLogger(ProfileCommand.class.getName());
 
   @Parameters(index = "0")
   private String profile;
@@ -36,12 +36,12 @@ public class ProfileCommand implements BuildCLICommand {
         try (FileWriter writer = new FileWriter(profileFile)) {
           writer.write(content);
         }
-        LOGGER.info(() -> "Configuration profile created: " + fileName);
+        LOGGER.info("Configuration profile created: {}", fileName);
       } else {
-        LOGGER.warning(() -> "Configuration profile already exists: " + fileName);
+        LOGGER.warn("Configuration profile already exists: {}", fileName);
       }
     } catch (IOException e) {
-      LOGGER.log(Level.SEVERE, "Failed to create or write configuration profile: " + fileName, e);
+      LOGGER.error("Failed to create or write configuration profile: {}", fileName, e);
     }
   }
 }
