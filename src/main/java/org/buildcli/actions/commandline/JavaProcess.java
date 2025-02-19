@@ -1,36 +1,39 @@
 package org.buildcli.actions.commandline;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 
 public class JavaProcess extends AbstractCommandLineProcess {
 
-  private JavaProcess() {
-    super("java");
+  private JavaProcess(boolean printOutput) {
+    super("java", printOutput);
   }
 
 
   public static JavaProcess createRunJarProcess(String jarName, String...args) {
-    var arg = Arrays.stream(args).reduce((a, b) -> a + " " + b).orElse("");
-    return createProcess("-jar", jarName, arg);
+    return createProcess("-jar", jarName, mergeArgs(args));
   }
 
   public static JavaProcess createGetVersionProcess() {
-    return createProcess("--version");
+    var process = new JavaProcess(false);
+
+    process.commands.add("--version");
+    return process;
   }
 
   public static JavaProcess createProcess(String... args) {
-    var process = new JavaProcess();
+    var process = new JavaProcess(true);
 
     process.commands.addAll(List.of(args));
     return process;
   }
 
   public static CommandLineProcess createRunClassProcess(String absolutePath, String...args) {
-    var arg = Arrays.stream(args).reduce((a, b) -> a + " " + b).orElse("");
-    return createProcess(absolutePath, arg);
+    return createProcess(absolutePath, mergeArgs(args));
+  }
+
+  private static String mergeArgs(String...args) {
+    return Arrays.stream(args).reduce((a, b) -> a + " " + b).orElse("");
   }
 }

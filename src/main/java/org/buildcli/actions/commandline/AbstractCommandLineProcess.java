@@ -9,15 +9,23 @@ import java.util.List;
 public abstract class AbstractCommandLineProcess implements CommandLineProcess {
   protected final List<String> commands = new ArrayList<>();
   private BufferedReader reader = null;
+  private final boolean printOutput;
 
-  protected AbstractCommandLineProcess(String mainCommand) {
+  protected AbstractCommandLineProcess(String mainCommand, boolean printOutput) {
     commands.add(mainCommand);
+    this.printOutput = printOutput;
   }
 
   @Override
   public int run() {
     try {
-      var process = new ProcessBuilder(commands).start();
+      var processBuilder = new ProcessBuilder(commands);
+
+      if (printOutput) {
+        processBuilder.inheritIO();
+      }
+
+      var process = processBuilder.start();
 
       var result = process.waitFor();
 

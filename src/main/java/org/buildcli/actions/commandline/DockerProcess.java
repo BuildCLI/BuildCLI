@@ -1,13 +1,11 @@
 package org.buildcli.actions.commandline;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class DockerProcess extends AbstractCommandLineProcess{
-  private DockerProcess() {
-    super("docker");
+  private DockerProcess(boolean printOutput) {
+    super("docker", printOutput);
   }
 
   public static DockerProcess createBuildProcess(String tag) {
@@ -15,7 +13,7 @@ public class DockerProcess extends AbstractCommandLineProcess{
   }
 
   public static DockerProcess createBuildProcess(String tag, String fileName) {
-    var process = new DockerProcess();
+    var process = new DockerProcess(true);
 
     process.commands.addAll(List.of("build", "-t", tag));
 
@@ -34,7 +32,7 @@ public class DockerProcess extends AbstractCommandLineProcess{
   }
 
   public static DockerProcess createProcess(String... args) {
-    var process = new DockerProcess();
+    var process = new DockerProcess(true);
 
     process.commands.addAll(List.of(args));
 
@@ -42,10 +40,18 @@ public class DockerProcess extends AbstractCommandLineProcess{
   }
 
   public static DockerProcess createGetVersionProcess() {
-    return createProcess("-v");
+    var process = new DockerProcess(false);
+
+    process.commands.add("-v");
+
+    return process;
   }
 
   public static DockerProcess createInfoProcess() {
-    return createProcess("info");
+    var process = new DockerProcess(false);
+
+    process.commands.add("info");
+
+    return process;
   }
 }
