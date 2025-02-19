@@ -1,6 +1,6 @@
 package org.buildcli.commands.project;
 
-import org.buildcli.actions.commandline.CommandLineProcess;
+import org.buildcli.actions.commandline.BuildTool;
 import org.buildcli.actions.commandline.GradleProcess;
 import org.buildcli.actions.commandline.MavenProcess;
 import org.buildcli.domain.BuildCLICommand;
@@ -27,7 +27,7 @@ public class BuildCommand implements BuildCLICommand {
       return;
     }
 
-    CommandLineProcess process;
+    BuildTool process;
 
     if (compileOnly) {
       process = projectBuild.equals("Maven") ? MavenProcess.createCompileProcessor() : GradleProcess.createCompileProcessor();

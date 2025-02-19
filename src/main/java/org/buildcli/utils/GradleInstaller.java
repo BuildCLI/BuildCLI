@@ -2,7 +2,6 @@ package org.buildcli.utils;
 
 import org.buildcli.log.SystemOutLogger;
 import org.buildcli.utils.compress.FileExtractor;
-import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -73,12 +72,6 @@ public abstract class GradleInstaller {
       throw new IOException("Failed to download Gradle artifact: " + response.statusCode());
     }
 
-    long contentLength = response.headers().firstValue("Content-Length").map(GradleInstaller::parseContentLengthToLong).orElse(0L);
-
-    if (contentLength == 0L) {
-      throw new IOException("Failed to download maven artifact: " + response.statusCode());
-    }
-
     var gradleZip = new File(GRADLE_NAME +  ".zip");
 
     if (gradleZip.exists()) {
@@ -86,25 +79,11 @@ public abstract class GradleInstaller {
       DirectoryCleanup.cleanup(gradleZip.getAbsolutePath());
     }
 
-    try (var bodyStream = response.body()) {
-      try (var fos = new FileOutputStream(gradleZip)) {
-        byte[] buffer = new byte[1024];
-        long totalRead = 0;
-        int read;
-
-        while ((read = bodyStream.read(buffer)) != -1) {
-          fos.write(buffer, 0, read);
-          totalRead += read;
-
-          int progress = (int) ((totalRead * 100) / contentLength);
-          int progressBarLength = 50;
-          int filledLength = (int) ((progress / 100.0) * progressBarLength);
-
-          String progressBar = "=".repeat(filledLength) + " ".repeat(progressBarLength - filledLength);
-
-          System.out.printf("\r[%s] %d%%", progressBar, progress);
-        }
-        System.out.println();
+    try (var bodyStream = response.body(); var fos = new FileOutputStream(gradleZip)) {
+      byte[] buffer = new byte[1024];
+      int read;
+      while ((read = bodyStream.read(buffer)) != -1) {
+        fos.write(buffer, 0, read);
       }
     }
 
@@ -154,10 +133,6 @@ public abstract class GradleInstaller {
         SystemOutLogger.log("You can run the commands later.");
       }
     }
-  }
-
-  private static long parseContentLengthToLong(String s) {
-    return s.isEmpty() ? 0 : Long.parseLong(s);
   }
 }
 

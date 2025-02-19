@@ -10,9 +10,15 @@ import java.util.List;
 
 import static org.buildcli.utils.tools.ToolChecks.checksMaven;
 
-public class MavenProcess extends AbstractCommandLineProcess {
+public class MavenProcess extends BuildTool implements CommandLineProcess {
+  private final List<String> commands = new ArrayList<>();
+
   private MavenProcess() {
-    super(MavenConstants.MAVEN_CMD);
+    if (!checksMaven()) {
+      MavenInstaller.installMaven();
+    }
+
+    commands.add(MavenConstants.MAVEN_CMD);
   }
 
   public static MavenProcess createProcessor(String... goals) {
@@ -29,8 +35,12 @@ public class MavenProcess extends AbstractCommandLineProcess {
     return createProcessor("clean", "compile");
   }
 
-  public static MavenProcess createGetVersionProcessor() {
-    return createProcessor("--version");
+  @Override
+  public int run() {
+    try {
+      return new ProcessBuilder().command(commands).inheritIO().start().waitFor();
+    } catch (IOException | InterruptedException e) {
+      throw new RuntimeException(e);
+    }
   }
-
 }

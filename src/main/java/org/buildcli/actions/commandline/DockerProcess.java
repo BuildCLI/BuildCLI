@@ -5,9 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class DockerProcess extends AbstractCommandLineProcess{
+public class DockerProcess implements CommandLineProcess{
+  private final List<String> commands = new ArrayList<>();
   private DockerProcess() {
-    super("docker");
+    commands.add("docker");
   }
 
   public static DockerProcess createBuildProcess(String tag) {
@@ -30,22 +31,17 @@ public class DockerProcess extends AbstractCommandLineProcess{
   }
 
   public static DockerProcess createRunProcess(String tagName) {
-    return createProcess("run", "-p", "8080:8080", tagName);
-  }
-
-  public static DockerProcess createProcess(String... args) {
     var process = new DockerProcess();
-
-    process.commands.addAll(List.of(args));
-
+    process.commands.addAll(List.of("run", "-p", "8080:8080", tagName));
     return process;
   }
 
-  public static DockerProcess createGetVersionProcess() {
-    return createProcess("-v");
-  }
-
-  public static DockerProcess createInfoProcess() {
-    return createProcess("info");
+  @Override
+  public int run() {
+    try {
+      return new ProcessBuilder().command(commands).inheritIO().start().waitFor();
+    } catch (IOException | InterruptedException e) {
+      throw new RuntimeException(e);
+    }
   }
 }
