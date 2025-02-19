@@ -2,6 +2,7 @@ package org.buildcli.actions.commandline;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -12,8 +13,9 @@ public class JavaProcess extends AbstractCommandLineProcess {
   }
 
 
-  public static JavaProcess createRunJarProcess(String jarName) {
-    return createProcess("-jar", jarName);
+  public static JavaProcess createRunJarProcess(String jarName, String...args) {
+    var arg = Arrays.stream(args).reduce((a, b) -> a + " " + b).orElse("");
+    return createProcess("-jar", jarName, arg);
   }
 
   public static JavaProcess createGetVersionProcess() {
@@ -25,5 +27,10 @@ public class JavaProcess extends AbstractCommandLineProcess {
 
     process.commands.addAll(List.of(args));
     return process;
+  }
+
+  public static CommandLineProcess createRunClassProcess(String absolutePath, String...args) {
+    var arg = Arrays.stream(args).reduce((a, b) -> a + " " + b).orElse("");
+    return createProcess(absolutePath, arg);
   }
 }
