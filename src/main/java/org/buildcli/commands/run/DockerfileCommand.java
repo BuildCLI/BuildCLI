@@ -1,4 +1,4 @@
-package org.buildcli.commands.project.run;
+package org.buildcli.commands.run;
 
 import org.buildcli.actions.commandline.DockerProcess;
 import org.buildcli.domain.BuildCLICommand;

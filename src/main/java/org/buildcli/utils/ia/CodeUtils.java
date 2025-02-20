@@ -22,4 +22,20 @@ public abstract class CodeUtils {
 
     return -1;
   }
+
+  public static String extractCode(String content) {
+    if (content == null) {
+      return "";
+    }
+    var internalContent = content.trim();
+
+    int codeStart = startCode(internalContent);
+    int codeEnd = endCode(internalContent);
+
+    if (codeStart != -1 && codeEnd != -1) {
+      internalContent = internalContent.substring(codeStart, codeEnd).trim();
+    }
+
+    return internalContent;
+  }
 }

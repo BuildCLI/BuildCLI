@@ -8,8 +8,9 @@ import picocli.CommandLine.Command;
     version = "BuildCLI 0.0.14",
     description = "BuildCLI - A CLI for Java Project Management",
     subcommands = {
-        AutocompleteCommand.class, ProjectCommand.class, VersionCommand.class,
-        AboutCommand.class, CommandLine.HelpCommand.class, ConfigCommand.class
+        AutocompleteCommand.class, DoctorCommand.class, ProjectCommand.class, VersionCommand.class,
+        AboutCommand.class, CommandLine.HelpCommand.class, ConfigCommand.class,
+        RunCommand.class,
     }
 )
 public class BuildCLI {

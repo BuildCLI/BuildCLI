@@ -10,19 +10,13 @@ import java.util.List;
 
 import static org.buildcli.utils.tools.ToolChecks.checksGradle;
 
-public class GradleProcess extends BuildTool implements CommandLineProcess {
-  private final List<String> commands = new ArrayList<>();
-
-  private GradleProcess() {
-    if (!checksGradle()) {
-      GradleInstaller.installGradle();
-    }
-
-    commands.add(GradleConstants.GRADLE_CMD);
+public class GradleProcess extends AbstractCommandLineProcess {
+  private GradleProcess(boolean printOutput) {
+    super(GradleConstants.GRADLE_CMD, printOutput);
   }
 
   public static GradleProcess createProcessor(String... tasks) {
-    var processor = new GradleProcess();
+    var processor = new GradleProcess(true);
     processor.commands.addAll(Arrays.asList(tasks));
     return processor;
   }
@@ -35,12 +29,9 @@ public class GradleProcess extends BuildTool implements CommandLineProcess {
     return createProcessor("clean", "classes");
   }
 
-  @Override
-  public int run() {
-    try {
-      return new ProcessBuilder().command(commands).inheritIO().start().waitFor();
-    } catch (IOException | InterruptedException e) {
-      throw new RuntimeException(e);
-    }
+  public static GradleProcess createGetVersionProcess() {
+    var processor = new GradleProcess(false);
+    processor.commands.add("--version");
+    return processor;
   }
 }

@@ -1,0 +1,45 @@
+name: External PR Branch Enforcer
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize]
+
+permissions:
+  pull-requests: write
+  issues: write
+  contents: write
+
+jobs:
+  check-target-branch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check PR target branch
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const pr = context.payload.pull_request;
+            
+            if (pr.base.ref !== 'develop' && pr.user.login !== '${{ github.repository_owner }}') {
+              try {
+                await github.rest.issues.createComment({
+                  ...context.repo,
+                  issue_number: pr.number,
+                  body: '🤖 Attention! Always use the develop branch for your PRs instead of ' + pr.base.ref + '.' 
+                });
+                
+                await github.rest.pulls.update({
+                  ...context.repo,
+                  pull_number: pr.number,
+                  base: 'develop'
+                });
+                
+                await github.rest.issues.createComment({
+                  ...context.repo,
+                  issue_number: pr.number,
+                  body: '🤖 I\'ve automatically updated this PR to target the develop branch.'
+                });
+              } catch (error) {
+                throw error;
+              }
+            }

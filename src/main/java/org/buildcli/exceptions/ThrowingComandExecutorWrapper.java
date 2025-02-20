@@ -1,5 +1,6 @@
 package org.buildcli.exceptions;
 
+@Deprecated( forRemoval = true)
 public class ThrowingComandExecutorWrapper {
 	
     public void wrap(ThrowingComandExecutor throwingCommandExecutor) {
