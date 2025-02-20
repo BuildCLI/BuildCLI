@@ -82,6 +82,21 @@
 			<artifactId>org.eclipse.jgit</artifactId>
 			<version>6.6.1.202309021850-r</version>
 		</dependency>
+		<!-- JUnit -->
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter</artifactId>
+			<version>5.8.1</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- Mockito -->
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<version>4.0.0</version>
+			<scope>test</scope>
+		</dependency>
+
 
 		<!-- Langchain4j dependencies group -->
 		<dependency>

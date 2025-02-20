@@ -1,6 +1,7 @@
 package org.buildcli.commands.project.update;
 
 import org.buildcli.domain.BuildCLICommand;
+import org.buildcli.handler.GlobalExceptionHandler;
 import org.buildcli.utils.SemVerManager;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
@@ -12,6 +13,10 @@ public class VersionCommand implements BuildCLICommand {
 
   @Override
   public void run() {
-    new SemVerManager().manageVersion(upgradeVersionType);
+    try {
+      new SemVerManager().manageVersion(upgradeVersionType);
+    } catch (Exception e) {
+      GlobalExceptionHandler.handleException(e);
+    }
   }
 }

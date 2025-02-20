@@ -2,6 +2,7 @@ package org.buildcli.commands.project;
 
 import org.buildcli.constants.MavenConstants;
 import org.buildcli.domain.BuildCLICommand;
+import org.buildcli.handler.GlobalExceptionHandler;
 import org.buildcli.utils.DirectoryCleanup;
 import picocli.CommandLine.Command;
 
@@ -9,6 +10,10 @@ import picocli.CommandLine.Command;
 public class CleanupCommand implements BuildCLICommand {
   @Override
   public void run() {
-    DirectoryCleanup.cleanup(MavenConstants.TARGET);
+    try {
+      DirectoryCleanup.cleanup(MavenConstants.TARGET);
+    } catch (Exception e) {
+      GlobalExceptionHandler.handleException(e);
+    }
   }
 }

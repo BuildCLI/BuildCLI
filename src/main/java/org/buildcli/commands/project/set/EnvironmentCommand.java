@@ -1,6 +1,7 @@
 package org.buildcli.commands.project.set;
 
 import org.buildcli.domain.BuildCLICommand;
+import org.buildcli.handler.GlobalExceptionHandler;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
 
@@ -26,8 +27,11 @@ public class EnvironmentCommand implements BuildCLICommand {
       logger.info("Environment set to: " + environment);
       System.out.println("Environment set to: " + environment);
     } catch (IOException e) {
+      GlobalExceptionHandler.handleException(e);
       logger.severe("Failed to set environment: " + e.getMessage());
       System.err.println("Error: Could not set environment.");
+    }catch (Exception e){
+      GlobalExceptionHandler.handleException(e);
     }
   }
 }

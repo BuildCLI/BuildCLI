@@ -4,6 +4,7 @@ import org.buildcli.commands.ConfigCommand;
 import org.buildcli.domain.BuildCLICommand;
 import org.buildcli.domain.configs.BuildCLIConfig;
 import org.buildcli.exceptions.ConfigException;
+import org.buildcli.handler.GlobalExceptionHandler;
 import org.buildcli.utils.config.ConfigContextLoader;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
@@ -82,9 +83,9 @@ public class SetCommand implements BuildCLICommand {
       saveConfigFunction.save(buildCliConfig);
       System.out.printf("Configuration successfully updated in %s scope.%n", isLocalScope ? "local" : "global");
     } catch (Exception e) {
-      System.err.println("Failed to save configuration: " + e.getMessage());
+      GlobalExceptionHandler.handleException(e);
     }
-  }
+}
 
   /**
    * Validates if the given configuration string follows the expected "key=value" format.

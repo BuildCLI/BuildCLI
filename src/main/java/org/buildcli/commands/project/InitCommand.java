@@ -6,6 +6,7 @@ import java.io.IOException;
 
 import org.buildcli.domain.BuildCLICommand;
 import org.buildcli.exceptions.CommandExecutorRuntimeException;
+import org.buildcli.handler.GlobalExceptionHandler;
 import org.buildcli.log.SystemOutLogger;
 
 import picocli.CommandLine.Command;
@@ -24,6 +25,7 @@ public class InitCommand implements BuildCLICommand {
 
   @Override
   public void run() {
+    try{
     String basePackage = "org." + projectName.toLowerCase();
     String[] dirs = {
         "src/main/java/" + basePackage.replace('.', '/'),
@@ -37,13 +39,13 @@ public class InitCommand implements BuildCLICommand {
         SystemOutLogger.log("Directory created: " + dir);
       }
     }
-
-    try {
       createReadme(projectName);
       createMainClass(basePackage);
       createPomFile(projectName);
     } catch (IOException e) {
-      throw new CommandExecutorRuntimeException(e);
+      GlobalExceptionHandler.handleException(e);
+    } catch (Exception e) {
+      GlobalExceptionHandler.handleException(e);
     }
   }
 

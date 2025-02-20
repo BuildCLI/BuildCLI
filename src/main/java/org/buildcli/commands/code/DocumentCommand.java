@@ -8,6 +8,7 @@ import org.buildcli.actions.ai.params.OllamaAIServiceParams;
 import org.buildcli.constants.ConfigDefaultConstants;
 import org.buildcli.domain.BuildCLICommand;
 import org.buildcli.domain.configs.BuildCLIConfig;
+import org.buildcli.handler.GlobalExceptionHandler;
 import org.buildcli.utils.config.ConfigContextLoader;
 import org.buildcli.utils.filesystem.FindFilesUtils;
 import org.slf4j.Logger;
@@ -57,33 +58,36 @@ public class DocumentCommand implements BuildCLICommand {
 
   @Override
   public void run() {
-    logger.warn("Use this command with careful, IA may be crazy!");
+    try {
+      logger.warn("Use this command with careful, IA may be crazy!");
 
-    if (files == null || files.isEmpty()) {
-      logger.info("No files specified");
-      return;
+      if (files == null || files.isEmpty()) {
+        logger.info("No files specified");
+        return;
+      }
+
+      logger.info("Loading files with extensions: {}", Arrays.toString(getExtensions()));
+      var targetFiles = files.parallelStream()
+              .map(file -> FindFilesUtils.search(file, getExtensions()))
+              .flatMap(List::stream)
+              .toList();
+
+      logger.info("Found {} files with extensions: {}.", targetFiles.size(), Arrays.toString(getExtensions()));
+
+      var execsAsync = new CompletableFuture[targetFiles.size()];
+
+      logger.info("Commenting files {}...", targetFiles.size());
+      for (int i = 0; i < targetFiles.size(); i++) {
+        execsAsync[i] = supplyAsync(createCodeDocumenter(targetFiles.get(i)), executorService)
+                .thenAccept(saveSourceCodeDocumented(targetFiles.get(i)))
+                .exceptionally(catchAnyError(targetFiles.get(i)));
+      }
+
+      CompletableFuture.allOf(execsAsync).join();
+    } catch (Exception e) {
+      GlobalExceptionHandler.handleException(e);
     }
-
-    logger.info("Loading files with extensions: {}", Arrays.toString(getExtensions()));
-    var targetFiles = files.parallelStream()
-        .map(file -> FindFilesUtils.search(file, getExtensions()))
-        .flatMap(List::stream)
-        .toList();
-
-    logger.info("Found {} files with extensions: {}.", targetFiles.size(), Arrays.toString(getExtensions()));
-
-    var execsAsync = new CompletableFuture[targetFiles.size()];
-
-    logger.info("Commenting files {}...", targetFiles.size());
-    for (int i = 0; i < targetFiles.size(); i++) {
-      execsAsync[i] = supplyAsync(createCodeDocumenter(targetFiles.get(i)), executorService)
-          .thenAccept(saveSourceCodeDocumented(targetFiles.get(i)))
-          .exceptionally(catchAnyError(targetFiles.get(i)));
-    }
-
-    CompletableFuture.allOf(execsAsync).join();
   }
-
 
   private Supplier<String> createCodeDocumenter(File source) {
     try {

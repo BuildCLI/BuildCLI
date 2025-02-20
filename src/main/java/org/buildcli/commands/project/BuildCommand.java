@@ -2,6 +2,7 @@ package org.buildcli.commands.project;
 
 import org.buildcli.actions.commandline.MavenProcess;
 import org.buildcli.domain.BuildCLICommand;
+import org.buildcli.handler.GlobalExceptionHandler;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 
@@ -17,6 +18,7 @@ public class BuildCommand implements BuildCLICommand {
 
   @Override
   public void run() {
+    try{
     MavenProcess process;
     if (compileOnly) {
       process = MavenProcess.createCompileProcessor();
@@ -29,7 +31,10 @@ public class BuildCommand implements BuildCLICommand {
     if (exitCode == 0) {
       logger.info("Project compiled successfully. JAR file generated in target directory.");
     } else {
-      logger.severe("Failed to compile project. Maven exited with code: " + exitCode);
+      GlobalExceptionHandler.handleException(new Exception("Failed to compile project. Maven exited with code: " + exitCode));
+    }
+    } catch (Exception e) {
+      GlobalExceptionHandler.handleException(e);
     }
   }
 }

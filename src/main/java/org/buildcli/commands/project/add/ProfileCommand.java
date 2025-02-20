@@ -1,6 +1,7 @@
 package org.buildcli.commands.project.add;
 
 import org.buildcli.domain.BuildCLICommand;
+import org.buildcli.handler.GlobalExceptionHandler;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
 
@@ -41,7 +42,10 @@ public class ProfileCommand implements BuildCLICommand {
         LOGGER.warning(() -> "Configuration profile already exists: " + fileName);
       }
     } catch (IOException e) {
+      GlobalExceptionHandler.handleException(e);
       LOGGER.log(Level.SEVERE, "Failed to create or write configuration profile: " + fileName, e);
+    } catch (Exception e) {
+      GlobalExceptionHandler.handleException(e);
     }
   }
 }

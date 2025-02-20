@@ -3,6 +3,7 @@ package org.buildcli.commands.config;
 import org.buildcli.commands.ConfigCommand;
 import org.buildcli.domain.BuildCLICommand;
 import org.buildcli.domain.configs.BuildCLIConfig;
+import org.buildcli.handler.GlobalExceptionHandler;
 import org.buildcli.log.SystemOutLogger;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.ParentCommand;
@@ -46,7 +47,7 @@ public class PrintCommand implements BuildCLICommand {
       SystemOutLogger.log(buildCliConfig.toString());
 
     } catch (Exception e) {
-      System.err.println("Error loading configuration: " + e.getMessage());
+      GlobalExceptionHandler.handleException(e);
     }
 
   }

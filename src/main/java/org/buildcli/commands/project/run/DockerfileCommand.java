@@ -2,6 +2,7 @@ package org.buildcli.commands.project.run;
 
 import org.buildcli.actions.commandline.DockerProcess;
 import org.buildcli.domain.BuildCLICommand;
+import org.buildcli.handler.GlobalExceptionHandler;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 
@@ -17,20 +18,24 @@ public class DockerfileCommand implements BuildCLICommand {
 
   @Override
   public void run() {
-    var buildExitCode = DockerProcess.createBuildProcess(name).run();
+    try {
+      var buildExitCode = DockerProcess.createBuildProcess(name).run();
 
-    if (buildExitCode != 0) {
-      logger.severe("Failed to build Docker image. Exit code: " + buildExitCode);
-      return;
-    }
-    System.out.println("Docker image built successfully.");
+      if (buildExitCode != 0) {
+        logger.severe("Failed to build Docker image. Exit code: " + buildExitCode);
+        return;
+      }
+      System.out.println("Docker image built successfully.");
 
-    // Executar o comando "docker run"
-    int runExitCode = DockerProcess.createRunProcess(name).run();
-    if (runExitCode != 0) {
-      logger.severe("Failed to run Docker container. Exit code: " + runExitCode);
-    } else {
-      System.out.println("Docker container is running on port 8080.");
+      // Executar o comando "docker run"
+      int runExitCode = DockerProcess.createRunProcess(name).run();
+      if (runExitCode != 0) {
+        logger.severe("Failed to run Docker container. Exit code: " + runExitCode);
+      } else {
+        System.out.println("Docker container is running on port 8080.");
+      }
+    } catch (Exception e) {
+      GlobalExceptionHandler.handleException(e);
     }
   }
 }

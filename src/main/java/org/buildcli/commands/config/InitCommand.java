@@ -3,6 +3,7 @@ package org.buildcli.commands.config;
 import org.buildcli.commands.ConfigCommand;
 import org.buildcli.domain.BuildCLICommand;
 import org.buildcli.domain.configs.BuildCLIConfig;
+import org.buildcli.handler.GlobalExceptionHandler;
 import org.buildcli.utils.config.ConfigContextLoader;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.ParentCommand;
@@ -42,7 +43,7 @@ public class InitCommand implements BuildCLICommand {
       saveConfigFunction.save(buildConfig);
       System.out.printf("Configuration successfully initialized in %s scope.%n", isLocal ? "local" : "global");
     } catch (Exception e) {
-      System.err.println("Failed to initialize configuration: " + e.getMessage());
+      GlobalExceptionHandler.handleException(e);
     }
   }
 

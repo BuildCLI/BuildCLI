@@ -4,6 +4,7 @@ import org.buildcli.commands.ConfigCommand;
 import org.buildcli.domain.BuildCLICommand;
 import org.buildcli.domain.configs.BuildCLIConfig;
 import org.buildcli.exceptions.ConfigException;
+import org.buildcli.handler.GlobalExceptionHandler;
 import org.buildcli.log.SystemOutLogger;
 import org.buildcli.utils.config.ConfigContextLoader;
 import picocli.CommandLine.Command;
@@ -68,8 +69,7 @@ public class RmCommand implements BuildCLICommand {
       saveConfigFunction.save(buildCliConfig);
       SystemOutLogger.log("Successfully removed %d configuration properties from %s scope.".formatted(removedCount, isLocal ? "local" : "global"));
     } catch (Exception e) {
-      System.err.println("Failed to remove configuration properties: " + e.getMessage());
-    }
+      GlobalExceptionHandler.handleException(e);    }
   }
 
   /**

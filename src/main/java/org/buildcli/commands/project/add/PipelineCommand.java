@@ -2,6 +2,7 @@ package org.buildcli.commands.project.add;
 
 import org.buildcli.actions.pipeline.PipelineFileGenerator;
 import org.buildcli.domain.BuildCLICommand;
+import org.buildcli.handler.GlobalExceptionHandler;
 
 import java.io.IOException;
 import java.util.logging.Level;
@@ -19,6 +20,7 @@ public class PipelineCommand implements BuildCLICommand {
 
   @Override
   public void run() {
+
     for (String toolName : toolNames) {
       try {
         var generator = PipelineFileGenerator.PipelineFileGeneratorFactory.factory(toolName.toLowerCase());
@@ -27,7 +29,10 @@ public class PipelineCommand implements BuildCLICommand {
 
         logger.info("CI/CD configuration created successfully for " + toolName);
       } catch (IOException | IllegalStateException e) {
+        GlobalExceptionHandler.handleException(e);
         logger.log(Level.SEVERE, "Failed to configure CI/CD for " + toolName, e);
+      } catch (Exception e) {
+        GlobalExceptionHandler.handleException(e);
       }
     }
   }

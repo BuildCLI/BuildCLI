@@ -1,6 +1,7 @@
 package org.buildcli.commands.project.add;
 
 import org.buildcli.domain.BuildCLICommand;
+import org.buildcli.handler.GlobalExceptionHandler;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 
@@ -48,8 +49,11 @@ public class DockerfileCommand implements BuildCLICommand {
       System.out.println("Dockerfile created successfully.");
       System.out.println("Use 'buildcli project run docker' to build and run the Docker container.");
     } catch (IOException e) {
+      GlobalExceptionHandler.handleException(e);
       logger.log(Level.SEVERE, "Failed to setup Docker", e);
       System.err.println("Error: Could not setup Docker environment.");
+    } catch (Exception e) {
+      GlobalExceptionHandler.handleException(e);
     }
   }
 }

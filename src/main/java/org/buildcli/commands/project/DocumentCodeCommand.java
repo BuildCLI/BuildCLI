@@ -6,6 +6,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import org.buildcli.domain.BuildCLICommand;
+import org.buildcli.handler.GlobalExceptionHandler;
 import org.buildcli.utils.CodeDocumenter;
 
 import picocli.CommandLine.Command;
@@ -25,6 +26,7 @@ public class DocumentCodeCommand implements BuildCLICommand {
 
   @Override
   public void run() {
+    try{
     if (files == null || files.isEmpty()) {
       return;
     }
@@ -37,7 +39,9 @@ public class DocumentCodeCommand implements BuildCLICommand {
         CodeDocumenter.getDocumentationFromOllama(files.get(finalI));
       }, executorService);
     }
-
     CompletableFuture.allOf(execsAsync).join();
+    } catch (Exception e) {
+      GlobalExceptionHandler.handleException(e);
+    }
   }
 }

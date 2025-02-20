@@ -1,6 +1,7 @@
 package org.buildcli.commands;
 
 import org.buildcli.domain.BuildCLICommand;
+import org.buildcli.handler.GlobalExceptionHandler;
 import org.buildcli.utils.AutoCompleteManager;
 import picocli.CommandLine.Command;
 
@@ -8,6 +9,10 @@ import picocli.CommandLine.Command;
 public class AutocompleteCommand implements BuildCLICommand {
   @Override
   public void run() {
-    new AutoCompleteManager().setupAutocomplete();
+    try {
+      new AutoCompleteManager().setupAutocomplete();
+    } catch (Exception e) {
+      GlobalExceptionHandler.handleException(e);
+    }
   }
 }

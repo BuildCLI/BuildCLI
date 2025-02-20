@@ -4,6 +4,7 @@ import org.buildcli.actions.commandline.JavaProcess;
 import org.buildcli.actions.commandline.MavenProcess;
 import org.buildcli.commands.project.run.DockerfileCommand;
 import org.buildcli.domain.BuildCLICommand;
+import org.buildcli.handler.GlobalExceptionHandler;
 import org.buildcli.utils.ProfileManager;
 import picocli.CommandLine.Command;
 
@@ -42,8 +43,11 @@ public class RunCommand implements BuildCLICommand {
       MavenProcess.createPackageProcessor().run();
       runJar(); // Executa o JAR gerado
     } catch (IOException | InterruptedException e) {
+      GlobalExceptionHandler.handleException(e);
       logger.log(Level.SEVERE, "Failed to run project", e);
       Thread.currentThread().interrupt();
+    } catch (Exception e) {
+      GlobalExceptionHandler.handleException(e);
     }
   }
 

@@ -1,6 +1,7 @@
 package org.buildcli.commands.project.rm;
 
 import org.buildcli.domain.BuildCLICommand;
+import org.buildcli.handler.GlobalExceptionHandler;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
 
@@ -27,7 +28,10 @@ public class ProfileCommand implements BuildCLICommand {
       Files.deleteIfExists(path);
       LOGGER.info(() -> "Configuration profile deleted: " + fileName);
     } catch (IOException e) {
+      GlobalExceptionHandler.handleException(e);
       LOGGER.log(Level.SEVERE, "Failed to delete configuration profile: " + fileName, e);
+    } catch (Exception e) {
+      GlobalExceptionHandler.handleException(e);
     }
   }
 }

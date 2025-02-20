@@ -2,6 +2,7 @@ package org.buildcli.commands.project.add;
 
 import org.buildcli.constants.MavenConstants;
 import org.buildcli.domain.BuildCLICommand;
+import org.buildcli.handler.GlobalExceptionHandler;
 import org.buildcli.log.SystemOutLogger;
 import org.buildcli.utils.tools.maven.PomReader;
 import picocli.CommandLine.Command;
@@ -33,10 +34,12 @@ public class DependencyCommand implements BuildCLICommand {
         Files.write(Paths.get(MavenConstants.FILE), pomContent.getBytes());
         SystemOutLogger.log("Dependency added to pom.xml.");
       } catch (IOException e) {
+        GlobalExceptionHandler.handleException(e);
         logger.log(Level.SEVERE, "Error adding dependency to pom.xml", e);
       }
 
     } catch (Exception e) {
+      GlobalExceptionHandler.handleException(e);
       logger.log(Level.SEVERE, "Error adding dependency to pom.xml", e);
     }
   }
