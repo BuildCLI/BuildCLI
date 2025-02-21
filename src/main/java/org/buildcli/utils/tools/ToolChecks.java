@@ -1,5 +1,6 @@
 package org.buildcli.utils.tools;
 
+import java.io.File;
 import java.io.IOException;
 
 import static org.buildcli.utils.SystemCommands.GRADLE;
@@ -31,5 +32,12 @@ public abstract class ToolChecks {
     } catch (IOException | InterruptedException e) {
       return false;
     }
+  }
+
+  public static String checkIsMavenOrGradle() {
+     final boolean isMaven = new File("pom.xml").exists();
+     final boolean isGradle = new File("build.gradle").exists();
+
+     return isMaven ? "Maven" : isGradle ? "Gradle": "Neither" ;
   }
 }

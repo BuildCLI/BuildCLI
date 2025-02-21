@@ -5,11 +5,13 @@ import org.buildcli.actions.ai.AIServiceParams;
 import org.buildcli.actions.ai.factories.GeneralAIServiceFactory;
 import org.buildcli.actions.ai.params.JlamaAIServiceParams;
 import org.buildcli.actions.ai.params.OllamaAIServiceParams;
+import org.buildcli.constants.AIConstants;
 import org.buildcli.constants.ConfigDefaultConstants;
 import org.buildcli.domain.BuildCLICommand;
 import org.buildcli.domain.configs.BuildCLIConfig;
 import org.buildcli.utils.config.ConfigContextLoader;
 import org.buildcli.utils.filesystem.FindFilesUtils;
+import org.buildcli.utils.ia.CodeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import picocli.CommandLine.ArgGroup;
@@ -45,6 +47,9 @@ public class DocumentCommand implements BuildCLICommand {
   @Option(names = {"--extensions", "--ext"}, description = "To filter files by", defaultValue = "java, kt, scala, groovy", paramLabel = "java, kt, scala, groovy")
   private String extensions;
 
+  @Option(names = {"--context"}, description = "Overwrite the default AI command")
+  private String context;
+
   public static class IAModel {
     @Option(names = "--jlama")
     public boolean isJlama;
@@ -74,9 +79,10 @@ public class DocumentCommand implements BuildCLICommand {
 
     var execsAsync = new CompletableFuture[targetFiles.size()];
 
-    logger.info("Commenting files {}...", targetFiles.size());
+    logger.info("Documenting files {}...", targetFiles.size());
     for (int i = 0; i < targetFiles.size(); i++) {
       execsAsync[i] = supplyAsync(createCodeDocumenter(targetFiles.get(i)), executorService)
+          .thenApply(CodeUtils::extractCode)
           .thenAccept(saveSourceCodeDocumented(targetFiles.get(i)))
           .exceptionally(catchAnyError(targetFiles.get(i)));
     }
@@ -95,7 +101,7 @@ public class DocumentCommand implements BuildCLICommand {
       var iaService = new GeneralAIServiceFactory().create(aiParams);
 
       logger.info("Commenting with IA...");
-      return () -> iaService.generate(new AIChat(sourceCode));
+      return () -> iaService.generate(new AIChat(context == null || context.isEmpty() ? AIConstants.DOCUMENT_CODE_PROMPT : context, sourceCode));
 
     } catch (IOException e) {
       return () -> {

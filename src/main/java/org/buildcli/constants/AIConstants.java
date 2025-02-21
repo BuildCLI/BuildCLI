@@ -1,7 +1,7 @@
 package org.buildcli.constants;
 
 public abstract class AIConstants {
-  public static final String COMMENT_CODE_PROMPT = """
+  public static final String DOCUMENT_CODE_PROMPT = """
       ### Strict Code Commenting Prompt
       
       You are an AI assistant specialized in code documentation. Your task is to add explanatory comments to the given code WITHOUT modifying anything else.
@@ -59,5 +59,11 @@ public abstract class AIConstants {
       ---
       
       ### Now, add comments to the following code WITHOUT MODIFYING ANYTHING: 
+      """;
+
+  public static final String COMMENT_CODE_PROMPT = """
+      *"Review the following code for readability, performance, maintainability, and best practices. Identify potential bugs, security vulnerabilities, and areas for optimization. Suggest improvements while keeping the code’s intended functionality intact. Provide clear explanations for each suggestion."* \s
+
+      Your comments should be **precise**, explaining not just what is wrong but why it is an issue and how it can be improved."* \s
       """;
 }

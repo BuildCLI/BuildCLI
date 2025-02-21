@@ -134,7 +134,7 @@ public abstract class MavenInstaller {
   public static void configurePath(String mavenBinPath) throws IOException {
     var isWindows = OS.isWindows();
     if (isWindows) {
-      Runtime.getRuntime().exec("setx PATH \"%PATH%;" + mavenBinPath  + "\\\\bin\"");
+      Runtime.getRuntime().exec(new String[] {"setx PATH \"%PATH%;" + mavenBinPath  + "\\\\bin\""});
     } else {
       File bashrc = new File(System.getProperty("user.home"), ".bashrc");
       try (FileWriter fw = new FileWriter(bashrc, true)) {
