@@ -14,11 +14,6 @@ public class AIChat {
     this.userMessage = userMessage;
   }
 
-  public AIChat(String userMessage) {
-    this(AIConstants.COMMENT_CODE_PROMPT, userMessage);
-  }
-
-
   public UUID getChatId() {
     return chatId;
   }

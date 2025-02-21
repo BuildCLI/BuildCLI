@@ -25,4 +25,9 @@ public class GitCommandFormatter {
                 .filter(name -> !name.contains("dependabot"))
                 .toList().toString().replaceAll("[\\[\\]]", "");
     }
+
+    protected static Long countLogs(Iterable<RevCommit> logs){
+        return StreamSupport.stream(logs.spliterator(), false)
+                .count();
+    }
 }

@@ -11,12 +11,20 @@ function check_command() {
 
 check_command java
 check_command mvn
+check_command git
 
-if ! git clone https://github.com/BuildCLI/BuildCLI.git ; then 
-	echo "Failed to clone repository. Make sure Git is installed."
-	exit 1
+if [ -d "BuildCLI/.git" ]; then
+    echo "Project directory already exists. Pulling latest changes..."
+    cd BuildCLI
+    git pull origin main || { echo "Failed to update repository."; exit 1; }
+else
+    echo "Cloning repository..."
+    if ! git clone https://github.com/BuildCLI/BuildCLI.git ; then 
+        echo "Failed to clone repository. Make sure Git is installed."
+        exit 1
+    fi
+    cd BuildCLI
 fi
-cd BuildCLI
 
 if ! mvn clean package; then
     echo "Error while creating Maven package."
@@ -49,4 +57,3 @@ if [[ ":$PATH:" != *":$HOME/bin:"* ]]; then
 else 
     echo "You can now run the application with: buildcli"
 fi
-

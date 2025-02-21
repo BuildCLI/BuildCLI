@@ -1,29 +1,39 @@
 package org.buildcli.actions.commandline;
 
-import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-public class JavaProcess implements CommandLineProcess{
-  private final List<String> commands = new ArrayList<>();
-  private JavaProcess() {
-    commands.add("java");
+
+public class JavaProcess extends AbstractCommandLineProcess {
+
+  private JavaProcess(boolean printOutput) {
+    super("java", printOutput);
   }
 
-  public static JavaProcess createRunJarProcess(String jarName) {
-    var process = new JavaProcess();
 
-    process.commands.addAll(List.of("-jar", jarName));
+  public static JavaProcess createRunJarProcess(String jarName, String...args) {
+    return createProcess("-jar", jarName, mergeArgs(args));
+  }
 
+  public static JavaProcess createGetVersionProcess() {
+    var process = new JavaProcess(false);
+
+    process.commands.add("--version");
     return process;
   }
 
-  @Override
-  public int run() {
-    try {
-      return new ProcessBuilder(commands).inheritIO().start().waitFor();
-    } catch (InterruptedException | IOException e) {
-      throw new RuntimeException(e);
-    }
+  public static JavaProcess createProcess(String... args) {
+    var process = new JavaProcess(true);
+
+    process.commands.addAll(List.of(args));
+    return process;
+  }
+
+  public static CommandLineProcess createRunClassProcess(String absolutePath, String...args) {
+    return createProcess(absolutePath, mergeArgs(args));
+  }
+
+  private static String mergeArgs(String...args) {
+    return Arrays.stream(args).reduce((a, b) -> a + " " + b).orElse("");
   }
 }

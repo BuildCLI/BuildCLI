@@ -1,28 +1,16 @@
 package org.buildcli.actions.commandline;
 
 import org.buildcli.constants.MavenConstants;
-import org.buildcli.utils.MavenInstaller;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
-import static org.buildcli.utils.tools.ToolChecks.checksMaven;
-
-public class MavenProcess implements CommandLineProcess {
-  private final List<String> commands = new ArrayList<>();
-
-  private MavenProcess() {
-    if (!checksMaven()) {
-      MavenInstaller.installMaven();
-    }
-
-    commands.add(MavenConstants.MAVEN_CMD);
+public class MavenProcess extends AbstractCommandLineProcess {
+  private MavenProcess(boolean printOutput) {
+    super(MavenConstants.MAVEN_CMD, printOutput);
   }
 
   public static MavenProcess createProcessor(String... goals) {
-    var processor = new MavenProcess();
+    var processor = new MavenProcess(true);
     processor.commands.addAll(Arrays.asList(goals));
     return processor;
   }
@@ -35,12 +23,11 @@ public class MavenProcess implements CommandLineProcess {
     return createProcessor("clean", "compile");
   }
 
-  @Override
-  public int run() {
-    try {
-      return new ProcessBuilder().command(commands).inheritIO().start().waitFor();
-    } catch (IOException | InterruptedException e) {
-      throw new RuntimeException(e);
-    }
+  public static MavenProcess createGetVersionProcessor() {
+    var processor = new MavenProcess(false);
+
+    processor.commands.add("-v");
+    return processor;
   }
+
 }

@@ -1,3 +1,7 @@
+# Contribution
+
+Contributions are welcome! Feel free to open **Issues** and submit **Pull Requests**.
+
 # How to Contribute
 
 ### 1\. Check for an Existing Issue (Required Before Starting Work)
