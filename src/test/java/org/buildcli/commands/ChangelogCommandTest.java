@@ -69,6 +69,13 @@ class ChangelogCommandTest {
     }
 
     @Test
+    @DisplayName("Should return 'CHANGELOG.md' when fileName is null and format is 'markdown'")
+    void testFormatOutputFileWithoutFileName() {
+        String result = command.formatOutputFile(null, "markdown");
+        assertEquals("CHANGELOG.md", result);
+    }
+
+    @Test
     @DisplayName("Generate output markdown")
     void testGenerateOutputMarkdown() {
 
