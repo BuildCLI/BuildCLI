@@ -144,11 +144,11 @@ public class ChangelogCommand implements BuildCLICommand {
                     }
 
                     String formattedMessage = (scope != null && !scope.isEmpty())
-                            ? String.format("%s (%s): %s", type, scope, message)
+                            ? String.format("%s(%s): %s", type, scope, message)
                             : String.format("%s : %s", type, message);
 
                     String keepSection = TYPE_TO_KEEP_SECTION.getOrDefault(type, "Other");
-                    versionedData.get(releaseVersion).get(keepSection).add("- " + formattedMessage);
+                    versionedData.get(releaseVersion).get(keepSection).add(formattedMessage);
                 }
             }
 
@@ -193,7 +193,7 @@ public class ChangelogCommand implements BuildCLICommand {
                     """);
 
         data.forEach((version, sections) -> {
-            sb.append("## [%s] = %s%n%n" .formatted(version, LocalDate.now()));
+            sb.append("## [%s] - %s%n%n" .formatted(version, LocalDate.now()));
 
             ORDERED_SECTIONS.forEach(section -> {
                 var commits = sections.get(section);
