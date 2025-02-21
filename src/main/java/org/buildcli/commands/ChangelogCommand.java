@@ -48,7 +48,8 @@ public class ChangelogCommand implements BuildCLICommand {
     @Option(
             names = {"--output", "-o"},
             description  = "The output file to write the changelog to. " +
-                    "If not specified, will use 'CHANGELOG.<format>'."
+                    "If not specified, will use 'CHANGELOG.<format>'.",
+            defaultValue = "CHANGELOG"
     )
     private String outputFile;
 
@@ -108,6 +109,9 @@ public class ChangelogCommand implements BuildCLICommand {
     }
 
     protected String formatOutputFile(String fileName, String format) {
+        if (fileName == null | fileName.isBlank()) {
+            return "CHANGELOG" + FileTypes.fromExtension(format);
+        }
         String outputFileName = fileName.contains(".") ? fileName.substring(0, fileName.lastIndexOf('.')) : fileName;
         String extension = FileTypes.fromExtension(format);
         return outputFile == null ? "CHANGELOG" + extension : Path.of(outputFileName + extension).toString();
