@@ -67,6 +67,11 @@
             <artifactId>langchain4j-jlama</artifactId>
             <version>0.36.2</version>
         </dependency>
+        <dependency>
+            <groupId>io.github.dumijdev</groupId>
+            <artifactId>dp-xml</artifactId>
+            <version>0.2.3</version>
+        </dependency>
     </dependencies>
 
     <build>
