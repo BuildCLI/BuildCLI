@@ -1,14 +1,19 @@
 package dev.buildcli.core.domain.maven;
 
-import io.github.dumijdev.dpxml.stereotype.Pojolizable;
-import io.github.dumijdev.dpxml.stereotype.RootElement;
-import io.github.dumijdev.dpxml.stereotype.Xmlizable;
+import io.github.dumijdev.dpxml.stereotype.*;
 
 @Xmlizable
 @Pojolizable
 @RootElement(name = "project")
+@StaticAttributes(
+    attributes = {
+        @StaticAttribute(name = "xmlns", value = "http://maven.apache.org/POM/4.0.0"),
+        @StaticAttribute(name = "xmlns:xsi", value = "http://www.w3.org/2001/XMLSchema-instance"),
+        @StaticAttribute(name = "xsi:schemaLocation", value = "http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"),
+    }
+)
 public class Project {
-  private String modelVersion;
+  private String modelVersion = "4.0.0";
   private String groupId;
   private String artifactId;
   private String version;
