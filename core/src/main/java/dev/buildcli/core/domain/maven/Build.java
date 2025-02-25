@@ -3,18 +3,16 @@ package dev.buildcli.core.domain.maven;
 import io.github.dumijdev.dpxml.stereotype.Pojolizable;
 import io.github.dumijdev.dpxml.stereotype.Xmlizable;
 
-import java.util.List;
-
 @Xmlizable
 @Pojolizable
 public class Build {
-  private List<Plugin> plugins;
+  private Plugins plugins;
 
-  public List<Plugin> getPlugins() {
+  public Plugins getPlugins() {
     return plugins;
   }
 
-  public void setPlugins(List<Plugin> plugins) {
+  public void setPlugins(Plugins plugins) {
     this.plugins = plugins;
   }
 }
