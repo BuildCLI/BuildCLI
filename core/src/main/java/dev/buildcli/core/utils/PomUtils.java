@@ -149,13 +149,13 @@ public class PomUtils {
       var groupId = parts[0];
       var artifactId = parts[1];
 
-      dep = createDependencyNode(groupId, artifactId, null, null);
+      dep = createDependencyNode(groupId, artifactId);
     } else if (parts.length == 3) {
       var groupId = parts[0];
       var artifactId = parts[1];
       var version = parts[2];
 
-      dep = createDependencyNode(groupId, artifactId, version, null);
+      dep = createDependencyNode(groupId, artifactId, version);
     } else if (parts.length == 4) {
       var groupId = parts[0];
       var artifactId = parts[1];
@@ -170,6 +170,14 @@ public class PomUtils {
     }
 
     return dep;
+  }
+
+  private static Node createDependencyNode(String groupId, String artifactId, String version) {
+    return createDependencyNode(groupId, artifactId, version, null);
+  }
+
+  private static Node createDependencyNode(String groupId, String artifactId) {
+    return createDependencyNode(groupId, artifactId, null, null);
   }
 
   private static Node createDependencyNode(String groupId, String artifactId, String version, String scope) {
