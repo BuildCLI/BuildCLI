@@ -7,7 +7,10 @@ import picocli.CommandLine;
 public class CommandLineRunner {
   public static void main(String[] args) {
     LoggingConfig.configure();
-    BuildCLIService.welcome();
+
+    if (BuildCLIService.shouldShowAsciiArt(args)) {
+      BuildCLIService.welcome();
+    }
 
     var commandLine = new CommandLine(new BuildCLI());
 
