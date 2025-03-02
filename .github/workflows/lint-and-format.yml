@@ -17,7 +17,7 @@ jobs:
 
       # Set up Java environment (for Checkstyle & ktlint)
       - name: Set up Java
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '21'
