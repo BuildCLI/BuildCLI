@@ -1,6 +1,5 @@
 package dev.buildcli.core.utils.tools.maven;
 
-import dev.buildcli.core.domain.maven.Project;
 import io.github.dumijdev.dpxml.model.Node;
 import io.github.dumijdev.dpxml.parser.impl.xml.DefaultXmlizer;
 

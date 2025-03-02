@@ -1,13 +1,11 @@
 package dev.buildcli.core.utils.tools.maven;
 
 import dev.buildcli.core.constants.MavenConstants;
-import dev.buildcli.core.domain.maven.Project;
 import dev.buildcli.core.exceptions.ExtractionRuntimeException;
 import dev.buildcli.core.model.Dependency;
 import dev.buildcli.core.model.Pom;
 import io.github.dumijdev.dpxml.model.Node;
 import io.github.dumijdev.dpxml.parser.impl.node.DefaultNodilizer;
-import io.github.dumijdev.dpxml.parser.impl.pojo.BasicPojolizer;
 import org.xml.sax.SAXException;
 
 import javax.xml.XMLConstants;
@@ -17,7 +15,6 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.nio.file.Files;
