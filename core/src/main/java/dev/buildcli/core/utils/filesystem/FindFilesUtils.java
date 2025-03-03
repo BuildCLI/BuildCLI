@@ -15,7 +15,6 @@ public abstract class FindFilesUtils {
   public static List<File> search(File dir, String...extensions) {
     List<File> files = new ArrayList<>();
     if (dir.isDirectory()) {
-      logger.info("Searching for directory {}", dir);
       var listFiles = dir.listFiles();
       if (listFiles == null || listFiles.length == 0) {
         return files;
@@ -28,16 +27,18 @@ public abstract class FindFilesUtils {
         }
 
         if (endsWith(file, extensions)) {
-          logger.info("Found file {}", file);
           files.add(file);
         }
       }
     } else if (dir.isFile() && endsWith(dir, extensions)) {
-      logger.info("Found file {}", dir);
       files.add(dir);
     }
 
     return List.copyOf(files);
+  }
+
+  public static List<File> searchJarFiles(File dir) {
+    return search(dir, ".jar");
   }
 
   public static List<File> searchJavaFiles(File dir) {
