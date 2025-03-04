@@ -1,4 +1,4 @@
-package org.buildcli.utils;
+package dev.buildcli.core.utils;
 
 public enum FileTypes {
     MARKDOWN("markdown", ".md"),

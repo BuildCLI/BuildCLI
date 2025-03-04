@@ -1,4 +1,4 @@
-package org.buildcli.constants;
+package dev.buildcli.core.constants;
 
 import java.util.List;
 
