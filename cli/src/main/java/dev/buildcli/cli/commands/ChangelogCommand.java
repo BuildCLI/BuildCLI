@@ -1,7 +1,6 @@
 package dev.buildcli.cli.commands;
 
 import dev.buildcli.core.domain.BuildCLICommand;
-import java.nio.file.Paths;
 import org.buildcli.utils.FileTypes;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
@@ -114,11 +113,8 @@ public class ChangelogCommand implements BuildCLICommand {
             return "CHANGELOG" + FileTypes.fromExtension(format);
         }
         String outputFileName = fileName.contains(".") ? fileName.substring(0, fileName.lastIndexOf('.')) : fileName;
-        String[] tokens = outputFileName.split(Pattern.quote(File.separator));
-        String path = Paths.get("", tokens).toString();
         String extension = FileTypes.fromExtension(format);
-
-        return outputFile == null ? "CHANGELOG" + extension : path + extension;
+        return outputFile == null ? "CHANGELOG" + extension : Path.of(outputFileName + extension).toString();
     }
 
     protected void generateChangeLog(String releaseVersion, String outputFile, List<String> includeTypes) throws IOException, GitAPIException {
