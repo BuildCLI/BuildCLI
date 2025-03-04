@@ -1,0 +1,93 @@
+# Apply the "bug" label if the issue contains the word "bug" or comes from a bug report template.
+# Also applies if the PR affects bug-related files or paths.
+bug:
+  - "bug"
+  - "Bug report"
+  - "fix/**"
+  - "**/*.bug"
+  - "hotfix/**"
+
+# Apply the "feature" label if the issue mentions "feature" or is a feature request.
+# Also applies if the PR affects feature-related files.
+feature:
+  - "feature"
+  - "Feature request"
+  - "feat/**"
+  - "**/*.feature"
+
+# Apply the "documentation" label if the issue mentions "documentation"
+# or if the PR modifies markdown documentation files.
+documentation:
+  - "documentation"
+  - "docs/**"
+  - "**/*.md"
+  - "README.md"
+  - "CONTRIBUTING.md"
+
+# Apply the "security" label if the issue contains "security" or "vulnerability."
+# Also applies if the issue references a CVE or exploit.
+security:
+  - "security"
+  - "vulnerability"
+  - "exploit"
+  - "CVE-"
+
+# Apply the "good first issue" label if the issue is marked as a beginner-friendly task.
+good first issue:
+  - "good first issue"
+  - "beginner"
+  - "starter"
+  - "easy"
+
+# Apply the "high priority" label if the issue is urgent or critical.
+high priority:
+  - "high priority"
+  - "urgent"
+  - "critical"
+  - "blocker"
+  - "must-fix"
+
+# Apply the "low priority" label if the issue is minor or not urgent.
+low priority:
+  - "low priority"
+  - "minor"
+  - "non-urgent"
+  - "nice to have"
+
+# Apply the "dependencies" label if the PR modifies dependency files.
+dependencies:
+  - "package.json"
+  - "package-lock.json"
+  - "requirements.txt"
+
+# Apply the "tests" label if the PR modifies test-related files or mentions testing.
+tests:
+  - "tests/**"
+  - "**/*.test.*"
+  - "unit test"
+  - "integration test"
+
+# Apply the "ci/cd" label if the PR modifies GitHub Actions, CI/CD, or related workflows.
+ci/cd:
+  - ".github/workflows/**"
+  - ".gitlab-ci.yml"
+  - "Jenkinsfile"
+
+# Apply the "refactor" label if the PR is focused on code improvements without functional changes.
+refactor:
+  - "refactor"
+  - "code improvement"
+  - "cleanup"
+
+# Apply the "ui/ux" label if the PR involves UI, frontend, or design changes.
+ui/ux:
+  - "ui"
+  - "ux"
+  - "frontend"
+  - "design"
+  - "css"
+  - "user experience"
+
+# Apply the "other" label if no other categories match.
+other:
+  - "*"
