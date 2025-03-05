@@ -31,6 +31,10 @@ public abstract class ConfigDefaultConstants {
   public static final String AI_URL = composePropertyName(AI_PARENT, "url");
   public static final String AI_TOKEN = composePropertyName(AI_PARENT, "token");
 
+  //Plugins
+  public static final String PLUGIN_PARENT = "plugin";
+  public static final String PLUGIN_PATHS = composePropertyName(PLUGIN_PARENT, "paths");
+
 
   public static String composePropertyName(String... names) {
     var builder = new StringBuilder("buildcli");

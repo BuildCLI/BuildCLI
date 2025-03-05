@@ -26,7 +26,7 @@ else
     cd BuildCLI
 fi
 
-if ! mvn clean package; then
+if ! mvn clean package -DskipTests; then
     echo "Error while creating Maven package."
     exit 1
 fi
@@ -39,7 +39,7 @@ cp cli/target/buildcli.jar "$HOME/bin/"
 
 cat <<EOF > "$HOME/bin/buildcli"
 #!/bin/bash
-java -jar "\$HOME/bin/buildcli.jar" "\$@"
+java --enable-preview --add-modules jdk.incubator.vector -jar "\$HOME/bin/buildcli.jar" "\$@"
 EOF
 
 chmod +x "$HOME/bin/buildcli"

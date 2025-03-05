@@ -2,7 +2,9 @@ package dev.buildcli.core.utils;
 
 import picocli.AutoComplete;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
@@ -15,7 +17,7 @@ public class AutoCompleteManager {
 
     public void setupAutocomplete() {
         String commandName = "buildcli";
-        String fullyQualifiedClassName = "org.buildcli.OptionCommand";
+        String fullyQualifiedClassName = "dev.buildcli.cli.BuildCLI";
 
         try {
             List<String> availableShells = detectAvailableShells();
@@ -51,14 +53,15 @@ public class AutoCompleteManager {
     }
 
     private boolean isShellInstalled(String shell) {
-        Path shellPath = switch (shell) {
-            case "bash" -> Path.of("/bin/bash");
-            case "zsh" -> Path.of("/bin/zsh");
-            case "fish" -> Path.of("/usr/bin/fish");
-            default -> null;
-        };
+        try{
+            Process process = new ProcessBuilder(OS.isWindows() ? "where" : "which", OS.isWindows() ? shell + ".exe" : shell).start();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            String output = reader.readLine();
 
-        return shellPath != null && Files.exists(shellPath);
+            return output != null && !output.isBlank();
+        } catch (Exception e){
+            return false;
+        }
     }
 
     private void generateAutoComplete(String fullyQualifiedClassName, String commandName, Path completionPath) {
