@@ -1,7 +1,7 @@
 package dev.buildcli.cli.commands;
 
 import dev.buildcli.core.domain.BuildCLICommand;
-import org.buildcli.utils.FileTypes;
+import dev.buildcli.core.utils.FileTypes;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.lib.Ref;
@@ -20,7 +20,7 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static org.buildcli.constants.ChangelogConstants.ORDERED_SECTIONS;
+import static dev.buildcli.core.constants.ChangelogConstants.ORDERED_SECTIONS;
 
 @Command(
         name = "changelog",

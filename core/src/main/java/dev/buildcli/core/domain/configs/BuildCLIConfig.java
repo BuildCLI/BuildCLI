@@ -2,8 +2,12 @@ package dev.buildcli.core.domain.configs;
 import dev.buildcli.core.exceptions.ConfigException;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.*;
 import java.util.stream.Collectors;
+
+import static dev.buildcli.core.constants.ConfigDefaultConstants.BUILD_CLI_CONFIG_GLOBAL_FILE;
 
 public class BuildCLIConfig {
   private final Properties properties = new Properties();
@@ -104,5 +108,52 @@ public class BuildCLIConfig {
     public static ImmutableProperty from(Map.Entry<Object, Object> entry) {
       return new ImmutableProperty(entry.getKey().toString(), entry.getValue().toString());
     }
+  }
+
+  private static boolean isPresentFileProperties(){
+    Path pathFile = BUILD_CLI_CONFIG_GLOBAL_FILE.toAbsolutePath();
+    return Files.exists(pathFile)
+        && Files.isRegularFile(pathFile)
+        && pathFile.getFileName().toString().equals("buildcli.properties");
+  }
+
+  private void generatePropertiesFile() {
+    File pathFile = BUILD_CLI_CONFIG_GLOBAL_FILE.toFile();
+
+
+    File parentDir = pathFile.getParentFile();
+    if (!parentDir.exists()) {
+      if (!parentDir.mkdirs()) {
+        throw new ConfigException("Could not create directory: " + parentDir.getAbsolutePath());
+      }
+    }
+
+    String content = "buildcli.ai.vendor=jlama\n" +
+        "\n" +
+        "# If you want to use Ollama\n" +
+        "#buildcli.ai.vendor=ollama\n" +
+        "#buildcli.ai.model=llama3.2\n" +
+        "#buildcli.ai.url=http://localhost:11434/\n" +
+        "#buildcli.ai.token=#ai-token";
+
+    try {
+      if (pathFile.createNewFile()) {
+        try (FileWriter writer = new FileWriter(pathFile)) {
+          writer.write(content);
+        }
+        System.out.println("Default configuration file created: " + BUILD_CLI_CONFIG_GLOBAL_FILE.toAbsolutePath());
+      }
+    } catch (IOException e) {
+      throw new ConfigException("Error writing properties file to: " + pathFile.toString(), e);
+    }
+  }
+
+  public static BuildCLIConfig initialize() {
+    BuildCLIConfig config = new BuildCLIConfig();
+    if (!isPresentFileProperties()){
+      config.generatePropertiesFile();
+      return config;
+    }
+   return config;
   }
 }
