@@ -60,12 +60,12 @@
         <dependency>
             <groupId>dev.langchain4j</groupId>
             <artifactId>langchain4j-ollama</artifactId>
-            <version>1.0.0-beta1</version>
+            <version>0.36.2</version>
         </dependency>
         <dependency>
             <groupId>dev.langchain4j</groupId>
             <artifactId>langchain4j-jlama</artifactId>
-            <version>1.0.0-beta1</version>
+            <version>0.36.2</version>
         </dependency>
         <dependency>
             <groupId>io.github.dumijdev</groupId>

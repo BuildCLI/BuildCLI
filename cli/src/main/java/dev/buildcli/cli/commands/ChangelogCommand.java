@@ -89,7 +89,7 @@ public class ChangelogCommand implements BuildCLICommand {
             Map.entry("security", "Security")
     );
 
-    private File repositoryDir = new File(".");
+    private final File repositoryDir = new File(".");
 
 
     @Override
@@ -109,7 +109,7 @@ public class ChangelogCommand implements BuildCLICommand {
     }
 
     protected String formatOutputFile(String fileName, String format) {
-        if (fileName == null | fileName.isBlank()) {
+        if (fileName == null || fileName.isBlank()) {
             return "CHANGELOG" + FileTypes.fromExtension(format);
         }
         String outputFileName = fileName.contains(".") ? fileName.substring(0, fileName.lastIndexOf('.')) : fileName;
