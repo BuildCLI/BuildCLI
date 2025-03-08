@@ -3,7 +3,8 @@ package dev.buildcli.cli.commands.config;
 import dev.buildcli.cli.commands.ConfigCommand;
 import dev.buildcli.core.domain.BuildCLICommand;
 import dev.buildcli.core.domain.configs.BuildCLIConfig;
-import dev.buildcli.core.log.SystemOutLogger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.ParentCommand;
 
@@ -23,6 +24,7 @@ import static dev.buildcli.core.utils.config.ConfigContextLoader.getLocalConfig;
  */
 @Command(name = "print", aliases = {"p", "show", "list"}, description = "Prints the current configuration.")
 public class PrintCommand implements BuildCLICommand {
+  private static final Logger logger = LoggerFactory.getLogger(PrintCommand.class);
 
   /**
    * Parent command providing context for local or global configuration.
@@ -41,12 +43,11 @@ public class PrintCommand implements BuildCLICommand {
     try {
       boolean isLocal = configCommand.isLocal() || !configCommand.isGlobal();
       BuildCLIConfig buildCliConfig = isLocal ? getLocalConfig() : getGlobalConfig();
-
-      SystemOutLogger.log("Current Configuration (" + (isLocal ? "local" : "global") + "):");
-      SystemOutLogger.log(buildCliConfig.toString());
+      logger.info("Current Configuration ({}):", isLocal ? "local" : "global");
+      logger.info(buildCliConfig.toString());
 
     } catch (Exception e) {
-      System.err.println("Error loading configuration: " + e.getMessage());
+      logger.error("Error loading configuration: {}", e.getMessage());
     }
 
   }

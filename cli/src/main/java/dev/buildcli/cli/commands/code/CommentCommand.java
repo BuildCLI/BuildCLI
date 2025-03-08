@@ -34,7 +34,7 @@ import static java.util.concurrent.CompletableFuture.supplyAsync;
 @Command(name = "comment", aliases = {"c"}, description = "Comments out the selected code.",mixinStandardHelpOptions = true)
 public class CommentCommand implements BuildCLICommand {
   private final ExecutorService executorService = Executors.newVirtualThreadPerTaskExecutor();
-  private final Logger logger = LoggerFactory.getLogger("CodeCommentCommand");
+  private final Logger logger = LoggerFactory.getLogger(CommentCommand.class);
 
   @Parameters(description = "Set of files or directories to comment sources")
   private List<File> files;

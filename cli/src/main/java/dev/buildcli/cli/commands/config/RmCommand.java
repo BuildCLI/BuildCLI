@@ -4,8 +4,9 @@ import dev.buildcli.cli.commands.ConfigCommand;
 import dev.buildcli.core.domain.BuildCLICommand;
 import dev.buildcli.core.domain.configs.BuildCLIConfig;
 import dev.buildcli.core.exceptions.ConfigException;
-import dev.buildcli.core.log.SystemOutLogger;
 import dev.buildcli.core.utils.config.ConfigContextLoader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
 import picocli.CommandLine.ParentCommand;
@@ -28,6 +29,7 @@ import static dev.buildcli.core.utils.config.ConfigContextLoader.getLocalConfig;
  */
 @Command(name = "remove", aliases = {"rm", "r"}, description = "Removes specified configuration properties from BuildCLI.", mixinStandardHelpOptions = true)
 public class RmCommand implements BuildCLICommand {
+  private static final Logger logger = LoggerFactory.getLogger(RmCommand.class);
 
   /**
    * Reference to the parent command to determine scope (local or global).
@@ -66,7 +68,7 @@ public class RmCommand implements BuildCLICommand {
 
     try {
       saveConfigFunction.save(buildCliConfig);
-      SystemOutLogger.log("Successfully removed %d configuration properties from %s scope.".formatted(removedCount, isLocal ? "local" : "global"));
+      logger.info("Successfully removed {} configuration properties from {} scope.", removedCount, isLocal ? "local" : "global");
     } catch (Exception e) {
       System.err.println("Failed to remove configuration properties: " + e.getMessage());
     }
