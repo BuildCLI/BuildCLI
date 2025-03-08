@@ -1,5 +1,6 @@
 package dev.buildcli.cli;
 
+import dev.buildcli.core.domain.configs.BuildCLIConfig;
 import dev.buildcli.plugin.CommandFactory;
 import dev.buildcli.core.log.config.LoggingConfig;
 import dev.buildcli.core.utils.BuildCLIService;
@@ -18,6 +19,7 @@ public class CommandLineRunner {
 
     var commandPlugins = PluginManager.getCommands();
 
+    BuildCLIConfig.initialize();
     var commandLine = new CommandLine(new BuildCLI());
 
     for (BuildCLICommandPlugin commandPlugin : commandPlugins) {
