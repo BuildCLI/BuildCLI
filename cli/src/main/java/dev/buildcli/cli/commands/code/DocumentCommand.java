@@ -39,7 +39,7 @@ public class DocumentCommand implements BuildCLICommand {
   private IAModel model;
 
   private final ExecutorService executorService = Executors.newVirtualThreadPerTaskExecutor();
-  private final Logger logger = LoggerFactory.getLogger("CodeDocumentCommand");
+  private final Logger logger = LoggerFactory.getLogger(DocumentCommand.class);
 
   @Parameters(description = "Set of files or directories to comment sources")
   private List<File> files;

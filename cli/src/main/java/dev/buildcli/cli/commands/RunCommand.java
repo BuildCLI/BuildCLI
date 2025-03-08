@@ -6,6 +6,8 @@ import dev.buildcli.core.actions.commandline.MavenProcess;
 import dev.buildcli.cli.commands.run.DockerfileCommand;
 import dev.buildcli.core.domain.BuildCLICommand;
 import dev.buildcli.core.utils.ProfileManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
 
@@ -15,12 +17,10 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 @Command(name = "run", description = "Executes the project with the active properties file.", subcommands = {DockerfileCommand.class}, mixinStandardHelpOptions = true)
 public class RunCommand implements BuildCLICommand {
-  private final Logger logger = Logger.getLogger(RunCommand.class.getName());
+  private static final Logger logger = LoggerFactory.getLogger(RunCommand.class);
   private final ProfileManager profileManager = new ProfileManager();
 
   @Parameters(index = "0", description = "The file or directory to run. If a directory, it will package and run the project.", arity = "0..1", paramLabel = "<file-or-dir>", defaultValue = ".")
@@ -56,7 +56,7 @@ public class RunCommand implements BuildCLICommand {
         throw new IOException("Process exited with code " + exitedCode);
       }
     } catch (IOException | InterruptedException e) {
-      logger.log(Level.SEVERE, "Failed to run project", e);
+      logger.error("Failed to run project", e);
       Thread.currentThread().interrupt();
     }
   }
@@ -65,7 +65,7 @@ public class RunCommand implements BuildCLICommand {
     // Carregar o perfil ativo
     String activeProfile = profileManager.getActiveProfile();
     if (activeProfile == null) {
-      logger.warning("No active profile set. Using default profile.");
+      logger.warn("No active profile set. Using default profile.");
       activeProfile = "default";
     }
 
@@ -74,8 +74,8 @@ public class RunCommand implements BuildCLICommand {
     String profileMessage = properties.getProperty("app.message", "Running with no specific profile");
 
     // Exibir a mensagem do perfil ativo no console
-    System.out.println("Active Profile: " + activeProfile);
-    System.out.println(profileMessage);
+    logger.info("Active Profile: {}", activeProfile);
+    logger.info(profileMessage);
 
     MavenProcess.createPackageProcessor().run();
     var jarPath = findJar();
@@ -89,7 +89,7 @@ public class RunCommand implements BuildCLICommand {
     try (InputStream input = Files.newInputStream(Paths.get(propertiesFile))) {
       properties.load(input);
     } catch (IOException e) {
-      logger.log(Level.SEVERE, "Failed to load profile properties file: " + propertiesFile, e);
+      logger.info("Failed to load profile properties file: {}", propertiesFile, e);
     }
     return properties;
   }
