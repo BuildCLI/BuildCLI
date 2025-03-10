@@ -143,7 +143,7 @@ public class InitCommand implements BuildCLICommand {
                 </project>
             """.formatted(projectName.toLowerCase(), projectName, jdkVersion, projectName.toLowerCase()));
       }
-      logger.info("pom.xml file creatsed with default configuration.");
+      logger.info("pom.xml file created with default configuration.");
     }
   }
 }
