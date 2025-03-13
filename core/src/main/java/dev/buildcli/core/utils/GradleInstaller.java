@@ -1,7 +1,8 @@
 package dev.buildcli.core.utils;
 
-import dev.buildcli.core.log.SystemOutLogger;
 import dev.buildcli.core.utils.compress.FileExtractor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -15,6 +16,8 @@ import java.nio.file.Paths;
 import java.util.Scanner;
 
 public abstract class GradleInstaller {
+  private static final Logger logger = LoggerFactory.getLogger(GradleInstaller.class);
+
   private GradleInstaller() {
   }
 
@@ -23,24 +26,24 @@ public abstract class GradleInstaller {
   private static final String GRADLE_DOWNLOAD_URL = "https://services.gradle.org/distributions/%s-bin.zip".formatted(GRADLE_NAME);
   private static final String USER_HOME = System.getProperty("user.home");
   public static void installGradle() {
-    SystemOutLogger.log("Installing Gradle operation started...");
+    logger.info("Installing Gradle operation started...");
     try {
-      SystemOutLogger.log("Downloading Gradle operation started...");
+      logger.info("Downloading Gradle operation started...");
       var file = downloadGradle();
-      SystemOutLogger.log("Downloading Gradle operation finished...");
+      logger.info("Downloading Gradle operation finished...");
 
-      SystemOutLogger.log("Gradle downloaded to " + file.getAbsolutePath());
+      logger.info("Gradle downloaded to {}", file.getAbsolutePath());
       var outputDir = installProgramFilesDirectory();
-      SystemOutLogger.log("Gradle install path set to " + outputDir.getAbsolutePath());
+      logger.info("Gradle install path set to {}", outputDir.getAbsolutePath());
 
-      SystemOutLogger.log("Extracting Gradle operation started...");
+      logger.info("Extracting Gradle operation started...");
       extractGradle(file.getAbsolutePath(), outputDir.getAbsolutePath());
-      SystemOutLogger.log("Extracting Gradle operation finished...");
+      logger.info("Extracting Gradle operation finished...");
 
       String gradleExtractedDir = Paths.get(outputDir.getAbsolutePath(), GRADLE_NAME).toFile().getAbsolutePath();
-      SystemOutLogger.log("Configuring Gradle path operation started...");
+      logger.info("Configuring Gradle path operation started...");
       configurePath(gradleExtractedDir);
-      SystemOutLogger.log("Configuring Gradle path operation finished...");
+      logger.info("Configuring Gradle path operation finished...");
     } catch (IOException | InterruptedException e) {
       throw new RuntimeException(e);
     }
@@ -64,7 +67,7 @@ public abstract class GradleInstaller {
         .followRedirects(HttpClient.Redirect.ALWAYS)
         .build();
 
-    SystemOutLogger.log("Downloading Gradle artifact from: " + GRADLE_DOWNLOAD_URL);
+    logger.info("Downloading Gradle artifact from: {}", GRADLE_DOWNLOAD_URL);
 
     var response = client.send(request, HttpResponse.BodyHandlers.ofInputStream());
 
@@ -81,7 +84,7 @@ public abstract class GradleInstaller {
     var gradleZip = new File(GRADLE_NAME +  ".zip");
 
     if (gradleZip.exists()) {
-      SystemOutLogger.log("Cleaning up previous Gradle zip: " + gradleZip);
+      logger.info("Cleaning up previous Gradle zip: {}", gradleZip);
       DirectoryCleanup.cleanup(gradleZip.getAbsolutePath());
     }
 
@@ -137,20 +140,20 @@ public abstract class GradleInstaller {
       }
 
       Scanner scanner = new Scanner(System.in);
-      SystemOutLogger.log("Please run: sudo chmod +x " + gradleExtractedDir + "/bin/gradle");
-      SystemOutLogger.log("Please run: source ~/" + shellConfigFile);
-      SystemOutLogger.log("Do you want to run these commands now? (y/n)");
+      logger.info("Please run: sudo chmod +x {}/bin/gradle", gradleExtractedDir);
+      logger.info("Please run: source ~/{}", shellConfigFile);
+      logger.info("Do you want to run these commands now? (y/n)");
 
       String response = scanner.nextLine().trim().toLowerCase();
       if (response.equals("y") || response.equals("yes")) {
-        SystemOutLogger.log("Running the commands...");
+        logger.info("Running the commands...");
 
         Runtime.getRuntime().exec(new String[] {"sudo chmod +x " + gradleExtractedDir + "/bin/gradle"});
 
         String sourceCommand = "bash -c 'source ~/" + shellConfigFile + " && echo \"Source command executed\"'";
         Runtime.getRuntime().exec(new String[] {sourceCommand});
       } else {
-        SystemOutLogger.log("You can run the commands later.");
+        logger.info("You can run the commands later.");
       }
 
       scanner.close();

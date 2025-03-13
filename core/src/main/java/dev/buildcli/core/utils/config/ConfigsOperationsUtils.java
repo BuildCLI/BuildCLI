@@ -2,7 +2,8 @@ package dev.buildcli.core.utils.config;
 
 import dev.buildcli.core.domain.configs.BuildCLIConfig;
 import dev.buildcli.core.exceptions.ConfigException;
-import dev.buildcli.core.log.SystemOutLogger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,6 +14,7 @@ import static dev.buildcli.core.constants.ConfigDefaultConstants.BUILD_CLI_CONFI
 import static dev.buildcli.core.constants.ConfigDefaultConstants.BUILD_CLI_CONFIG_GLOBAL_FILE;
 
 class ConfigsOperationsUtils {
+  private static final Logger logger = LoggerFactory.getLogger(ConfigsOperationsUtils.class);
 
   private static Optional<BuildCLIConfig> loadConfig(File file, boolean isLocal) {
     if (!file.exists()) {
@@ -45,13 +47,13 @@ class ConfigsOperationsUtils {
 
       File parent = file.getParentFile();
       if (parent != null && !parent.exists()) {
-        SystemOutLogger.log("Creating global config directory...");
+        logger.info("Creating global config directory...");
         parent.mkdirs();
       }
 
       Files.writeString(file.toPath(), builder.toString());
 
-      SystemOutLogger.log("Config file saved at " + file.getAbsolutePath());
+      logger.info("Config file saved at {}", file.getAbsolutePath());
 
     } catch (IOException e) {
       throw new ConfigException("Error writing config file", e);

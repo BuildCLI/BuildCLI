@@ -3,8 +3,9 @@ package dev.buildcli.core.utils;
 import dev.buildcli.core.actions.commandline.CommandLineProcess;
 import dev.buildcli.core.actions.commandline.MavenProcess;
 import dev.buildcli.core.domain.git.GitCommandExecutor;
-import dev.buildcli.core.log.SystemOutLogger;
 import dev.buildcli.core.utils.tools.CLIInteractions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.InputStream;
 import java.util.Arrays;
@@ -26,6 +27,7 @@ import java.util.jar.Manifest;
 * */
 
 public class BuildCLIService {
+  private static final Logger logger = LoggerFactory.getLogger(BuildCLIService.class);
 
   private static final GitCommandExecutor gitExec = new GitCommandExecutor();
 
@@ -76,9 +78,9 @@ public class BuildCLIService {
   }
 
   public static void about() {
-    SystemOutLogger.log("BuildCLI is a command-line interface (CLI) tool for managing and automating common tasks in Java project development.\n" +
-        "It allows you to create, compile, manage dependencies, and run Java projects directly from the terminal, simplifying the development process.\n");
-    SystemOutLogger.log("Visit the repository for more details: https://github.com/wheslleyrimar/BuildCLI\n");
+    logger.info("BuildCLI is a command-line interface (CLI) tool for managing and automating common tasks in Java project development.\n" +
+            "It allows you to create, compile, manage dependencies, and run Java projects directly from the terminal, simplifying the development process.\n");
+    logger.info("Visit the repository for more details: https://github.com/wheslleyrimar/BuildCLI\n");
 
     gitExec.showContributors(localRepository, "https://github.com/BuildCLI/BuildCLI.git");
   }
@@ -89,19 +91,20 @@ public class BuildCLIService {
       String homeBuildCLI = OS.getHomeBinDirectory();
       OS.cpDirectoryOrFile(buildCLIDirectory + "/target/buildcli.jar", homeBuildCLI);
       OS.chmodX(homeBuildCLI + "/buildcli.jar");
-      SystemOutLogger.log("\u001B[32mBuildCLI updated successfully!\u001B[0m");
+      logger.info("\u001B[32mBuildCLI updated successfully!\u001B[0m");
     } else {
-      SystemOutLogger.log("\u001B[33mBuildCLI update canceled!\u001B[0m");
+      logger.info("\u001B[33mBuildCLI update canceled!\u001B[0m");
     }
   }
 
   public static void checkUpdatesBuildCLIAndUpdate() {
     boolean updated = gitExec.checkIfLocalRepositoryIsUpdated(localRepository, "https://github.com/BuildCLI/BuildCLI.git");
     if (!updated) {
-      SystemOutLogger.log("""
+      logger.info("""
           \u001B[33m
           ATTENTION: Your BuildCLI is outdated!
           \u001B[0m""");
+
       updateBuildCLI();
     }
   }

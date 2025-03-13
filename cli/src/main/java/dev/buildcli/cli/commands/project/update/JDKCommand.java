@@ -1,7 +1,6 @@
 package dev.buildcli.cli.commands.project.update;
 
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -12,14 +11,15 @@ import javax.xml.transform.stream.StreamResult;
 import dev.buildcli.cli.commands.project.BuildCommand;
 import dev.buildcli.core.constants.MavenConstants;
 import dev.buildcli.core.domain.BuildCLICommand;
-import dev.buildcli.core.log.SystemOutLogger;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 
 @Command(name = "jdk", description = "Updates JDK version of the project.", mixinStandardHelpOptions = true)
 public class JDKCommand implements BuildCLICommand {
-    private static final Logger logger = Logger.getLogger(JDKCommand.class.getName());
+    private static final Logger logger = LoggerFactory.getLogger(JDKCommand.class);
     @Option(names = {"--recomp", "-r"}, description = "Rebuilds the project with the new JDK version.", defaultValue = "false")
     private boolean recomp;
     @Option(names = {"--jdkver", "-jv"}, description = "The JDK version to update to.", defaultValue = "17")
@@ -41,16 +41,16 @@ public class JDKCommand implements BuildCLICommand {
 
             try {
                 transformer.transform(new DOMSource(xmlDoc), new StreamResult(MavenConstants.FILE));
-                SystemOutLogger.log("JDK version updated in pom.xml");
+                logger.info("JDK version updated in pom.xml");
             } catch (Exception e) {
-                logger.log(Level.SEVERE, "Error updating JDK version in pom.xml", e);
+                logger.error("Error updating JDK version in pom.xml", e);
             }
         } catch (Exception e) {
-            logger.log(Level.SEVERE, "Error updating JDK version in pom.xml", e);
+            logger.error("Error updating JDK version in pom.xml", e);
         }
 
         if (recomp) {
-            SystemOutLogger.log("Rebuilding project with new java version");
+            logger.info("Rebuilding project with new java version");
             new BuildCommand().run();
         }
     }

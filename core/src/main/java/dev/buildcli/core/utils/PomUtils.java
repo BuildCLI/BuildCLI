@@ -2,9 +2,10 @@ package dev.buildcli.core.utils;
 
 import jakarta.xml.bind.JAXBContext;
 import dev.buildcli.core.exceptions.ExtractionRuntimeException;
-import dev.buildcli.core.log.SystemOutLogger;
 import dev.buildcli.core.model.Dependency;
 import dev.buildcli.core.model.Pom;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXException;
 
 import javax.xml.XMLConstants;
@@ -23,13 +24,12 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Objects;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class PomUtils {
 
-    private static final Logger logger = Logger.getLogger(PomUtils.class.getName());
+	private static final Logger logger = LoggerFactory.getLogger(PomUtils.class);
     
     private static final String FILE = "pom.xml";
     private static final String DEPENDENCIES_PATTERN = "##dependencies##";
@@ -67,9 +67,9 @@ public class PomUtils {
     	try {
             String pomContent = pomData.replace(DEPENDENCIES_PATTERN, pom.getDependencyFormatted());
             Files.write(Paths.get(FILE), pomContent.getBytes());
-            SystemOutLogger.log(successMessage);
+            logger.info(successMessage);
         } catch (IOException e) {
-            logger.log(Level.SEVERE, failureMessage, e);
+            logger.error(failureMessage, e);
         }
     }
 

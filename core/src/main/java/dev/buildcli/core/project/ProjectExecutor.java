@@ -3,16 +3,17 @@ package dev.buildcli.core.project;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 import dev.buildcli.core.utils.SystemCommands;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public abstract class ProjectExecutor {
 
-	private static final Logger logger = Logger.getLogger(ProjectExecutor.class.getName());
-	
-	protected final List<String> command;
+    private static final Logger logger = LoggerFactory.getLogger(ProjectExecutor.class);
+
+    protected final List<String> command;
 	
 	protected abstract void addMvnCommand();
 	
@@ -33,7 +34,7 @@ public abstract class ProjectExecutor {
             var process = builder.start();
             process.waitFor();
         } catch (IOException | InterruptedException e) {
-            logger.log(Level.SEVERE, this.getErrorMessage(), e);
+            logger.error(this.getErrorMessage(), e);
             Thread.currentThread().interrupt();
         }
     }
