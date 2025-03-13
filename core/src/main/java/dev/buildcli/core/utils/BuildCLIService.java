@@ -122,7 +122,7 @@ public class BuildCLIService {
 
     var exitedCode = process.run();
 
-    if (exitedCode != 0) {
+    if (exitedCode == 0) {
       System.out.println("Success...");
     } else {
       System.out.println("Failure...");
