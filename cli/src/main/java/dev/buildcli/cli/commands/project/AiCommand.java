@@ -4,8 +4,8 @@ import dev.buildcli.cli.commands.code.CommentCommand;
 import dev.buildcli.cli.commands.code.DocumentCommand;
 import picocli.CommandLine.Command;
 
-@Command(name = "code", aliases = {"source"}, description = "Command parent to interact with source code into a project", mixinStandardHelpOptions = true,
+@Command(name = "ai", description = "Command to use ai features", mixinStandardHelpOptions = true,
     subcommands = {DocumentCommand.class, CommentCommand.class}
 )
-public class CodeCommand {
+public class AiCommand {
 }

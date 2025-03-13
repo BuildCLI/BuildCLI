@@ -67,6 +67,12 @@
             <artifactId>langchain4j-jlama</artifactId>
             <version>0.36.2</version>
         </dependency>
+
+        <dependency>
+            <groupId>info.picocli</groupId>
+            <artifactId>picocli-shell-jline3</artifactId>
+            <version>4.7.6</version>
+        </dependency>
     </dependencies>
 
     <build>

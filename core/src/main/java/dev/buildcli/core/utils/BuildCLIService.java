@@ -78,9 +78,11 @@ public class BuildCLIService {
   }
 
   public static void about() {
+
     logger.info("BuildCLI is a command-line interface (CLI) tool for managing and automating common tasks in Java project development.\n" +
             "It allows you to create, compile, manage dependencies, and run Java projects directly from the terminal, simplifying the development process.\n");
     logger.info("Visit the repository for more details: https://github.com/wheslleyrimar/BuildCLI\n");
+
 
     gitExec.showContributors(localRepository, "https://github.com/BuildCLI/BuildCLI.git");
   }

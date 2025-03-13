@@ -13,6 +13,7 @@
     <modules>
         <module>cli</module>
         <module>core</module>
+        <module>hooks</module>
         <module>plugin</module>
     </modules>
 
@@ -63,6 +64,11 @@
             <dependency>
                 <groupId>dev.buildcli</groupId>
                 <artifactId>buildcli-plugin</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>dev.buildcli</groupId>
+                <artifactId>buildcli-hooks</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

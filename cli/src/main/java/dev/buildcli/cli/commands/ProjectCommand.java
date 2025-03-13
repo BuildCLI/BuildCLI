@@ -7,7 +7,7 @@ import picocli.CommandLine.Command;
     subcommands = {
         AddCommand.class, RmCommand.class, BuildCommand.class, SetCommand.class,
         TestCommand.class, RunCommand.class, InitCommand.class, CleanupCommand.class,
-        UpdateCommand.class, CodeCommand.class
+        UpdateCommand.class
     },
     mixinStandardHelpOptions = true
 )
