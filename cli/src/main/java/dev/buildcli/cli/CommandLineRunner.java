@@ -1,22 +1,19 @@
 package dev.buildcli.cli;
 
-import dev.buildcli.core.domain.configs.BuildCLIConfig;
-import dev.buildcli.core.log.config.LoggingConfig;
+import dev.buildcli.plugin.CommandFactory;
 import dev.buildcli.core.utils.BuildCLIService;
 import dev.buildcli.core.utils.input.InteractiveInputUtils;
 import dev.buildcli.plugin.BuildCLICommandPlugin;
-import dev.buildcli.plugin.CommandFactory;
 import dev.buildcli.plugin.PluginManager;
 import dev.buildcli.hooks.HookManager;
 import picocli.CommandLine;
+import dev.buildcli.core.domain.configs.BuildCLIConfig;
 
 import java.util.List;
 
 public class CommandLineRunner {
 
   public static void main(String[] args) {
-    LoggingConfig.configure();
-
     if (BuildCLIService.shouldShowAsciiArt(args)) {
       BuildCLIService.welcome();
     }

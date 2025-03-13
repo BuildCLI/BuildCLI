@@ -5,6 +5,8 @@ import dev.buildcli.core.domain.BuildCLICommand;
 import dev.buildcli.core.domain.configs.BuildCLIConfig;
 import dev.buildcli.core.exceptions.ConfigException;
 import dev.buildcli.core.utils.config.ConfigContextLoader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
 import picocli.CommandLine.ParentCommand;
@@ -31,6 +33,7 @@ import static dev.buildcli.core.utils.config.ConfigContextLoader.getLocalConfig;
  */
 @Command(name = "set", aliases = {"s"}, description = "Set configuration properties for BuildCLI.", mixinStandardHelpOptions = true)
 public class SetCommand implements BuildCLICommand {
+  private static final Logger logger = LoggerFactory.getLogger(SetCommand.class);
 
   /**
    * Reference to the parent command to determine if the configuration is local or global.
@@ -81,9 +84,9 @@ public class SetCommand implements BuildCLICommand {
 
     try {
       saveConfigFunction.save(buildCliConfig);
-      System.out.printf("Configuration successfully updated in %s scope.%n", isLocalScope ? "local" : "global");
+      logger.info("Configuration successfully updated in {} scope", isLocalScope ? "local" : "global");
     } catch (Exception e) {
-      System.err.println("Failed to save configuration: " + e.getMessage());
+      logger.error("Failed to save configuration: {}", e.getMessage());
     }
   }
 

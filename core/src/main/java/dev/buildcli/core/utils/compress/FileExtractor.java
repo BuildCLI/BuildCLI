@@ -3,7 +3,8 @@ package dev.buildcli.core.utils.compress;
 import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
 import org.apache.commons.compress.archivers.tar.TarArchiveInputStream;
 import org.apache.commons.compress.compressors.gzip.GzipCompressorInputStream;
-import dev.buildcli.core.log.SystemOutLogger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -15,13 +16,15 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 public abstract class FileExtractor {
+  private static final Logger logger = LoggerFactory.getLogger(FileExtractor.class);
+
   private FileExtractor() {
   }
 
   public static void extractFile(String filePath, String extractTo) throws IOException {
     CompressedFileExtractor fileExtractor;
 
-    SystemOutLogger.log("Validating extension file to: " + filePath);
+    logger.info("Validating extension file to: {}", filePath);
     if (filePath.endsWith(".zip")) {
       fileExtractor = new ZipFileExtractor();
     } else if (filePath.endsWith(".tar.gz")) {
@@ -30,7 +33,7 @@ public abstract class FileExtractor {
       throw new IllegalArgumentException("Archive format unsupported. Only use .zip or .tar.gz.");
     }
 
-    SystemOutLogger.log("Trying to extract %s to %s".formatted(filePath, extractTo));
+    logger.info("Trying to extract {} to {}", filePath, extractTo);
     fileExtractor.extract(filePath, extractTo);
   }
 
@@ -58,7 +61,7 @@ public abstract class FileExtractor {
           }
         }
       }
-      SystemOutLogger.log("Extracted: %s to %s".formatted(filePath, extractTo));
+      logger.info("Extracted: {} to {}", filePath, extractTo);
     }
   }
 
@@ -83,7 +86,8 @@ public abstract class FileExtractor {
           }
         }
       }
-      SystemOutLogger.log("Extracted: %s to %s".formatted(filePath, extractTo));
+      logger.info("Extracted: {} to {}", filePath, extractTo);
+
     }
   }
 }

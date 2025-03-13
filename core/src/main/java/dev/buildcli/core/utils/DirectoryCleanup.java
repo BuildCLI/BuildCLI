@@ -1,6 +1,7 @@
 package dev.buildcli.core.utils;
 
-import dev.buildcli.core.log.SystemOutLogger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,12 +12,13 @@ import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
 public class DirectoryCleanup {
+  private static final Logger logger = LoggerFactory.getLogger(DirectoryCleanup.class);
 
   public static void cleanup(String directory) {
     var targetPath = new File(directory).toPath();
 
     if (!Files.exists(targetPath)) {
-      SystemOutLogger.log("The '%s' directory does not exist.".formatted(targetPath.toString()));
+      logger.info("The '{}' directory does not exist.",targetPath);
       return;
     }
 
@@ -34,9 +36,9 @@ public class DirectoryCleanup {
           return FileVisitResult.CONTINUE;
         }
       });
-      SystemOutLogger.log("The '%s' directory was successfully cleaned.".formatted(targetPath.toString()));
+      logger.info("The '{}' directory was successfully cleaned.", targetPath);
     } catch (IOException e) {
-      SystemOutLogger.log("Error clearing '%s' directory: %s".formatted(directory, e.getMessage()));
+      logger.error("Error clearing '{}' directory: {}", directory, directory, e);
     }
   }
 }

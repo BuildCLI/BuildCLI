@@ -1,18 +1,20 @@
 package dev.buildcli.core.domain.git;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 import static dev.buildcli.core.domain.git.GitCommands.*;
 import static dev.buildcli.core.domain.git.GitCommandFormatter.*;
 
 public class GitCommandExecutor extends GitCommandUtils {
 
-    private static final Logger logger = Logger.getLogger(GitCommandExecutor.class.getName());
+    private static final Logger logger = LoggerFactory.getLogger(GitCommandExecutor.class);
 
     protected int runGitCommand(String... command) {
         try {
@@ -21,7 +23,7 @@ public class GitCommandExecutor extends GitCommandUtils {
             Process process = builder.start();
             return process.waitFor();
         } catch (IOException | InterruptedException e) {
-            logger.log(Level.WARNING, String.format("Git command '%s' failed.", String.join(" ", command)), e);
+            logger.warn(String.format("Git command '%s' failed.", String.join(" ", command)), e);
             Thread.currentThread().interrupt();
             return -1;
         }
@@ -78,7 +80,8 @@ public class GitCommandExecutor extends GitCommandUtils {
             }
             return null;
         } catch (Exception e) {
-            logger.log(Level.SEVERE,"Git repository not found!");
+
+            logger.error("Git repository not found!");
             throw new RuntimeException(e);
         }
     }
