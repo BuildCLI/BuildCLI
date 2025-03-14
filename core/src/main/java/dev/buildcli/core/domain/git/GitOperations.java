@@ -5,15 +5,20 @@ import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.errors.IncorrectObjectTypeException;
 import org.eclipse.jgit.errors.MissingObjectException;
 import org.eclipse.jgit.lib.ObjectId;
+import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.transport.URIish;
 import org.eclipse.jgit.transport.sshd.SshdSessionFactory;
+import org.eclipse.jgit.util.StringUtils;
 
 import java.net.URISyntaxException;
 import java.io.File;
 import java.io.IOException;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -127,13 +132,41 @@ public class GitOperations {
         }
     }
 
-    public Iterable<RevCommit> gitLog() {
+    public Iterable<RevCommit> gitLog(String path) {
         try {
-            return git.log().addPath("src/main/java").call();
+            if (!StringUtils.isEmptyOrNull(path)) {
+                return git.log().addPath(path).call();
+            }
+
+            return git.log().call();
         } catch (GitAPIException e) {
             handleException("Error executing git log command", e);
             return null;
         }
+    }
+
+    public List<Ref> getTagList() {
+        try {
+            return git.tagList().call();
+        } catch (GitAPIException e) {
+            handleException("Error executing git log command", e);
+            return null;
+        }
+    }
+
+    public Optional<String> getLatestGitTag() throws IOException {
+
+        try {
+            List<Ref> taglist = getTagList();
+            if (!taglist.isEmpty()) {
+                return taglist.stream()
+                        .map(ref -> ref.getName().replace("refs/tags/", ""))
+                        .max(Comparator.naturalOrder());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Optional.empty();
     }
 
     public Iterable<RevCommit> gitLogOnlyCommitsNotInLocal(RevCommit localHead, RevCommit remoteHead){

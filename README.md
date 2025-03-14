@@ -12,7 +12,7 @@ Welcome to BuildCLI - Java Project Management!
 
 **BuildCLI** is a command-line interface (CLI) tool for managing and automating common tasks in Java project development. It allows you to create, compile, manage dependencies, and run Java projects directly from the terminal, simplifying the development process.
 
-- **Repository:** [https://github.com/wheslleyrimar/buildcli](https://github.com/wheslleyrimar/buildcli)
+- **Repository:** [https://github.com/BuildCLI/BuildCLI](https://github.com/BuildCLI/BuildCLI)
 - **License:** [MIT](https://opensource.org/licenses/MIT)
 
 ---
@@ -39,7 +39,7 @@ Welcome to BuildCLI - Java Project Management!
 - **Run Project**: Starts the project directly from the CLI using Spring Boot.
 - **Dockerize Project**: Generates a Dockerfile for the project, allowing easy containerization.
 - **Build and Run Docker Container**: Builds and runs the Docker container using the generated Dockerfile.
-- **CI/CD Integration**: Automatically generates configuration files por CI/CD tools (e.g., Jenkins, Github Actions) and triggers pipelines based on project changes.
+- **CI/CD Integration**: Automatically generates configuration files por CI/CD tools (e.g., Jenkins, GitHub Actions) and triggers pipelines based on project changes.
 - **Changelog Generation**: Automatically generates a structured changelog by analyzing the Git commit history, facilitating the understanding of changes between releases.
 ---
 
@@ -182,7 +182,7 @@ buildcli project run docker
 
 ### 10. Set Up CI/CD Integration
 
-Generates configuration files for CI/CD tools and prepares the project for automated pipelines. Supports Jenkins, Gitlab and Github Actions.
+Generates configuration files for CI/CD tools and prepares the project for automated pipelines. Supports Jenkins, Gitlab and GitHub Actions.
 
 ```bash
 buildcli project add pipeline github

@@ -58,6 +58,24 @@ If you're unsure about whether you should work on an issue, especially if the as
 
 - (Optional but Recommended) Use the PR template available at `.github/PULL_REQUEST_TEMPLATE/default.md` to structure your PR effectively.
 
+Close Issue on PR Merge
+-----------------------
+
+To ensure that issues are automatically closed when a related PR is merged, include one of the following keywords in your PR description:
+
+- `Closes #ISSUE_NUMBER`
+
+- `Fixes #ISSUE_NUMBER`
+
+### Automation Workflow
+
+A GitHub Actions workflow will automatically close the linked issue upon PR merge. For more details checkout `.github\workflows\close-issue-on-pr-merge.yaml`.
+
+Project Environment
+-------------------
+
+The project is based on **JDK 21**. Please ensure that you use JDK 21 for development and contribution.
+
 Communication & Issue Handling
 ------------------------------
 

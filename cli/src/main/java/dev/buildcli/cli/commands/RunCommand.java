@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -86,10 +87,18 @@ public class RunCommand implements BuildCLICommand {
   private Properties loadProfileProperties(String profile) {
     Properties properties = new Properties();
     String propertiesFile = "src/main/resources/application-" + profile + ".properties";
+    Path propertiesFilePath = Paths.get(propertiesFile);
+    String messageWarning = "Profile properties file not found: " + propertiesFile + ". Continuing with empty properties.";
+
+    if (!Files.exists(propertiesFilePath)) {
+      logger.warning(messageWarning);
+      return properties;
+    }
+
     try (InputStream input = Files.newInputStream(Paths.get(propertiesFile))) {
       properties.load(input);
     } catch (IOException e) {
-      logger.log(Level.SEVERE, "Failed to load profile properties file: " + propertiesFile, e);
+      logger.warning(messageWarning);
     }
     return properties;
   }

@@ -46,7 +46,7 @@ class GitCommandUtils extends GitOperations {
         getCommit(checkLocalHeadCommits());
         getCommit(checkRemoteHeadCommits());
 
-        Iterable<RevCommit> contributors = gitLog();
+        Iterable<RevCommit> contributors = gitLog("src/main/java");
 
         SystemOutLogger.log("Contributors: "+ distinctContributors(contributors));
 
