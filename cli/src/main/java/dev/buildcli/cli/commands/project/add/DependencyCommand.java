@@ -1,5 +1,6 @@
 package dev.buildcli.cli.commands.project.add;
 
+import dev.buildcli.core.actions.dependency.DependencySearchService;
 import dev.buildcli.core.constants.MavenConstants;
 import dev.buildcli.core.domain.BuildCLICommand;
 import dev.buildcli.core.log.SystemOutLogger;
@@ -10,6 +11,7 @@ import picocli.CommandLine.Parameters;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Stream;
@@ -19,13 +21,16 @@ import java.util.stream.Stream;
 public class DependencyCommand implements BuildCLICommand {
   private static final Logger logger = Logger.getLogger(DependencyCommand.class.getName());
   @Parameters
-  private String[] dependencies;
+  private String dependency;
 
   @Override
   public void run() {
     try {
+      DependencySearchService service = new DependencySearchService();
       var pom = PomReader.read(MavenConstants.FILE);
       var pomData = PomReader.readAsString(MavenConstants.FILE);
+      String dependencies = service.promptOptionsToAdd(service.sendSearchRequest(dependency));
+
       Stream.of(dependencies).forEach(pom::addDependency);
 
       try {

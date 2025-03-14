@@ -29,7 +29,7 @@ public class BuildCLIService {
 
   private static final GitCommandExecutor gitExec = new GitCommandExecutor();
 
-  private static final String buildCLIDirectory = getBuildCLIBuildDirectory();
+  private static final String buildCLIDirectory = "/media/omatheusmesmo/FileShare/BuildCLI"; //getBuildCLIBuildDirectory();
   private static final String localRepository = gitExec.findGitRepository(buildCLIDirectory);
 
   public BuildCLIService() {
