@@ -6,6 +6,7 @@ import dev.buildcli.core.domain.git.GitCommandExecutor;
 import dev.buildcli.core.log.SystemOutLogger;
 import dev.buildcli.core.utils.tools.CLIInteractions;
 
+import java.io.File;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
@@ -118,7 +119,7 @@ public class BuildCLIService {
     OS.cdDirectory("");
     OS.cdDirectory(buildCLIDirectory);
 
-    CommandLineProcess process = MavenProcess.createPackageProcessor();
+    CommandLineProcess process = MavenProcess.createPackageProcessor(new File("."));
 
     var exitedCode = process.run();
 

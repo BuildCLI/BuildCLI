@@ -1,6 +1,7 @@
-package dev.buildcli.plugin;
+package dev.buildcli.plugin.utils;
 
 import dev.buildcli.core.domain.jar.Jar;
+import dev.buildcli.plugin.BuildCLIPlugin;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,7 +11,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.ServiceLoader;
 
-abstract class PluginLoader {
+final class PluginLoader {
   private static final Logger logger = LoggerFactory.getLogger(PluginLoader.class);
 
   public static <T extends BuildCLIPlugin> List<T> load(Class<T> tClass, Jar jar) {

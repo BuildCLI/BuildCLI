@@ -1,6 +1,8 @@
-package dev.buildcli.core.utils;
+package dev.buildcli.core.utils.installers;
 
 import dev.buildcli.core.log.SystemOutLogger;
+import dev.buildcli.core.utils.DirectoryCleanup;
+import dev.buildcli.core.utils.OS;
 import dev.buildcli.core.utils.compress.FileExtractor;
 
 import java.io.File;

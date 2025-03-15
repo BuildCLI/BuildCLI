@@ -5,7 +5,7 @@ import org.jline.utils.NonBlockingReader;
 import java.io.IOException;
 import java.util.Arrays;
 
-public class KeyDetector {
+final class KeyDetector {
   public enum KeyType {
     UP, DOWN, ENTER, CTRL_C, OTHER
   }

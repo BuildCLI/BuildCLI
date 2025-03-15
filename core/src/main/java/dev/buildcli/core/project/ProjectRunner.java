@@ -13,6 +13,7 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+@Deprecated(forRemoval = true)
 public class ProjectRunner {
     private static final Logger logger = Logger.getLogger(ProjectRunner.class.getName());
     private final ProfileManager profileManager;

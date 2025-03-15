@@ -1,6 +1,6 @@
 package dev.buildcli.core.utils.ia;
 
-public abstract class CodeUtils {
+public final class CodeUtils {
   public static int endCode(String content) {
     return content.indexOf("```", startCode(content) + 3);
   }

@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 
 import dev.buildcli.core.log.SystemOutLogger;
 
+@Deprecated(forRemoval = true)
 public class ProjectInitializer {
 
     private static final Logger LOGGER = Logger.getLogger(ProjectInitializer.class.getName());

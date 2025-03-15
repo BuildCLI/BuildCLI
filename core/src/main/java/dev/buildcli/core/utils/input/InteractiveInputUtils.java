@@ -275,6 +275,10 @@ public abstract class InteractiveInputUtils {
     return question(prompt, null, false);
   }
 
+  public static String question(String prompt, boolean required) {
+    return question(prompt, null, required);
+  }
+
   private static void clearLines(int count) {
     for (int i = 0; i < count; i++) {
       terminal.puts(InfoCmp.Capability.cursor_up);

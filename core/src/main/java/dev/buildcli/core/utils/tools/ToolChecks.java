@@ -34,9 +34,9 @@ public abstract class ToolChecks {
     }
   }
 
-  public static String checkIsMavenOrGradle() {
-     final boolean isMaven = new File("pom.xml").exists();
-     final boolean isGradle = new File("build.gradle").exists();
+  public static String checkIsMavenOrGradle(File directory) {
+     final boolean isMaven = new File(directory, "pom.xml").exists();
+     final boolean isGradle = new File(directory, "build.gradle").exists();
 
      return isMaven ? "Maven" : isGradle ? "Gradle": "Neither" ;
   }
