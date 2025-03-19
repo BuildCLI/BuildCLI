@@ -1,5 +1,7 @@
 package dev.buildcli.plugin.builders;
 
+import dev.buildcli.plugin.enums.TemplateType;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -7,7 +9,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 
-public class CommandPluginBuilder implements PluginBuilder {
+import static dev.buildcli.core.utils.input.InteractiveInputUtils.options;
+
+public class TemplatePluginBuilder implements PluginBuilder {
   private static final String[] PROJECT_DIRECTORIES = {
       "src/main/java/dev/buildcli/plugin",
       "src/main/resources",
@@ -16,18 +20,22 @@ public class CommandPluginBuilder implements PluginBuilder {
       "src/test/resources"
   };
 
-  private static final String COMMAND_TEMPLATE = """
+  private static final String TEMPLATE_TEMPLATE = """
         package dev.buildcli.plugin.%s;
         
-        import dev.buildcli.plugin.BuildCLICommandPlugin;
-        import picocli.CommandLine.Command;
+        import dev.buildcli.plugin.BuildCLITemplatePlugin;
+        import dev.buildcli.plugin.enums.TemplateType;
         
-        @Command(name = "%s", mixinStandardHelpOptions = true)
-        public class %sCommand extends BuildCLICommandPlugin {
+        public class %sTemplate extends BuildCLITemplatePlugin {
           @Override
-          public void run() {
+          public void execute() {
             // Plugin implementation
             System.out.println("Hello World, %s!");
+          }
+
+          @Override
+          public TemplateType type() {
+            return TemplateType.%s;
           }
         
           @Override
@@ -43,11 +51,6 @@ public class CommandPluginBuilder implements PluginBuilder {
           @Override
           public String description() {
             return "Build CLI Plugin";
-          }
-        
-          @Override
-          public String[] parents() {
-            return null;
           }
         }
         """;
@@ -117,7 +120,7 @@ public class CommandPluginBuilder implements PluginBuilder {
       </project>
       """;
 
-  private static final String SERVICE_FILE = "dev.buildcli.plugin.BuildCLICommandPlugin";
+  private static final String SERVICE_FILE = "dev.buildcli.plugin.BuildCLITemplatePlugin";
 
   @Override
   public File build(File directory, String name) {
@@ -156,17 +159,19 @@ public class CommandPluginBuilder implements PluginBuilder {
     String pluginPackage = normalizedName.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
     String className = capitalizeFirstLetter(normalizedName);
 
+    var templateType = options("Choose a template type", Arrays.asList(TemplateType.values()));
+
     // Write Java class file
     String commandContent = String.format(
-        COMMAND_TEMPLATE,
-        pluginPackage, pluginPackage, className, pluginPackage, pluginPackage
+        TEMPLATE_TEMPLATE,
+        pluginPackage, className, pluginName, templateType, pluginName
     );
 
     Path javaFilePath = Paths.get(
         rootDirectory.getAbsolutePath(),
         "src/main/java/dev/buildcli/plugin",
         pluginPackage,
-        className + "Command.java"
+        className + "Template.java"
     );
     if (!Files.exists(javaFilePath.getParent())) {
       Files.createDirectories(javaFilePath.getParent());
@@ -179,10 +184,11 @@ public class CommandPluginBuilder implements PluginBuilder {
         "src/main/resources/META-INF/services",
         SERVICE_FILE
     );
+
+    String serviceContent = String.format("dev.buildcli.plugin.%s.%sTemplate", pluginPackage, className);
     if (!Files.exists(serviceFilePath.getParent())) {
       Files.createDirectories(serviceFilePath.getParent());
     }
-    String serviceContent = String.format("dev.buildcli.plugin.%s.%sCommand", pluginPackage, className);
     Files.writeString(serviceFilePath, serviceContent);
 
     //Write pf4j file
@@ -196,7 +202,7 @@ public class CommandPluginBuilder implements PluginBuilder {
     var pf4jContent = String.format("""
         plugin.id=%s
         plugin.version=0.0.1-SNAPSHOT
-        plugin.class=dev.buildcli.plugin.%s.%sCommand
+        plugin.class=dev.buildcli.plugin.%s.%sTemplate
         """, className.toLowerCase(), pluginPackage, className);
 
     Files.writeString(pf4jFilePath, pf4jContent);

@@ -42,3 +42,4 @@ buildcli.jar
 Dockefile
 changelog.md
 **/changelog.md
+*.zip

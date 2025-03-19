@@ -104,7 +104,7 @@ public class RunCommand implements BuildCLICommand {
   }
 
   private String findJar() throws IOException, InterruptedException {
-    File targetDir = new File("target");
+    File targetDir = new File(file, "target");
     if (!targetDir.exists() || !targetDir.isDirectory()) {
       throw new IOException("Target directory does not exist or is not a directory.");
     }

@@ -57,7 +57,7 @@ public final class BuildCLIPluginManager {
     return property.orElse("").concat((property.isPresent() ? "" : ";") + defaultPath).split(";");
   }
 
-  public static List<Jar> loadJars() {
+  private static List<Jar> loadJars() {
     return Arrays.stream(pluginPaths())
         .filter(Predicate.not(String::isBlank))
         .map(File::new)
