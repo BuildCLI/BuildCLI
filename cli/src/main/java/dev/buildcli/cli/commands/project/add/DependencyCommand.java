@@ -12,7 +12,6 @@ import picocli.CommandLine.Parameters;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,13 +28,14 @@ public class DependencyCommand implements BuildCLICommand {
   @Override
   public void run() {
     try {
+      validateDependencyFormat(dependency);
       DependencySearchService service = new DependencySearchService();
       var pom = PomReader.read(MavenConstants.FILE);
       var pomData = PomReader.readAsString(MavenConstants.FILE);
       List<String> dependencies =  List.of(dependency);
 
       if(manually==null) {
-       dependencies = service.searchDependecy(dependency);
+       dependencies = service.searchDependency(dependency);
       }
       dependencies.forEach(pom::addDependency);
 
@@ -49,6 +49,15 @@ public class DependencyCommand implements BuildCLICommand {
 
     } catch (Exception e) {
       logger.log(Level.SEVERE, "Error adding dependency to pom.xml", e);
+    }
+  }
+
+  private void validateDependencyFormat(String dependency) {
+    String[] tokens = dependency.split(":");
+    if ((tokens.length != 2) && (tokens.length != 3)) {
+      logger.log(Level.WARNING, "Invalid dependency format. Use 'groupId:artifactId'"
+                  + "or 'groupId:artifactId:version'.");
+      throw new RuntimeException();
     }
   }
 }
