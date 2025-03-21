@@ -1,7 +1,6 @@
 package dev.buildcli.core.actions.dependency;
 
 import com.google.gson.*;
-import dev.buildcli.core.model.Dependency;
 
 import java.net.URI;
 import java.net.URLEncoder;
@@ -21,18 +20,33 @@ public class DependencySearchService {
     private static final String API_MAVEN = "https://search.maven.org/solrsearch/select?q=";
     private static final String ROWS = "&rows=25";
     private static final String OUTPUT ="&wt=json";
+    private static final String AND ="+AND+";
 
-    public HttpRequest createSearchGetRequest(String groupOrArtifactID){
+    public HttpRequest createSearchGetRequest(String[] dependency){
         return HttpRequest.newBuilder()
-                .uri(URI.create(API_MAVEN + groupOrArtifactID + ROWS + OUTPUT))
+            .uri(URI.create(getUri(dependency)))
                 .GET()
                 .build();
+    }
+
+    private String getUri(String[] dependency) {
+        StringBuilder uri = new StringBuilder(API_MAVEN);
+        uri.append("g:").append(dependency[0]);
+        uri.append(AND);
+        uri.append("a:").append(dependency[1]);
+        if (dependency.length == 3) {
+            uri.append(AND);
+            uri.append("v:").append(dependency[2]);
+        }
+        uri.append(ROWS).append(OUTPUT);
+        System.out.println("URI: " + uri);
+        return uri.toString();
     }
 
     private String getResponseBody(HttpRequest request){
         HttpClient client = HttpClient.newHttpClient();
 
-        HttpResponse<String> response = null;
+        HttpResponse<String> response;
         try {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
             client.close();
@@ -50,7 +64,7 @@ public class DependencySearchService {
         return DEPENDENCIES.containsKey(dependency);
     }
 
-    public List<String> searchDependecy(String dependencyName){
+    public List<String> searchDependency(String dependencyName){
         if(isAlreadyConfigured(dependencyName)){
             return DEPENDENCIES.get(dependencyName);
         }
@@ -58,10 +72,8 @@ public class DependencySearchService {
     }
 
     public List<String> sendSearchRequest(String dependencyName) {
-        dependencyName = URLEncoder.encode(dependencyName, StandardCharsets.UTF_8);
-
-        HttpRequest request = createSearchGetRequest(dependencyName);
-
+        String[] dependency = dependencyName.split(":");
+        HttpRequest request = createSearchGetRequest(dependency);
         String response = getResponseBody(request);
 
        return getDependencyList(response);
@@ -79,8 +91,12 @@ public class DependencySearchService {
     }
 
     private String getDependencyFromJson(JsonObject jsonObject){
+        String version = null == jsonObject.get("latestVersion")
+            ? jsonObject.get("v").getAsString()
+            : jsonObject.get("latestVersion").getAsString();
+
         return String.join("",jsonObject.get("g").getAsString(),
-                ":",jsonObject.get("a").getAsString(),
-                ":",jsonObject.get("latestVersion").getAsString());
+            ":",jsonObject.get("a").getAsString(),
+            ":",version);
     }
 }
