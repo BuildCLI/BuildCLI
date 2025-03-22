@@ -48,7 +48,7 @@ public abstract class ConfigDefaultConstants {
         AI_TOKEN, "LLM token",
         AI_URL, "LLM url, e.g, %s".formatted(content("http://localhost:11434").italic().greenFg()),
         AI_MODEL, "LLM model",
-        PLUGIN_PATHS, "Path to yours plugins"
+        PLUGIN_PATHS, "Path to yours plugins, separated by %s".formatted(greenFg(";"))
     );
   }
 
