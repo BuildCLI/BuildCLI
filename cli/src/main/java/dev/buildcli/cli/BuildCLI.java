@@ -2,6 +2,7 @@ package dev.buildcli.cli;
 
 import dev.buildcli.cli.commands.*;
 import dev.buildcli.cli.commands.AiCommand;
+import dev.buildcli.cli.commands.bug.BugCommand;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.HelpCommand;
@@ -12,7 +13,7 @@ import picocli.CommandLine.HelpCommand;
     subcommands = {
         AboutCommand.class, AiCommand.class, AutocompleteCommand.class, ChangelogCommand.class, ConfigCommand.class,
         DoctorCommand.class, HookCommand.class, ProjectCommand.class, PluginCommand.class, RunCommand.class,
-        VersionCommand.class, HelpCommand.class
+        VersionCommand.class, HelpCommand.class, BugCommand.class
     }
 )
 public class BuildCLI {
