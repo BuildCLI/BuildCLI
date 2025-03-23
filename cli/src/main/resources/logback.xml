@@ -5,14 +5,7 @@
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>
-                %d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %highlight(%msg%n){
-                FATAL=red bold,
-                ERROR=red bold,
-                WARN=yellow,
-                INFO=green,
-                DEBUG=cyan,
-                TRACE=blue
-                }
+                %highlight(%-5level) %msg%n
             </pattern>
         </encoder>
     </appender>
@@ -31,6 +24,11 @@
 
 
     <root level="info">
-        <appender-ref ref="STDOUT" />
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="FILE"/>
     </root>
+
+    <logger name="ch.qos.logback" level="ERROR"/>
+    <logger name="org.springframework" level="WARN"/>
+
 </configuration>
