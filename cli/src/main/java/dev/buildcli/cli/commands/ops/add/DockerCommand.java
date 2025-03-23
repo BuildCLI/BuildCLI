@@ -1,4 +1,4 @@
-package dev.buildcli.cli.commands.project.add;
+package dev.buildcli.cli.commands.ops.add;
 
 import dev.buildcli.core.domain.BuildCLICommand;
 import picocli.CommandLine.Command;
@@ -14,8 +14,8 @@ import java.util.logging.Logger;
 @Command(name = "dockerfile", aliases = {"docker", "df"}, description = "Generates a Dockerfile for the project. "
         + "Alias: 'docker' and 'df'. Allows customizing the base image, exposed ports, and file name.",
         mixinStandardHelpOptions = true)
-public class DockerfileCommand implements BuildCLICommand {
-  private Logger logger = Logger.getLogger(DockerfileCommand.class.getName());
+public class DockerCommand implements BuildCLICommand {
+  private Logger logger = Logger.getLogger(DockerCommand.class.getName());
 
   @Option(names = {"--name", "-n"}, description = "", defaultValue = "Dockerfile")
   private String name;
