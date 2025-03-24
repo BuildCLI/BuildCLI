@@ -1,6 +1,10 @@
 package dev.buildcli.core.constants;
 
 public abstract class AIConstants {
+
+  private AIConstants() {
+  }
+
   public static final String DOCUMENT_CODE_PROMPT = """
       ### Strict Code Commenting Prompt
       
