@@ -3,7 +3,7 @@ package dev.buildcli.core.constants;
 import dev.buildcli.core.utils.OS;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class MavenConstantsTest {
 
