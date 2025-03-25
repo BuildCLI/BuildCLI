@@ -25,7 +25,7 @@ class AIConstantsTest {
 
 				### How to Add Comments:
 				✔️ Inline comments (`//` for Java, JavaScript, C#, etc., `#` for Python) should be placed next to important lines of code.
-				✔️ Block comments (`/** ... */` or `""\" ... ""\"`) should be used to document classes and functions.
+				✔️ Block comments (`/** ... */` or `" ... "`) should be used to document classes and functions.
 				✔️ Describe the intent behind the code and complex logic—avoid redundant or obvious comments.
 				✔️ Only add comments—do not rewrite, replace, or remove anything.
 
