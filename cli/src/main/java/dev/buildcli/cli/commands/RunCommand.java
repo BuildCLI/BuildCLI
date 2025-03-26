@@ -1,5 +1,8 @@
 package dev.buildcli.cli.commands;
 
+import dev.buildcli.cli.commands.run.OrchestrationCommand;
+import dev.buildcli.cli.commands.run.OrchestrationDownCommand;
+import dev.buildcli.cli.commands.run.OrchestrationUpCommand;
 import dev.buildcli.core.actions.commandline.CommandLineProcess;
 import dev.buildcli.core.actions.commandline.JavaProcess;
 import dev.buildcli.core.actions.commandline.MavenProcess;
@@ -15,10 +18,15 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Properties;
 
-@Command(name = "run", description = "Executes the project with the active properties file.", subcommands = {DockerfileCommand.class}, mixinStandardHelpOptions = true)
+@Command(name = "run",
+        description = "Executes the project with the active properties file.",
+        subcommands = {DockerfileCommand.class, OrchestrationCommand.class, OrchestrationDownCommand.class,
+                       OrchestrationUpCommand.class},
+        mixinStandardHelpOptions = true)
 public class RunCommand implements BuildCLICommand {
   private static final Logger logger = LoggerFactory.getLogger(RunCommand.class);
   private final ProfileManager profileManager = new ProfileManager();
@@ -77,7 +85,7 @@ public class RunCommand implements BuildCLICommand {
     logger.info("Active Profile: {}", activeProfile);
     logger.info(profileMessage);
 
-    MavenProcess.createPackageProcessor().run();
+    MavenProcess.createPackageProcessor(file).run();
     var jarPath = findJar();
 
     return JavaProcess.createRunJarProcess(jarPath);
@@ -86,16 +94,24 @@ public class RunCommand implements BuildCLICommand {
   private Properties loadProfileProperties(String profile) {
     Properties properties = new Properties();
     String propertiesFile = "src/main/resources/application-" + profile + ".properties";
+    Path propertiesFilePath = Paths.get(propertiesFile);
+    String messageWarning = "Profile properties file not found: " + propertiesFile + ". Continuing with empty properties.";
+
+    if (!Files.exists(propertiesFilePath)) {
+      logger.error(messageWarning);
+      return properties;
+    }
+
     try (InputStream input = Files.newInputStream(Paths.get(propertiesFile))) {
       properties.load(input);
     } catch (IOException e) {
-      logger.info("Failed to load profile properties file: {}", propertiesFile, e);
+      logger.error(messageWarning + e);
     }
     return properties;
   }
 
   private String findJar() throws IOException, InterruptedException {
-    File targetDir = new File("target");
+    File targetDir = new File(file, "target");
     if (!targetDir.exists() || !targetDir.isDirectory()) {
       throw new IOException("Target directory does not exist or is not a directory.");
     }

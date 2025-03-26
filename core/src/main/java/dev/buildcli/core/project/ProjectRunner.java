@@ -9,10 +9,12 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Properties;
 
 
+@Deprecated(forRemoval = true)
 public class ProjectRunner {
     private static final Logger logger = LoggerFactory.getLogger(ProjectRunner.class);
     private final ProfileManager profileManager;
@@ -96,10 +98,18 @@ public class ProjectRunner {
     private Properties loadProfileProperties(String profile) {
         Properties properties = new Properties();
         String propertiesFile = "src/main/resources/application-" + profile + ".properties";
+        Path propertiesFilePath = Paths.get(propertiesFile);
+        String messageWarning = "Profile properties file not found: " + propertiesFile + ". Continuing with empty properties.";
+
+        if (!Files.exists(propertiesFilePath)) {
+            logger.error(messageWarning);
+            return properties;
+        }
         try (InputStream input = Files.newInputStream(Paths.get(propertiesFile))) {
             properties.load(input);
         } catch (IOException e) {
-            logger.error("Failed to load profile properties file: {}",propertiesFile, e);
+            logger.error(messageWarning);
+
         }
         return properties;
     }

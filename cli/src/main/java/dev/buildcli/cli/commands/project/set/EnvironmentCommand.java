@@ -13,8 +13,8 @@ import java.nio.file.StandardOpenOption;
 
 @Command(name = "environment", aliases = {"env", "e"}, description = "", mixinStandardHelpOptions = true)
 public class EnvironmentCommand implements BuildCLICommand {
-  private static final Logger logger = LoggerFactory.getLogger(EnvironmentCommand.class);
-  private final Path configPath = Path.of("environment.config");;
+  private final Logger logger = LoggerFactory.getLogger(EnvironmentCommand.class.getName());
+  private final Path configPath = Path.of("environment.config");
 
   @Parameters(index = "0")
   private String environment;

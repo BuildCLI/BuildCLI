@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+@Deprecated(forRemoval = true)
 public class ProjectInitializer {
 
     private static final Logger logger = LoggerFactory.getLogger(ProjectInitializer.class);

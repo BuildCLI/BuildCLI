@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
+@Deprecated(forRemoval = true)
 public class ProjectCompiler {
 
     private static final Logger logger = LoggerFactory.getLogger(ProjectCompiler.class);

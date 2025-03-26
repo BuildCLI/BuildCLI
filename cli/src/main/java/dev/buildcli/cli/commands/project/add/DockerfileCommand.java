@@ -1,6 +1,5 @@
 package dev.buildcli.cli.commands.project.add;
 
-import dev.buildcli.cli.commands.config.PrintCommand;
 import dev.buildcli.core.domain.BuildCLICommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +15,7 @@ import java.util.List;
         + "Alias: 'docker' and 'df'. Allows customizing the base image, exposed ports, and file name.",
         mixinStandardHelpOptions = true)
 public class DockerfileCommand implements BuildCLICommand {
-  private static final Logger logger = LoggerFactory.getLogger(PrintCommand.class);
+  private static final Logger logger = LoggerFactory.getLogger(DockerfileCommand.class);
 
   @Option(names = {"--name", "-n"}, description = "", defaultValue = "Dockerfile")
   private String name;

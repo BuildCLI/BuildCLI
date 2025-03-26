@@ -2,6 +2,7 @@ package dev.buildcli.core.utils.tools;
 
 import java.util.Scanner;
 
+@Deprecated(forRemoval = true)
 public class CLIInteractions {
 
     public static boolean getConfirmation(String string) {

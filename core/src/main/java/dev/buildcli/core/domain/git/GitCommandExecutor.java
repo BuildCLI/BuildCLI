@@ -2,12 +2,17 @@ package dev.buildcli.core.domain.git;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
-
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 
 import static dev.buildcli.core.domain.git.GitCommands.*;
 import static dev.buildcli.core.domain.git.GitCommandFormatter.*;
@@ -61,8 +66,37 @@ public class GitCommandExecutor extends GitCommandUtils {
         updateLocalRepositoryFromUpstreamWithStash(gitPath, url);
     }
 
-    public void showContributors(String gitPath, String url) {
-        getContributors(gitPath, url);
+    public String showContributors() {
+        return getContributorsFromAPI();
+    }
+
+    // TODO: improve the hotfix below
+
+    private static String getContributorsFromAPI() {
+        String url = "https://api.github.com/repos/BuildCLI/BuildCLI/contributors";
+
+        HttpRequest httpRequest = HttpRequest.newBuilder()
+                .uri(java.net.URI.create(url))
+                .GET()
+                .build();
+
+        HttpClient client = HttpClient.newHttpClient();
+        HttpResponse<String> response = null;
+        try {
+            response = client.send(httpRequest, HttpResponse.BodyHandlers.ofString());
+            client.close();
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        JsonArray json = new Gson().fromJson(response.body(), JsonArray.class);
+
+        return json.asList().stream()
+                .map(JsonObject.class::cast)
+                .map(jsonObject -> jsonObject.get("login").getAsString())
+                .filter(login -> !login.equals("wrimar") && !login.equals("dependabot[bot]"))
+                .reduce((s1, s2) -> s1 + ", " + s2)
+                .orElse("");
     }
 
     public String getDirectory() {

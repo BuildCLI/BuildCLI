@@ -58,18 +58,36 @@ public class BuildCLIConfig {
 
   public Optional<Double> getPropertyAsDouble(String property) {
     try {
-      return Optional.of(Double.parseDouble(properties.getProperty(property)));
+      var value = properties.getProperty(property);
+
+      if (value == null) {
+        return Optional.empty();
+      }
+
+      return Optional.of(Double.parseDouble(value));
     } catch (NumberFormatException e) {
       throw new ConfigException("Invalid double value for property: " + property, e);
     }
   }
 
   public Optional<Boolean> getPropertyAsBoolean(String property) {
-    return Optional.of(Boolean.parseBoolean(properties.getProperty(property)));
+    var value = properties.getProperty(property);
+
+    if (value == null) {
+      return Optional.empty();
+    }
+
+    return Optional.of(Boolean.parseBoolean(value));
   }
 
   public Optional<String> getProperty(String property) {
-    return Optional.ofNullable(properties.getProperty(property));
+    var value = properties.getProperty(property);
+
+    if (value == null) {
+      return Optional.empty();
+    }
+
+    return Optional.of(value);
   }
 
   public void addOrSetProperty(String property, String value) {

@@ -5,9 +5,9 @@ import org.jline.utils.NonBlockingReader;
 import java.io.IOException;
 import java.util.Arrays;
 
-public class KeyDetector {
+final class KeyDetector {
   public enum KeyType {
-    UP, DOWN, ENTER, CTRL_C, OTHER
+    UP, DOWN, ENTER, CTRL_C, SPACE, OTHER
   }
 
   // Read a potential escape sequence from the reader
@@ -38,6 +38,9 @@ public class KeyDetector {
       }
       if (sequence[0] == 3) { // Ctrl+C
         return KeyType.CTRL_C;
+      }
+      if (sequence[0] == 32) { // Space
+        return KeyType.SPACE;
       }
     }
 

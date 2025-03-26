@@ -41,6 +41,7 @@ Welcome to BuildCLI - Java Project Management!
 - **Build and Run Docker Container**: Builds and runs the Docker container using the generated Dockerfile.
 - **CI/CD Integration**: Automatically generates configuration files por CI/CD tools (e.g., Jenkins, GitHub Actions) and triggers pipelines based on project changes.
 - **Changelog Generation**: Automatically generates a structured changelog by analyzing the Git commit history, facilitating the understanding of changes between releases.
+- **Orchestration Commands**: BuildCLI now includes orchestration commands to automate Docker Compose configuration generation and manage container lifecycles.
 ---
 
 ## Installation
@@ -145,7 +146,8 @@ buildcli project run
 Automatically generates inline documentation for a Java file using AI:
 
 ```bash
-buildcli project document-code File.java
+# File or directory
+buildcli ai code document File.java 
 ```
 
 This command sends the specified Java file to the local Ollama server, which generates documentation and comments directly within the code. The modified file with documentation will be saved back to the same location.
@@ -196,30 +198,7 @@ buildcli project add pipeline gitlab
 buildcli project add pipeline jenkins
 ```
 
----
-
-## Prerequisites
-
-### Local Ollama API
-
-Ensure you have the Ollama server running locally, as the `docs` functionality relies on an AI model accessible via a local API.
-
-- [Download Ollama](https://ollama.com/download)
-
-You can start the Ollama server by running:
-
-```bash
-ollama run llama3.2
-```
-
-### Prerequisites for CI/CD Integration
-
-- **Jenkins**: Ensure Jenkins is installed and accessible in your environment.
-- **GitHub Actions**: Ensure your repository is hosted on GitHub with Actions enabled.
-
----
-
-## Changelog Generation
+### 11. Changelog Generation
 
 BuildCLI now includes an automatic changelog generation feature that analyzes your Git commit history and produces a structured changelog.
 This helps developers and end-users easily track changes between releases.
@@ -242,9 +221,9 @@ Or use the alias:
 - `--format, -f <format>:`
   Specify the output format. Supported formats:
 
-   - markdown (default)
-   - html
-   - json
+    - markdown (default)
+    - html
+    - json
 - `--output, -o <file>:`
   Specify the output file name. If not provided, defaults to CHANGELOG.<extension>.
 
@@ -262,6 +241,135 @@ buildcli changelog --version v1.0.0 --format markdown --include feat,fix --outpu
 buildcli changelog -v v1.0.0 -f markdown -i feat,fix -o CHANGELOG.md
 ````
 
+### 12. Orchestration Commands
+BuildCLI now includes orchestration commands to automate Docker compose configuration generation and manage 
+container lifecycles.
+Below, you'll find a Quick Start Guide and usage examples for the new feature.
+
+---
+
+### Quick Start Guide
+
+### 1. Generate a Docker Compose file for your project:
+
+```bash
+buildcli project add dockerCompose
+```
+or
+
+```bash
+buildcli p add dc
+```
+This command creates a docker-compose.yml file with a primary service for your java application, using the 
+image built from the enhanced Dockerfile.
+
+
+### 2. Customize Essential Parameters:
+
+You can customize ports, volumes, and resource limits (CPU and memory) using CLI flag. For example:
+
+#### Options:
+
+- `--port, -p <ports>:`
+  Specify the ports to expose for the container. Format: `<host_port>:<container_port>`.
+
+- `--volume, -v <volume>:`
+  Specify the volume to mount for the container. Format: `<host_path>:<container_path>`.
+
+- `--cpu, -c <cpu_limit>:`
+  Specify the CPU limit for the container.
+
+- `--memory, -m <memory_limit>:`
+  Specify the memory limit for the container. Format: `<value><unit>` (e.g., `512m`).
+
+- `--dockerfile, -d <dockerfile_path>:`
+- Specify the path to the Dockerfile for the container.
+
+#### Example Command
+
+```bash
+buildcli project add docker-compose --ports 8080:8080 --volumes /data:/app/data --cpu 2 --memory 512m --dockerfile /path/to/Dockerfile
+```
+or
+
+```bash
+buildcli p add dc -p 8080:8080 -v /data:/app/data -c 2 -m 512m -d /path/to/Dockerfile
+```
+
+### 3. Start the Containers:
+
+Use the following command to start the containers:
+
+```bash
+buildcli run orchrestration up
+```
+or
+
+```bash
+buildcli run oc up
+```
+
+
+To force a rebuild of the images, add the `--build` flag:
+
+```bash
+buildcli run orchestration up --build
+```
+or 
+
+```bash
+buildcli run oc up -b
+```
+
+
+### 4. Stop the Containers:
+To stop the containers, use the following command:
+
+```bash
+buildcli run orchestration down
+``` 
+or 
+
+```bash
+buildcli run oc down
+```
+
+
+### 5. Stop a specific container:
+
+To stop a specific container, use the following command:
+
+```bash
+buildcli orchestration down --name <container_name>
+``` 
+or 
+
+```bash
+buildcli oc down -n <container_name>
+```
+
+---
+
+## Prerequisites
+
+### Local Ollama API
+
+Ensure you have the Ollama server running locally, as the `docs` functionality relies on an AI model accessible via a local API.
+
+- [Download Ollama](https://ollama.com/download)
+
+You can start the Ollama server by running:
+
+```bash
+ollama run llama3.2
+```
+
+### Prerequisites for CI/CD Integration
+
+- **Jenkins**: Ensure Jenkins is installed and accessible in your environment.
+- **GitHub Actions**: Ensure your repository is hosted on GitHub with Actions enabled.
+
+---
 
 ## Contribution
 

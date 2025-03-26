@@ -10,6 +10,7 @@ import org.jline.terminal.TerminalBuilder;
 import org.jline.utils.InfoCmp;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
@@ -273,6 +274,154 @@ public abstract class InteractiveInputUtils {
 
   public static String question(String prompt) {
     return question(prompt, null, false);
+  }
+
+  public static String question(String prompt, boolean required) {
+    return question(prompt, null, required);
+  }
+
+  /**
+   * Displays an interactive terminal checklist for selecting multiple options.
+   *
+   * @param prompt    The prompt to display to the user.
+   * @param options   The list of available options.
+   * @param formatter Function to convert each option to a String. If null, uses {@code Object::toString}.
+   * @param <T>       The type of the options.
+   * @return The list of selected options or empty list if none selected/canceled.
+   * @throws IllegalArgumentException if the options list is null or empty.
+   */
+  public static <T> List<T> checklist(String prompt, List<T> options, Function<T, String> formatter) {
+    if (options == null || options.isEmpty()) {
+      throw new IllegalArgumentException("Options list cannot be empty");
+    }
+
+    // Define the display function, using the provided formatter or defaulting to Object::toString
+    Function<T, String> display = formatter != null ? formatter : Object::toString;
+    int cursorIndex = 0;
+    int startIndex = 0;
+    int maxVisibleOptions = Math.min(options.size(), 10);
+
+    // Track selected options
+    boolean[] selected = new boolean[options.size()];
+    List<T> selectedOptions = new ArrayList<>();
+
+    boolean first = true;
+
+    while (true) {
+      if (!first) {
+        // Clear the previous display area
+        clearLines(maxVisibleOptions + 4); // +4 for prompt, instructions, and scroll indicators
+      }
+
+      // Display the prompt and instructions
+      println(prompt);
+      println("(Use arrow keys ↑↓ to navigate, Space to select/deselect, Enter to confirm, Ctrl+C to cancel)");
+
+      first = false;
+
+      // Render the checklist options
+      renderChecklist(options, display, cursorIndex, startIndex, maxVisibleOptions, selected);
+
+      // Display scroll indicators if needed
+      if (startIndex > 0) {
+        print("↑ more options above\r");
+      }
+      if (startIndex + maxVisibleOptions < options.size()) {
+        println();
+        print("↓ more options below\r");
+      }
+
+      try {
+        var key = KeyDetector.detectKey(terminal.reader());
+        switch (key) {
+          case UP:
+            if (cursorIndex > 0) {
+              cursorIndex--;
+              if (cursorIndex < startIndex) {
+                startIndex = cursorIndex;
+              }
+            }
+            break;
+          case DOWN:
+            if (cursorIndex < options.size() - 1) {
+              cursorIndex++;
+              if (cursorIndex >= startIndex + maxVisibleOptions) {
+                startIndex = cursorIndex - maxVisibleOptions + 1;
+              }
+            }
+            break;
+          case SPACE:
+            // Toggle selection for the current item
+            selected[cursorIndex] = !selected[cursorIndex];
+            break;
+          case ENTER:
+            // Return the selected options
+            selectedOptions.clear();
+            for (int i = 0; i < options.size(); i++) {
+              if (selected[i]) {
+                selectedOptions.add(options.get(i));
+              }
+            }
+            clearLines(maxVisibleOptions + 4);
+            return selectedOptions;
+          case CTRL_C:
+            clearLines(maxVisibleOptions + 4);
+            println("Operation canceled");
+            return new ArrayList<>();
+          default:
+            // Ignore other keys
+            break;
+        }
+      } catch (UserInterruptException | IOException e) {
+        clearLines(maxVisibleOptions + 4);
+        println("Operation canceled");
+        return new ArrayList<>();
+      }
+    }
+  }
+
+  /**
+   * Renders the checklist options in the terminal.
+   *
+   * @param options           The complete list of options.
+   * @param display           Function to convert each option to a String.
+   * @param cursorIndex       The index of the item where the cursor is currently positioned.
+   * @param startIndex        The starting index for the visible options.
+   * @param maxVisibleOptions Maximum number of options visible at once.
+   * @param selected          Array indicating whether each option is selected.
+   * @param <T>               The type of the options.
+   */
+  private static <T> void renderChecklist(List<T> options, Function<T, String> display,
+                                          int cursorIndex, int startIndex,
+                                          int maxVisibleOptions, boolean[] selected) {
+    for (int i = 0; i < maxVisibleOptions; i++) {
+      int optionIndex = startIndex + i;
+      boolean hasCursor = cursorIndex == optionIndex;
+
+      if (optionIndex < options.size()) {
+        T option = options.get(optionIndex);
+        String checkbox = selected[optionIndex] ? "[✓] " : "[ ] ";
+        var item = BeautifyShell.content(checkbox + display.apply(option));
+
+        if (hasCursor) {
+          item.blueFg().underline();
+        }
+
+        println(item);
+      }
+    }
+  }
+
+  /**
+   * Displays an interactive terminal checklist for selecting multiple options.
+   *
+   * @param prompt    The prompt to display to the user.
+   * @param options   The list of available options.
+   * @param <T>       The type of the options.
+   * @return The list of selected options or empty list if none selected/canceled.
+   */
+  public static <T> List<T> checklist(String prompt, List<T> options) {
+    return checklist(prompt, options, Object::toString);
   }
 
   private static void clearLines(int count) {
