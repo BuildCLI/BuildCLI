@@ -1,7 +1,6 @@
-package dev.buildcli.core.utils.actions;
+package dev.buildcli.core.actions.tools;
 
 import dev.buildcli.core.actions.commandline.MavenProcess;
-import dev.buildcli.core.actions.tools.MavenChecker;
 import dev.buildcli.core.utils.installers.MavenInstaller;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
