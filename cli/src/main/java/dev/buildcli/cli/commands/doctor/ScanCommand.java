@@ -13,7 +13,7 @@ import picocli.CommandLine.Command;
     mixinStandardHelpOptions = true
 )
 public class ScanCommand implements BuildCLICommand {
-  private final Logger logger = LoggerFactory.getLogger("DoctorScanCommand");
+  private final Logger logger = LoggerFactory.getLogger(ScanCommand.class);
   @Override
   public void run() {
     ToolCheckers.all().forEach(toolChecker -> {

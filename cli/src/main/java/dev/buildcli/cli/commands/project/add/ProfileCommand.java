@@ -14,7 +14,7 @@ import java.io.IOException;
         + "This command allows adding profile file (e.g., test, dev, production) with extension .properties.",
         mixinStandardHelpOptions = true)
 public class ProfileCommand implements BuildCLICommand {
-  private final Logger LOGGER = LoggerFactory.getLogger(ProfileCommand.class.getName());
+  private static final Logger logger = LoggerFactory.getLogger(ProfileCommand.class);
 
   @Parameters(index = "0")
   private String profile;
@@ -36,12 +36,12 @@ public class ProfileCommand implements BuildCLICommand {
         try (FileWriter writer = new FileWriter(profileFile)) {
           writer.write(content);
         }
-        LOGGER.info("Configuration profile created: {}", fileName);
+        logger.info("Configuration profile created: {}", fileName);
       } else {
-        LOGGER.warn("Configuration profile already exists: {}", fileName);
+        logger.warn("Configuration profile already exists: {}", fileName);
       }
     } catch (IOException e) {
-      LOGGER.error("Failed to create or write configuration profile: {}", fileName, e);
+      logger.error("Failed to create or write configuration profile: {}", fileName, e);
     }
   }
 }

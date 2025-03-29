@@ -11,19 +11,24 @@ import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.transport.URIish;
 import org.eclipse.jgit.transport.sshd.SshdSessionFactory;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.eclipse.jgit.util.StringUtils;
+
 
 import java.net.URISyntaxException;
 import java.io.File;
 import java.io.IOException;
+
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 public class GitOperations {
-    protected static final Logger logger = Logger.getLogger(GitOperations.class.getName());
+    private static final Logger logger = LoggerFactory.getLogger(GitOperations.class);
 
     public Git git;
     public Repository repository;
@@ -191,7 +196,7 @@ public class GitOperations {
     }
 
     private void handleException(String message, Exception e) {
-        logger.log(Level.SEVERE, message, e);
+        logger.error(message, e);
         throw new RuntimeException(e);
     }
 }

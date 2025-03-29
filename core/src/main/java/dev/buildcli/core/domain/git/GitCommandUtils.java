@@ -1,17 +1,17 @@
 package dev.buildcli.core.domain.git;
 
-import dev.buildcli.core.log.SystemOutLogger;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.util.logging.Logger;
+
 
 import static dev.buildcli.core.domain.git.GitCommandFormatter.countLogs;
 import static dev.buildcli.core.domain.git.GitCommandFormatter.distinctContributors;
 import static dev.buildcli.core.utils.input.InteractiveInputUtils.confirm;
 
 class GitCommandUtils extends GitOperations {
-  protected static final Logger logger = Logger.getLogger(GitCommandUtils.class.getName());
-
+    private static final Logger logger = LoggerFactory.getLogger(GitCommandUtils.class);
 
   protected void updateLocalRepositoryFromUpstreamWithStash(String path, String url) {
     startGitRepository(path);
@@ -19,6 +19,7 @@ class GitCommandUtils extends GitOperations {
     if (!isRemoteDefined("upstream")) {
       setUpstreamUrl(url);
     }
+
 
     if (thereIsLocalChanges()) {
       boolean eraserLocalChanges = !confirm("eraser local changes");
@@ -46,7 +47,7 @@ class GitCommandUtils extends GitOperations {
 
     Iterable<RevCommit> contributors = gitLog("src/main/java");
 
-    SystemOutLogger.log("Contributors: " + distinctContributors(contributors));
+    logger.info("Contributors: {}" ,distinctContributors(contributors));
 
     closeGitRepository();
   }

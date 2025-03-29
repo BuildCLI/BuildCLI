@@ -13,7 +13,7 @@ import picocli.CommandLine.Command;
     mixinStandardHelpOptions = true
 )
 public class FixCommand implements BuildCLICommand {
-  private final Logger logger = LoggerFactory.getLogger("DoctorFixCommand");
+  private final Logger logger = LoggerFactory.getLogger(FixCommand.class);
   @Override
   public void run() {
     logger.warn("Fix command requires admin privileges.");

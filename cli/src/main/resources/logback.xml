@@ -1,25 +1,33 @@
-<configuration debug="false">
-  <statusListener class="ch.qos.logback.core.status.NopStatusListener" />
+<configuration>
 
-  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-    <encoder>
-      <pattern>%msg%n</pattern>
-    </encoder>
-  </appender>
+    <!--Console-->
 
-  <appender name="FILE" class="ch.qos.logback.core.FileAppender">
-    <file>${user.home}/logs/buildcli.log</file>
-    <encoder>
-      <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
-    </encoder>
-  </appender>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>
+                %highlight(%-5level) %msg%n
+            </pattern>
+        </encoder>
+    </appender>
 
-  <root level="INFO">
-    <appender-ref ref="STDOUT" />
-    <appender-ref ref="FILE" />
-  </root>
+    <!--File-->
 
-  <logger name="org.apache.sshd" level="WARN"/>
-  <logger name="org.pf4j" level="OFF" />
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <file>logs/build-cli-logs.log</file>
+        <append>true</append>
+        <encoder>
+            <pattern>
+                %d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <root level="info">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="FILE"/>
+    </root>
+
+    <logger name="ch.qos.logback" level="ERROR"/>
+    <logger name="org.springframework" level="WARN"/>
 
 </configuration>

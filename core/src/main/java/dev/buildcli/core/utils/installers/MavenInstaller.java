@@ -1,9 +1,11 @@
 package dev.buildcli.core.utils.installers;
 
-import dev.buildcli.core.log.SystemOutLogger;
+
 import dev.buildcli.core.utils.DirectoryCleanup;
 import dev.buildcli.core.utils.OS;
 import dev.buildcli.core.utils.compress.FileExtractor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -16,6 +18,9 @@ import java.net.http.HttpResponse;
 import java.nio.file.Paths;
 
 public abstract class MavenInstaller {
+
+  private static final Logger logger = LoggerFactory.getLogger(MavenInstaller.class);
+
   private MavenInstaller() {
   }
 
@@ -25,28 +30,29 @@ public abstract class MavenInstaller {
 
 
   public static void installMaven() {
-    SystemOutLogger.log("Installing Maven operation started...");
+    logger.info("Installing Maven operation started...");
+
     try {
-      SystemOutLogger.log("Downloading Maven operation started...");
+      logger.info("Downloading Maven operation started...");
       var file = downloadMaven();
-      SystemOutLogger.log("Downloading Maven operation finished...");
+      logger.info("Downloading Maven operation finished...");
 
-      SystemOutLogger.log("Maven downloaded to " + file.getAbsolutePath());
+      logger.info("Maven downloaded to {}", file.getAbsolutePath());
       var outputFile = installProgramFilesDirectory();
-      SystemOutLogger.log("Maven install path set to " + outputFile.getAbsolutePath());
+      logger.info("Maven install path set to {}", outputFile.getAbsolutePath());
 
-      SystemOutLogger.log("Extracting Maven operation started...");
+      logger.info("Extracting Maven operation started...");
       extractMaven(file.getAbsolutePath(), outputFile.getAbsolutePath());
-      SystemOutLogger.log("Extracting Maven operation finished...");
+      logger.info("Extracting Maven operation finished...");
 
-      SystemOutLogger.log("Configuring Maven path operation started...");
+      logger.info("Configuring Maven path operation started...");
       configurePath(Paths.get(outputFile.getAbsolutePath(), MAVEN_NAME).toFile().getAbsolutePath());
-      SystemOutLogger.log("Configuring Maven path operation finished...");
+      logger.info("Configuring Maven path operation finished...");
 
       if (file.exists()) {
-        SystemOutLogger.log("Cleaning up maven download path...");
+        logger.info("Cleaning up maven download path...");
         DirectoryCleanup.cleanup(file.getAbsolutePath());
-        SystemOutLogger.log("Cleaning up maven download path finished...");
+        logger.info("Cleaning up maven download path finished...");
       }
     } catch (IOException | InterruptedException e) {
       throw new RuntimeException(e);
@@ -70,13 +76,13 @@ public abstract class MavenInstaller {
     var url = MAVEN_DOWNLOAD_URL + (isWindows ? "zip" : "tar.gz");
     var request = HttpRequest.newBuilder().uri(URI.create(url)).GET().build();
 
-    SystemOutLogger.log("Downloading Maven artifact from: " + url);
+    logger.info("Downloading Maven artifact from: {}", url);
 
     var client = HttpClient.newHttpClient();
 
-    SystemOutLogger.log("Connecting to " + url);
+    logger.info("Connecting to {}", url);
     var response = client.send(request, HttpResponse.BodyHandlers.ofInputStream());
-    SystemOutLogger.log("Connected to " + url);
+    logger.info("Connected to {}", url);
 
     if (response.statusCode() != 200) {
       throw new IOException("Failed to download maven artifact: " + response.statusCode());
@@ -91,7 +97,7 @@ public abstract class MavenInstaller {
     var mavenInstallDir = new File(MAVEN_NAME + (isWindows ? ".zip" : ".tar.gz"));
 
     if (mavenInstallDir.exists()) {
-      SystemOutLogger.log("Cleaning up maven install directory: " + mavenInstallDir);
+      logger.info("Cleaning up maven install directory: {}", mavenInstallDir);
       DirectoryCleanup.cleanup(mavenInstallDir.getAbsolutePath());
     }
 
@@ -142,8 +148,8 @@ public abstract class MavenInstaller {
       try (FileWriter fw = new FileWriter(bashrc, true)) {
         fw.write("\nexport PATH=$PATH:" + mavenBinPath + "/bin\n");
       }
-      SystemOutLogger.log("Please run: source ~/.bashrc");
-      SystemOutLogger.log("Please run: sudo chmod +x " + mavenBinPath + "/bin/mvn\n");
+      logger.info("Please run: source ~/.bashrc");
+      logger.info("Please run: sudo chmod +x {}/bin/mvn\n", mavenBinPath );
     }
   }
 }

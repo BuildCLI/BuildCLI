@@ -4,6 +4,8 @@ import dev.buildcli.cli.commands.ConfigCommand;
 import dev.buildcli.core.domain.BuildCLICommand;
 import dev.buildcli.core.domain.configs.BuildCLIConfig;
 import dev.buildcli.core.utils.config.ConfigContextLoader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.ParentCommand;
 
@@ -20,6 +22,7 @@ import picocli.CommandLine.ParentCommand;
  */
 @Command(name = "init", aliases = {"i", "create"}, description = "Initializes a new configuration context for BuildCLI.", mixinStandardHelpOptions = true)
 public class InitCommand implements BuildCLICommand {
+  private static final Logger logger = LoggerFactory.getLogger(InitCommand.class);
 
   /**
    * Reference to the parent command to determine scope (local or global).
@@ -40,11 +43,12 @@ public class InitCommand implements BuildCLICommand {
 
     try {
       saveConfigFunction.save(buildConfig);
-      System.out.printf("Configuration successfully initialized in %s scope.%n", isLocal ? "local" : "global");
+      logger.info("Configuration successfully initialized in {} scope.", isLocal ? "local" : "global");
     } catch (Exception e) {
-      System.err.println("Failed to initialize configuration: " + e.getMessage());
-    }
+      logger.error("Failed to initialize configuration: {}", e.getMessage());
+   }
   }
+
 
   /**
    * Functional interface for saving configuration based on scope.

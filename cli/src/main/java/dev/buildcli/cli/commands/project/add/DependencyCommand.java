@@ -3,12 +3,13 @@ package dev.buildcli.cli.commands.project.add;
 import dev.buildcli.core.actions.dependency.DependencySearchService;
 import dev.buildcli.core.constants.MavenConstants;
 import dev.buildcli.core.domain.BuildCLICommand;
-import dev.buildcli.core.log.SystemOutLogger;
 import dev.buildcli.core.utils.PomUtils;
 import dev.buildcli.core.utils.tools.maven.PomReader;
 import org.jetbrains.annotations.NotNull;
-import picocli.CommandLine.Option;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import picocli.CommandLine.Command;
+import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
 
 import java.io.IOException;
@@ -16,13 +17,12 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 @Command(name = "dependency", aliases = {"d"}, description = "Adds a new dependency to the project. Alias: 'd'. "
         + "This command allows adding dependencies.", mixinStandardHelpOptions = true)
 public class DependencyCommand implements BuildCLICommand {
-  private static final Logger logger = Logger.getLogger(DependencyCommand.class.getName());
+  private static final Logger logger = LoggerFactory.getLogger(DependencyCommand.class);
   @Parameters
   private String dependency;
   @Option(names = {"--manual", "-m"}, description = "Defines if dependency will be added manually or not.")
@@ -35,13 +35,13 @@ public class DependencyCommand implements BuildCLICommand {
 
       try {
         Files.write(Paths.get(MavenConstants.FILE), pomWithAddedDependencies.getBytes());
-        SystemOutLogger.log("Dependency added to pom.xml.");
+          logger.info("Dependency added to pom.xml.");
       } catch (IOException e) {
-        logger.log(Level.SEVERE, "Error adding dependency to pom.xml", e);
+        logger.error("Error adding dependency to pom.xml", e);
       }
 
     } catch (Exception e) {
-      logger.log(Level.SEVERE, "Error adding dependency to pom.xml", e);
+      logger.error("Error adding dependency to pom.xml", e);
     }
   }
 

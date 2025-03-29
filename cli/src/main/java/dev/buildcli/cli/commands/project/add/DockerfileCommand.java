@@ -2,6 +2,8 @@ package dev.buildcli.cli.commands.project.add;
 
 import dev.buildcli.core.actions.commandline.JavaProcess;
 import dev.buildcli.core.domain.BuildCLICommand;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 
@@ -13,14 +15,12 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 @Command(name = "dockerfile", aliases = {"docker", "df"}, description = "Generates a Dockerfile for the project. "
         + "Alias: 'docker' and 'df'. Allows customizing the base image, exposed ports, and file name.",
         mixinStandardHelpOptions = true)
 public class DockerfileCommand implements BuildCLICommand {
-  private Logger logger = Logger.getLogger(DockerfileCommand.class.getName());
+  private static final Logger logger = LoggerFactory.getLogger(DockerfileCommand.class);
 
   @Option(names = {"--name", "-n"}, description = "Name of the file to write docker build instructions.", defaultValue = "Dockerfile")
   private String name;
@@ -57,16 +57,16 @@ public class DockerfileCommand implements BuildCLICommand {
           builder.append("ENTRYPOINT ").append("[\"java\", \"-jar\", \"app.jar\"]").append("\n");
 
           writer.write(builder.toString());
-          System.out.println("Dockerfile generated.");
+          logger.info("Dockerfile generated.");
         }
       } else {
-        System.out.println("Dockerfile already exists.");
+        logger.info("Dockerfile already exists.");
       }
-      System.out.println("Dockerfile created successfully.");
-      System.out.println("Use 'buildcli project run docker' to build and run the Docker container.");
+      logger.info("Dockerfile created successfully.");
+      logger.info("Use 'buildcli project run docker' to build and run the Docker container.");
     } catch (IOException e) {
-      logger.log(Level.SEVERE, "Failed to setup Docker", e);
-      System.err.println("Error: Could not setup Docker environment.");
+      logger.error("Failed to setup Docker", e);
+      logger.error("Error: Could not setup Docker environment.");
     }
   }
 

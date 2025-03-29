@@ -1,15 +1,15 @@
 package dev.buildcli.core.project;
 
 import dev.buildcli.core.utils.SystemCommands;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 @Deprecated(forRemoval = true)
 public class ProjectCompiler {
 
-    private static final Logger logger = Logger.getLogger(ProjectCompiler.class.getName());
+    private static final Logger logger = LoggerFactory.getLogger(ProjectCompiler.class);
 
     public void compileProject() {
         try {
@@ -21,10 +21,10 @@ public class ProjectCompiler {
             if (exitCode == 0) {
                 logger.info("Project compiled successfully. JAR file generated in target directory.");
             } else {
-                logger.severe("Failed to compile project. Maven exited with code: " + exitCode);
+                logger.error("Failed to compile project. Maven exited with code: {}", exitCode);
             }
         } catch (IOException | InterruptedException e) {
-            logger.log(Level.SEVERE, "Failed to compile project", e);
+            logger.error("Failed to compile project", e);
             Thread.currentThread().interrupt();
         }
     }

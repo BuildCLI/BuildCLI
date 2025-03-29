@@ -30,7 +30,7 @@ import static dev.buildcli.core.utils.BeautifyShell.brightGreenFg;
 
 @Command(name = "comment", aliases = {"c"}, description = "Comments out the selected code.",mixinStandardHelpOptions = true)
 public class CommentCommand implements BuildCLICommand {
-  private final Logger logger = LoggerFactory.getLogger("AICodeCommentCommand");
+  private final Logger logger = LoggerFactory.getLogger(CommentCommand.class);
 
   @Parameters(description = "Set of files or directories to comment sources")
   private List<File> files;

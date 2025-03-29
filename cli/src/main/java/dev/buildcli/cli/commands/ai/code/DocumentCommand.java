@@ -28,7 +28,7 @@ import static java.util.concurrent.CompletableFuture.supplyAsync;
 
 @Command(name = "document", aliases = {"docs"}, description = "Generates documentation for the project code. Alias: 'docs'. This command scans the specified files and extracts structured documentation.", mixinStandardHelpOptions = true)
 public class DocumentCommand implements BuildCLICommand {
-  private final Logger logger = LoggerFactory.getLogger("AICodeDocumentCommand");
+  private final Logger logger = LoggerFactory.getLogger(DocumentCommand.class);
   @ParentCommand
   private CodeCommand parent;
 

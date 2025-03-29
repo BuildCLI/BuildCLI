@@ -5,15 +5,16 @@ import dev.buildcli.core.actions.commandline.GradleProcess;
 import dev.buildcli.core.actions.commandline.MavenProcess;
 import dev.buildcli.core.domain.BuildCLICommand;
 import dev.buildcli.core.utils.tools.ToolChecks;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 
 import java.io.File;
-import java.util.logging.Logger;
 
 @Command(name = "build", aliases = {"b"}, description = "Builds the project, either compiling or packaging, and logs the result.", mixinStandardHelpOptions = true)
 public class BuildCommand implements BuildCLICommand {
-  private final Logger logger = Logger.getLogger(BuildCommand.class.getName());
+  private static final Logger logger = LoggerFactory.getLogger(BuildCommand.class);
 
   @Option(names = {"--compileOnly", "--compile", "-c"}, description = "Indicator to only compile project, e.g, mvn clean compile", defaultValue = "false")
   private boolean compileOnly;
@@ -27,7 +28,7 @@ public class BuildCommand implements BuildCLICommand {
     final var projectBuild = ToolChecks.checkIsMavenOrGradle(path);
 
     if (projectBuild.equals("Neither")) {
-      logger.severe("Neither Maven nor Gradle project detected. Please ensure one of these build files (pom.xml or build.gradle) exists.");
+      logger.error("Neither Maven nor Gradle project detected. Please ensure one of these build files (pom.xml or build.gradle) exists.");
       return;
     }
 
@@ -44,7 +45,7 @@ public class BuildCommand implements BuildCLICommand {
     if (exitCode == 0) {
       logger.info("Project built successfully.");
     } else {
-      logger.severe("Failed to build project. Process exited with code: " + exitCode);
+      logger.error("Failed to build project. Process exited with code: {}", exitCode);
     }
   }
 }

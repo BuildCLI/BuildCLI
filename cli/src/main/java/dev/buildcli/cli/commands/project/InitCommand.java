@@ -2,7 +2,8 @@ package dev.buildcli.cli.commands.project;
 
 import dev.buildcli.core.domain.BuildCLICommand;
 import dev.buildcli.core.exceptions.CommandExecutorRuntimeException;
-import dev.buildcli.core.log.SystemOutLogger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import dev.buildcli.plugin.BuildCLIPlugin;
 import dev.buildcli.plugin.enums.TemplateType;
 import dev.buildcli.plugin.utils.BuildCLIPluginManager;
@@ -25,6 +26,8 @@ import static dev.buildcli.core.utils.input.InteractiveInputUtils.question;
     mixinStandardHelpOptions = true
 )
 public class InitCommand implements BuildCLICommand {
+  private static final Logger logger = LoggerFactory.getLogger(InitCommand.class);
+
   @Option(names = {"--name", "-n"}, defaultValue = "buildcli")
   private String projectName;
   @Option(names = {"--jdk", "-j"}, defaultValue = "17")
@@ -38,6 +41,7 @@ public class InitCommand implements BuildCLICommand {
       var templates = BuildCLIPluginManager.getTemplatesByType(TemplateType.PROJECT);
       templates = new LinkedList<>(templates);
       templates.add(new QuickStartProject());
+
 
       var chooseTemplate = options("Choose a project template", templates, BuildCLIPlugin::name);
 
@@ -54,7 +58,7 @@ public class InitCommand implements BuildCLICommand {
       try (FileWriter writer = new FileWriter(readme)) {
         writer.write("# " + projectName + "\n\nThis is the " + projectName + " project.");
       }
-      SystemOutLogger.log("README.md file created.");
+      logger.info("README.md file created.");
     }
   }
 
@@ -78,7 +82,7 @@ public class InitCommand implements BuildCLICommand {
                 }
             """.formatted(basePackage));
       }
-      SystemOutLogger.log("Main.java file created with package and basic content.");
+      logger.info("Main.java file created with package and basic content.");
     }
   }
 
@@ -139,7 +143,7 @@ public class InitCommand implements BuildCLICommand {
                 </project>
             """.formatted(projectName.toLowerCase(), projectName, jdkVersion, projectName.toLowerCase()));
       }
-      SystemOutLogger.log("pom.xml file created with default configuration.");
+      logger.info("pom.xml file created with default configuration.");
     }
   }
 
@@ -164,7 +168,7 @@ public class InitCommand implements BuildCLICommand {
       for (String dir : dirs) {
         File directory = new File(dir);
         if (directory.mkdirs()) {
-          SystemOutLogger.log("Directory created: " + dir);
+          logger.info("Directory created: {}", dir);
         }
       }
 

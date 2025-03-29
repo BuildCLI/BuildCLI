@@ -1,17 +1,16 @@
 package dev.buildcli.core.project;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import dev.buildcli.core.log.SystemOutLogger;
 
 @Deprecated(forRemoval = true)
 public class ProjectInitializer {
 
-    private static final Logger LOGGER = Logger.getLogger(ProjectInitializer.class.getName());
+    private static final Logger logger = LoggerFactory.getLogger(ProjectInitializer.class);
 
     public void initializeProject(String projectName) throws IOException {
         String baseProject = (projectName != null && !projectName.isBlank()) ? projectName : "buildcli";
@@ -25,7 +24,7 @@ public class ProjectInitializer {
         for (String dir : dirs) {
             File directory = new File(dir);
             if (directory.mkdirs()) {
-                SystemOutLogger.log("Directory created: " + dir);
+                logger.info("Directory created: {}",dir);
             }
         }
 
@@ -40,7 +39,7 @@ public class ProjectInitializer {
             try (FileWriter writer = new FileWriter(readme)) {
                 writer.write("# " + projectName + "\n\nThis is the " + projectName + " project.");
             }
-            SystemOutLogger.log("README.md file created.");
+            logger.info("README.md file created.");
         }
     }
 
@@ -64,7 +63,7 @@ public class ProjectInitializer {
                     }
                 """.formatted(basePackage));
             }
-            SystemOutLogger.log("Main.java file created with package and basic content.");
+            logger.info("Main.java file created with package and basic content.");
         }
     }
 
@@ -125,7 +124,7 @@ public class ProjectInitializer {
                     </project>
                 """.formatted(projectName.toLowerCase(), projectName, projectName.toLowerCase()));
             }
-            SystemOutLogger.log("pom.xml file created with default configuration.");
+            logger.info("pom.xml file created with default configuration.");
         }
     }
 
@@ -150,12 +149,12 @@ public class ProjectInitializer {
                 try (FileWriter writer = new FileWriter(profileFile)) {
                     writer.write(content);
                 }
-                LOGGER.info(() -> "Configuration profile created: " + fileName);
+                logger.info("Configuration profile created: {}", fileName);
             } else {
-                LOGGER.warning(() -> "Configuration profile already exists: " + fileName);
+                logger.warn("Configuration profile already exists: {}", fileName);
             }
         } catch (IOException e) {
-            LOGGER.log(Level.SEVERE, "Failed to create or write configuration profile: " + fileName, e);
+           logger.error("Failed to create or write configuration profile: {}", fileName, e);
         }
     }
 }
