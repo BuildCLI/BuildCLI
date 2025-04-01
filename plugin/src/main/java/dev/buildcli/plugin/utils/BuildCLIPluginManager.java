@@ -19,7 +19,7 @@ import java.util.function.Predicate;
 
 import static dev.buildcli.core.constants.ConfigDefaultConstants.PLUGIN_PATHS;
 import static dev.buildcli.core.utils.BeautifyShell.blueFg;
-import static dev.buildcli.core.utils.input.InteractiveInputUtils.confirm;
+import static dev.buildcli.core.utils.console.input.InteractiveInputUtils.confirm;
 
 public final class BuildCLIPluginManager {
   private static final org.pf4j.PluginManager pluginManager = new CustomDefaultPluginManager(loadJars());

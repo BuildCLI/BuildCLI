@@ -14,8 +14,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.LinkedList;
 
-import static dev.buildcli.core.utils.input.InteractiveInputUtils.options;
-import static dev.buildcli.core.utils.input.InteractiveInputUtils.question;
+import static dev.buildcli.core.utils.console.input.InteractiveInputUtils.options;
+import static dev.buildcli.core.utils.console.input.InteractiveInputUtils.question;
 
 
 @Command(

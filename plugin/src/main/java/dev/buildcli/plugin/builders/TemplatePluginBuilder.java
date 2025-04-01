@@ -9,7 +9,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 
-import static dev.buildcli.core.utils.input.InteractiveInputUtils.options;
+import static dev.buildcli.core.utils.console.input.InteractiveInputUtils.options;
 
 public class TemplatePluginBuilder implements PluginBuilder {
   private static final String[] PROJECT_DIRECTORIES = {

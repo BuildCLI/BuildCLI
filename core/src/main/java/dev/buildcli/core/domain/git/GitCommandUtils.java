@@ -7,7 +7,7 @@ import java.util.logging.Logger;
 
 import static dev.buildcli.core.domain.git.GitCommandFormatter.countLogs;
 import static dev.buildcli.core.domain.git.GitCommandFormatter.distinctContributors;
-import static dev.buildcli.core.utils.input.InteractiveInputUtils.confirm;
+import static dev.buildcli.core.utils.console.input.InteractiveInputUtils.confirm;
 
 class GitCommandUtils extends GitOperations {
   protected static final Logger logger = Logger.getLogger(GitCommandUtils.class.getName());

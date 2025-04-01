@@ -1,4 +1,4 @@
-package dev.buildcli.core.utils.input;
+package dev.buildcli.core.utils.console.input;
 
 import org.jline.utils.NonBlockingReader;
 

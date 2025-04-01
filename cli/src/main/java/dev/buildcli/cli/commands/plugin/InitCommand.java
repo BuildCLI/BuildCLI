@@ -15,7 +15,7 @@ import java.io.File;
 import java.util.Arrays;
 
 import static dev.buildcli.core.utils.BeautifyShell.blueFg;
-import static dev.buildcli.core.utils.input.InteractiveInputUtils.*;
+import static dev.buildcli.core.utils.console.input.InteractiveInputUtils.*;
 
 @Command(
     name = "init",

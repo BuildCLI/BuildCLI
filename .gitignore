@@ -43,3 +43,4 @@ Dockefile
 changelog.md
 **/changelog.md
 *.zip
+/cli/logs/build-cli-logs.log

@@ -1,4 +1,4 @@
-package dev.buildcli.core.utils.input;
+package dev.buildcli.core.utils.console.input;
 
 import dev.buildcli.core.utils.BeautifyShell;
 import org.jline.reader.LineReader;
@@ -123,14 +123,14 @@ public abstract class InteractiveInputUtils {
     Function<T, String> display = formatter != null ? formatter : Object::toString;
     int selectedIndex = 0;
     int startIndex = 0;
-    int maxVisibleOptions = options.size();
+    int maxVisibleOptions = Math.min(options.size(), 10);
 
     boolean first = true;
 
     while (true) {
       if (!first) {
         // Clear the previous display area
-        clearLines(maxVisibleOptions * 100);
+        clearLines(maxVisibleOptions + 4);
       }
 
       // Display the prompt and initial instructions
@@ -171,10 +171,10 @@ public abstract class InteractiveInputUtils {
             }
             break;
           case ENTER:
-            clearLines(maxVisibleOptions * 100);
+            clearLines(maxVisibleOptions + 4);
             return options.get(selectedIndex);
           case CTRL_C:
-            clearLines(maxVisibleOptions * 100);
+            clearLines(maxVisibleOptions + 4);
             println("Operation canceled");
             return null;
           default:
@@ -183,7 +183,7 @@ public abstract class InteractiveInputUtils {
             break;
         }
       } catch (UserInterruptException | IOException e) {
-        clearLines(maxVisibleOptions * 100);
+        clearLines(maxVisibleOptions + 4);
         println("Operation canceled");
         return null;
       }

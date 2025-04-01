@@ -1,4 +1,4 @@
-package dev.buildcli.core.utils.markdown;
+package dev.buildcli.core.utils.console.markdown;
 
 import dev.buildcli.core.utils.BeautifyShell;
 

@@ -20,5 +20,6 @@
   </root>
 
   <logger name="org.apache.sshd" level="WARN"/>
+  <logger name="org.pf4j" level="OFF" />
 
 </configuration>

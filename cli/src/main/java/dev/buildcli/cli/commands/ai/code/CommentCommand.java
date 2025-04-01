@@ -9,7 +9,7 @@ import dev.buildcli.core.utils.async.Async;
 import dev.buildcli.core.utils.config.ConfigContextLoader;
 import dev.buildcli.core.utils.filesystem.FindFilesUtils;
 import dev.buildcli.core.utils.ai.IAParamsUtils;
-import dev.buildcli.core.utils.markdown.MarkdownInterpreter;
+import dev.buildcli.core.utils.console.markdown.MarkdownInterpreter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import picocli.CommandLine.Command;
