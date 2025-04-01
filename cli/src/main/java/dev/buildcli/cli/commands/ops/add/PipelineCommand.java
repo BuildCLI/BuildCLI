@@ -1,4 +1,4 @@
-package dev.buildcli.cli.commands.project.add;
+package dev.buildcli.cli.commands.ops.add;
 
 import dev.buildcli.core.actions.pipeline.PipelineFileGenerator;
 import dev.buildcli.core.domain.BuildCLICommand;
