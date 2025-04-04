@@ -39,6 +39,12 @@ public class DockerProcess extends AbstractCommandLineProcess{
     return process;
   }
 
+  public static DockerProcess createSilentProcess(String... args) {
+    var process = new DockerProcess(false);
+    process.commands.addAll(List.of(args));
+    return process;
+  }
+
   public static DockerProcess createGetVersionProcess() {
     var process = new DockerProcess(false);
 

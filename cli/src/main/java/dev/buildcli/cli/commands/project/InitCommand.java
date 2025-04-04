@@ -1,15 +1,21 @@
 package dev.buildcli.cli.commands.project;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-
 import dev.buildcli.core.domain.BuildCLICommand;
 import dev.buildcli.core.exceptions.CommandExecutorRuntimeException;
 import dev.buildcli.core.log.SystemOutLogger;
-
+import dev.buildcli.plugin.BuildCLIPlugin;
+import dev.buildcli.plugin.enums.TemplateType;
+import dev.buildcli.plugin.utils.BuildCLIPluginManager;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.LinkedList;
+
+import static dev.buildcli.core.utils.console.input.InteractiveInputUtils.options;
+import static dev.buildcli.core.utils.console.input.InteractiveInputUtils.question;
 
 
 @Command(
@@ -23,29 +29,22 @@ public class InitCommand implements BuildCLICommand {
   private String projectName;
   @Option(names = {"--jdk", "-j"}, defaultValue = "17")
   private String jdkVersion;
+  @Option(names = {"--template", "-t"}, description = "Choose project initializr by available templates", defaultValue = "false")
+  private boolean template;
 
   @Override
   public void run() {
-    String basePackage = "org." + projectName.toLowerCase();
-    String[] dirs = {
-        "src/main/java/" + basePackage.replace('.', '/'),
-        "src/main/resources",
-        "src/test/java/" + basePackage.replace('.', '/')
-    };
+    if (template) {
+      var templates = BuildCLIPluginManager.getTemplatesByType(TemplateType.PROJECT);
+      templates = new LinkedList<>(templates);
+      templates.add(new QuickStartProject());
 
-    for (String dir : dirs) {
-      File directory = new File(dir);
-      if (directory.mkdirs()) {
-        SystemOutLogger.log("Directory created: " + dir);
-      }
-    }
+      var chooseTemplate = options("Choose a project template", templates, BuildCLIPlugin::name);
 
-    try {
-      createReadme(projectName);
-      createMainClass(basePackage);
-      createPomFile(projectName);
-    } catch (IOException e) {
-      throw new CommandExecutorRuntimeException(e);
+      chooseTemplate.execute();
+
+    } else {
+      new QuickStartProject().execute();
     }
   }
 
@@ -141,6 +140,57 @@ public class InitCommand implements BuildCLICommand {
             """.formatted(projectName.toLowerCase(), projectName, jdkVersion, projectName.toLowerCase()));
       }
       SystemOutLogger.log("pom.xml file created with default configuration.");
+    }
+  }
+
+  private class QuickStartProject extends dev.buildcli.plugin.BuildCLITemplatePlugin {
+    @Override
+    public TemplateType type() {
+      return TemplateType.PROJECT;
+    }
+
+    @Override
+    public void execute() {
+      projectName = projectName == null || projectName.isEmpty() ? question("Enter project name") : projectName;
+      jdkVersion = jdkVersion == null || jdkVersion.isEmpty() ? question("Enter jdk version") : jdkVersion;
+      var basePackage = question("Enter base-package");
+
+      String[] dirs = {
+          "src/main/java/" + basePackage.replace('.', '/'),
+          "src/main/resources",
+          "src/test/java/" + basePackage.replace('.', '/')
+      };
+
+      for (String dir : dirs) {
+        File directory = new File(dir);
+        if (directory.mkdirs()) {
+          SystemOutLogger.log("Directory created: " + dir);
+        }
+      }
+
+      try {
+        createReadme(projectName);
+        createMainClass(basePackage);
+        createPomFile(projectName);
+      } catch (IOException e) {
+        throw new CommandExecutorRuntimeException(e);
+      }
+
+    }
+
+    @Override
+    public String name() {
+      return "quickstart";
+    }
+
+    @Override
+    public String description() {
+      return "Quick start project";
+    }
+
+    @Override
+    public String version() {
+      return "0.0.1";
     }
   }
 }

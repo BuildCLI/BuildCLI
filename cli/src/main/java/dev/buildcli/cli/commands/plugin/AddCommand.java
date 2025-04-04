@@ -25,8 +25,8 @@ import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
-import static dev.buildcli.core.utils.input.InteractiveInputUtils.confirm;
-import static dev.buildcli.core.utils.input.InteractiveInputUtils.question;
+import static dev.buildcli.core.utils.console.input.InteractiveInputUtils.confirm;
+import static dev.buildcli.core.utils.console.input.InteractiveInputUtils.question;
 
 @Command(
     name = "add",

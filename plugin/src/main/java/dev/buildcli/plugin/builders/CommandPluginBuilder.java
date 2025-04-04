@@ -168,6 +168,9 @@ public class CommandPluginBuilder implements PluginBuilder {
         pluginPackage,
         className + "Command.java"
     );
+    if (!Files.exists(javaFilePath.getParent())) {
+      Files.createDirectories(javaFilePath.getParent());
+    }
     Files.writeString(javaFilePath, commandContent);
 
     // Write service provider file
@@ -176,7 +179,9 @@ public class CommandPluginBuilder implements PluginBuilder {
         "src/main/resources/META-INF/services",
         SERVICE_FILE
     );
-
+    if (!Files.exists(serviceFilePath.getParent())) {
+      Files.createDirectories(serviceFilePath.getParent());
+    }
     String serviceContent = String.format("dev.buildcli.plugin.%s.%sCommand", pluginPackage, className);
     Files.writeString(serviceFilePath, serviceContent);
 
@@ -185,7 +190,9 @@ public class CommandPluginBuilder implements PluginBuilder {
         "src/main/resources",
         "plugin.properties"
     );
-
+    if (!Files.exists(pf4jFilePath.getParent())) {
+      Files.createDirectories(pf4jFilePath.getParent());
+    }
     var pf4jContent = String.format("""
         plugin.id=%s
         plugin.version=0.0.1-SNAPSHOT
@@ -196,6 +203,9 @@ public class CommandPluginBuilder implements PluginBuilder {
 
     // Write POM file
     Path pomFilePath = Paths.get(rootDirectory.getAbsolutePath(), "pom.xml");
+    if (!Files.exists(pomFilePath.getParent())) {
+      Files.createDirectories(pomFilePath.getParent());
+    }
     String pomContent = String.format(POM_TEMPLATE, pluginPackage, pluginPackage, pluginPackage);
     Files.writeString(pomFilePath, pomContent);
   }

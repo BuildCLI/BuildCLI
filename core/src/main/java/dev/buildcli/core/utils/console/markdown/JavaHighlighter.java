@@ -1,10 +1,10 @@
-package dev.buildcli.core.utils.markdown;
+package dev.buildcli.core.utils.console.markdown;
 
 import dev.buildcli.core.utils.BeautifyShell;
 
 import static dev.buildcli.core.utils.BeautifyShell.yellowFg;
-import static dev.buildcli.core.utils.markdown.SyntaxHighlighter.highlightGeneric;
-import static dev.buildcli.core.utils.markdown.SyntaxHighlighter.highlightPattern;
+import static dev.buildcli.core.utils.console.markdown.SyntaxHighlighter.highlightGeneric;
+import static dev.buildcli.core.utils.console.markdown.SyntaxHighlighter.highlightPattern;
 
 /**
  * Java syntax highlighter

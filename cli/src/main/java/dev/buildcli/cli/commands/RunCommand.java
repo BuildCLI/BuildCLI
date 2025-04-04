@@ -1,5 +1,8 @@
 package dev.buildcli.cli.commands;
 
+import dev.buildcli.cli.commands.run.OrchestrationCommand;
+import dev.buildcli.cli.commands.run.OrchestrationDownCommand;
+import dev.buildcli.cli.commands.run.OrchestrationUpCommand;
 import dev.buildcli.core.actions.commandline.CommandLineProcess;
 import dev.buildcli.core.actions.commandline.JavaProcess;
 import dev.buildcli.core.actions.commandline.MavenProcess;
@@ -19,7 +22,11 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-@Command(name = "run", description = "Executes the project with the active properties file.", subcommands = {DockerfileCommand.class}, mixinStandardHelpOptions = true)
+@Command(name = "run",
+        description = "Executes the project with the active properties file.",
+        subcommands = {DockerfileCommand.class, OrchestrationCommand.class, OrchestrationDownCommand.class,
+                       OrchestrationUpCommand.class},
+        mixinStandardHelpOptions = true)
 public class RunCommand implements BuildCLICommand {
   private final Logger logger = Logger.getLogger(RunCommand.class.getName());
   private final ProfileManager profileManager = new ProfileManager();
@@ -104,7 +111,7 @@ public class RunCommand implements BuildCLICommand {
   }
 
   private String findJar() throws IOException, InterruptedException {
-    File targetDir = new File("target");
+    File targetDir = new File(file, "target");
     if (!targetDir.exists() || !targetDir.isDirectory()) {
       throw new IOException("Target directory does not exist or is not a directory.");
     }

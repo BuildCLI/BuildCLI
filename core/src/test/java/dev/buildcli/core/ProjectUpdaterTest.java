@@ -1,4 +1,4 @@
-package dev.buildcli.cli.core;
+package dev.buildcli.core;
 
 import dev.buildcli.core.project.ProjectUpdater;
 import dev.buildcli.core.utils.PomUtils;

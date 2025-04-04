@@ -1,4 +1,4 @@
-package dev.buildcli.core.utils.markdown;
+package dev.buildcli.core.utils.console.markdown;
 
 /**
  * Interface for language-specific syntax highlighters

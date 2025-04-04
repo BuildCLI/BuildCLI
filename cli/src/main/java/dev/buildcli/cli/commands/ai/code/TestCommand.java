@@ -11,7 +11,7 @@ import dev.buildcli.core.utils.ai.IAParamsUtils;
 import dev.buildcli.core.utils.async.Async;
 import dev.buildcli.core.utils.config.ConfigContextLoader;
 import dev.buildcli.core.utils.filesystem.FindFilesUtils;
-import dev.buildcli.core.utils.markdown.MarkdownInterpreter;
+import dev.buildcli.core.utils.console.markdown.MarkdownInterpreter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import picocli.CommandLine.Command;
@@ -31,7 +31,7 @@ import java.util.function.Supplier;
 
 import static dev.buildcli.core.constants.AIConstants.GENERATE_TEST_PROMPT;
 import static dev.buildcli.core.utils.BeautifyShell.blueFg;
-import static dev.buildcli.core.utils.input.InteractiveInputUtils.confirm;
+import static dev.buildcli.core.utils.console.input.InteractiveInputUtils.confirm;
 
 @Command(
     name = "test",

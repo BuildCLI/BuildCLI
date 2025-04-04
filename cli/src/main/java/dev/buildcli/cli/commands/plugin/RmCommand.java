@@ -16,8 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static dev.buildcli.core.constants.ConfigDefaultConstants.PLUGIN_PATHS;
-import static dev.buildcli.core.utils.input.InteractiveInputUtils.confirm;
-import static dev.buildcli.core.utils.input.InteractiveInputUtils.question;
+import static dev.buildcli.core.utils.console.input.InteractiveInputUtils.confirm;
+import static dev.buildcli.core.utils.console.input.InteractiveInputUtils.question;
 
 @Command(
     name = "remove",

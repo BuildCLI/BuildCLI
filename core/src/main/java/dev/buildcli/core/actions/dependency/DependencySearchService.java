@@ -1,7 +1,6 @@
 package dev.buildcli.core.actions.dependency;
 
 import com.google.gson.*;
-import dev.buildcli.core.model.Dependency;
 
 import java.net.URI;
 import java.net.URLEncoder;
@@ -13,7 +12,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.stream.StreamSupport;
 
-import static dev.buildcli.core.utils.input.InteractiveInputUtils.options;
+import static dev.buildcli.core.utils.console.input.InteractiveInputUtils.options;
 import static dev.buildcli.core.constants.DependencyConstants.DEPENDENCIES;
 
 public class DependencySearchService {
