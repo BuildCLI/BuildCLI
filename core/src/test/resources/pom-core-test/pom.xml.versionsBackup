@@ -1,0 +1,14 @@
+<project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.example</groupId>
+  <artifactId>versions-backup</artifactId>
+  <version>1.0</version>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.temp</groupId>
+      <artifactId>temp-lib</artifactId>
+      <version>0.0.1</version>
+    </dependency>
+  </dependencies>
+</project>

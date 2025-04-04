@@ -1,0 +1,25 @@
+<project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.example.coretest</groupId>
+  <artifactId>pom-core-test</artifactId>
+  <version>1.0</version>
+
+  <dependencies>
+    <!-- We'll start with three dependencies -->
+    <dependency>
+      <groupId>com.example</groupId>
+      <artifactId>dep1</artifactId>
+      <version>1.0</version>
+    </dependency>
+    <dependency>
+      <groupId>com.example</groupId>
+      <artifactId>dep2</artifactId>
+      <version>1.0</version>
+    </dependency>
+    <dependency>
+      <groupId>com.example</groupId>
+      <artifactId>dep3</artifactId>
+      <version>1.0</version>
+    </dependency>
+  </dependencies>
+</project>

@@ -1,0 +1,8 @@
+<!-- non-dependencies-pom.xml (example) -->
+<project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.example</groupId>
+  <artifactId>my-sample</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <!-- Notice: No <dependencies> tag here -->
+</project>
