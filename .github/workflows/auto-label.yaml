@@ -20,7 +20,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Auto Label PRs
-        uses: actions/labeler@v4
+        uses: actions/labeler@v5
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           configuration-path: .github/labeler.yml
@@ -33,7 +33,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Auto Label Issues
-        uses: actions/labeler@v4
+        uses: actions/labeler@v5
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           configuration-path: .github/labeler.yml
