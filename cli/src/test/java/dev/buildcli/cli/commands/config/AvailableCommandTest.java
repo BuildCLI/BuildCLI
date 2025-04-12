@@ -26,16 +26,14 @@ class AvailableCommandTest {
 
     int exitCode = cmd.execute("config", "available");
 
-    System.out.println(sw.toString());
-
     Assertions.assertEquals(0, exitCode);
-    /*Assertions.assertTrue(sw.toString().contains("buildcli.logging.banner.enabled"));
+    Assertions.assertTrue(sw.toString().contains("buildcli.logging.banner.enabled"));
     Assertions.assertTrue(sw.toString().contains("buildcli.logging.banner.path"));
     Assertions.assertTrue(sw.toString().contains("buildcli.ai.vendor"));
     Assertions.assertTrue(sw.toString().contains("buildcli.ai.model"));
     Assertions.assertTrue(sw.toString().contains("buildcli.ai.url"));
     Assertions.assertTrue(sw.toString().contains("buildcli.ai.token"));
-    Assertions.assertTrue(sw.toString().contains("buildcli.plugins.paths"));*/
+    Assertions.assertTrue(sw.toString().contains("buildcli.plugin.paths"));
   }
 
   @Test
@@ -48,13 +46,13 @@ class AvailableCommandTest {
     int exitCode = cmd.execute("config", "a");
 
     Assertions.assertEquals(0, exitCode);
-    /*Assertions.assertTrue(sw.toString().contains("buildcli.logging.banner.enabled"));
+    Assertions.assertTrue(sw.toString().contains("buildcli.logging.banner.enabled"));
     Assertions.assertTrue(sw.toString().contains("buildcli.logging.banner.path"));
     Assertions.assertTrue(sw.toString().contains("buildcli.ai.vendor"));
     Assertions.assertTrue(sw.toString().contains("buildcli.ai.model"));
     Assertions.assertTrue(sw.toString().contains("buildcli.ai.url"));
     Assertions.assertTrue(sw.toString().contains("buildcli.ai.token"));
-    Assertions.assertTrue(sw.toString().contains("buildcli.plugins.paths"));*/
+    Assertions.assertTrue(sw.toString().contains("buildcli.plugin.paths"));
   }
 
   @Test
@@ -63,11 +61,14 @@ class AvailableCommandTest {
 
     var sw = new StringWriter();
     cmd.setOut(new PrintWriter(sw));
+    cmd.setErr(new PrintWriter(sw));
 
     int exitCode = cmd.execute("config", "az");
 
-    Assertions.assertEquals(2, exitCode);
-   /* Assertions.assertTrue(sw.toString().contains("Unmatched argument at index 1: 'az'"));
-    Assertions.assertTrue(sw.toString().contains("Usage: buildcli config [-hV] [[-g] | [-l]] [COMMAND]"));*/
+    String output = sw.toString();
+
+    Assertions.assertEquals(2, exitCode, "Exit code deve ser 2 para erros de CLI");
+    Assertions.assertTrue(output.contains("Unmatched argument at index 1: 'az'"), "Missing error message");
+    Assertions.assertTrue(output.contains("Usage: buildcli config [-hV] [[-g] | [-l]] [COMMAND]"), "Incorrect usage message");
   }
 }
