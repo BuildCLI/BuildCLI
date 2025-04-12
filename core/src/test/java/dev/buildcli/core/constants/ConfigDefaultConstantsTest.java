@@ -1,16 +1,10 @@
 package dev.buildcli.core.constants;
 
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import java.nio.file.Path;
 import org.junit.jupiter.api.Test;
 
 import java.nio.file.Path;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
-
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Unit tests for ConfigDefaultConstants class.
@@ -24,7 +18,7 @@ class ConfigDefaultConstantsTest {
         
         // Test global file path constant
         Path expectedPath = Path.of(System.getProperty("user.home"), ".buildcli", "buildcli.properties");
-        assertEquals(expectedPath, ConfigDefaultConstants.BUILD_CLI_CONFIG_GLOBAL_FILE);
+        assertEquals(ConfigDefaultConstants.BUILD_CLI_CONFIG_GLOBAL_FILE, expectedPath);
     }
     
     @Test
@@ -42,8 +36,8 @@ class ConfigDefaultConstantsTest {
     @Test
     void testProjectConstants() {
         // Test project-related constants
-        assertEquals("buildcli.logging.project.name", ConfigDefaultConstants.PROJECT_NAME);
-        assertEquals("buildcli.logging.project.type", ConfigDefaultConstants.PROJECT_TYPE);
+        assertEquals("buildcli.project.name", ConfigDefaultConstants.PROJECT_NAME);
+        assertEquals("buildcli.project.type", ConfigDefaultConstants.PROJECT_TYPE);
     }
     
     @Test
