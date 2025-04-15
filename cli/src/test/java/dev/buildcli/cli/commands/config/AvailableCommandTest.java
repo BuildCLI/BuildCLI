@@ -2,13 +2,12 @@ package dev.buildcli.cli.commands.config;
 
 import dev.buildcli.cli.BuildCLI;
 import dev.buildcli.cli.utils.CommandUtils;
+import dev.buildcli.cli.utilsfortest.ConfigKeys;
+import dev.buildcli.cli.utilsfortest.TestUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import picocli.CommandLine;
-
-import java.io.PrintWriter;
-import java.io.StringWriter;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 class AvailableCommandTest {
   @BeforeAll
@@ -17,57 +16,24 @@ class AvailableCommandTest {
     CommandUtils.call("config", "set", "buildcli.logging.banner.enabled=false");
   }
 
-  @Test
-  void shouldListAllConfigs_whenRunAvailableCommand() {
-    var cmd = new CommandLine(new BuildCLI());
+  @ParameterizedTest
+  @ValueSource(strings = {"available", "a"})
+  void shouldSuccess_whenRunValidCommands(String command) {
+    var result = TestUtils.executeCommand(BuildCLI.class, "config", command);
 
-    var sw = new StringWriter();
-    cmd.setOut(new PrintWriter(sw));
-
-    int exitCode = cmd.execute("config", "available");
-
-    System.out.println(sw.toString());
-
-    Assertions.assertEquals(0, exitCode);
-    /*Assertions.assertTrue(sw.toString().contains("buildcli.logging.banner.enabled"));
-    Assertions.assertTrue(sw.toString().contains("buildcli.logging.banner.path"));
-    Assertions.assertTrue(sw.toString().contains("buildcli.ai.vendor"));
-    Assertions.assertTrue(sw.toString().contains("buildcli.ai.model"));
-    Assertions.assertTrue(sw.toString().contains("buildcli.ai.url"));
-    Assertions.assertTrue(sw.toString().contains("buildcli.ai.token"));
-    Assertions.assertTrue(sw.toString().contains("buildcli.plugins.paths"));*/
+    Assertions.assertEquals(0, result.exitCode);
+    ConfigKeys.ALL_KEYS.forEach(
+            key -> Assertions.assertTrue(result.output.contains(key), "Key not found: " + key));
   }
 
-  @Test
-  void shouldListAllConfigs_whenRunACommand() {
-    var cmd = new CommandLine(new BuildCLI());
+  @ParameterizedTest
+  @ValueSource(strings = {"az"})
+  void shouldFail_whenRunInvalidCommands(String command) {
+    var result = TestUtils.executeCommand(BuildCLI.class, "config", command);
 
-    var sw = new StringWriter();
-    cmd.setOut(new PrintWriter(sw));
+    Assertions.assertEquals(2, result.exitCode, "Exit code must be 2 for CLI errors");
+    Assertions.assertTrue(result.error.contains("Unmatched argument at index 1: '" + command + "'"), "Missing error message");
+    Assertions.assertTrue(result.error.contains("Usage: buildcli config [-hV] [[-g] | [-l]] [COMMAND]"), "Incorrect usage message");
 
-    int exitCode = cmd.execute("config", "a");
-
-    Assertions.assertEquals(0, exitCode);
-    /*Assertions.assertTrue(sw.toString().contains("buildcli.logging.banner.enabled"));
-    Assertions.assertTrue(sw.toString().contains("buildcli.logging.banner.path"));
-    Assertions.assertTrue(sw.toString().contains("buildcli.ai.vendor"));
-    Assertions.assertTrue(sw.toString().contains("buildcli.ai.model"));
-    Assertions.assertTrue(sw.toString().contains("buildcli.ai.url"));
-    Assertions.assertTrue(sw.toString().contains("buildcli.ai.token"));
-    Assertions.assertTrue(sw.toString().contains("buildcli.plugins.paths"));*/
-  }
-
-  @Test
-  void shouldError_whenRunWrongCommand() {
-    var cmd = new CommandLine(new BuildCLI());
-
-    var sw = new StringWriter();
-    cmd.setOut(new PrintWriter(sw));
-
-    int exitCode = cmd.execute("config", "az");
-
-    Assertions.assertEquals(2, exitCode);
-   /* Assertions.assertTrue(sw.toString().contains("Unmatched argument at index 1: 'az'"));
-    Assertions.assertTrue(sw.toString().contains("Usage: buildcli config [-hV] [[-g] | [-l]] [COMMAND]"));*/
   }
 }
