@@ -12,7 +12,7 @@ class PomUtilsTest {
 	void shouldRemoveExistingDependency() {
 		var groupId = "info.picocli";
 		var artifactId = "picocli";
-		var changedPom = PomUtils.rmDependencyToPom("src/test/resources/pom-utils-test/pom.xml", 
+		var changedPom = PomUtils.rmDependencyToPom("src/test/resources/pom-utils-test/pom.xml",
 				new String[]{ groupId.concat(":").concat(artifactId) });
 		assertFalse(changedPom.hasDependency(groupId, artifactId));
 		assertFalse(changedPom.hasDependency("org.junit", "junit-bom"));
