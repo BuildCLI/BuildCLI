@@ -24,6 +24,11 @@
             <groupId>dev.buildcli</groupId>
             <artifactId>buildcli-core</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.pf4j</groupId>
+            <artifactId>pf4j</artifactId>
+            <version>3.13.0</version>
+        </dependency>
     </dependencies>
 
     <build>

@@ -23,12 +23,10 @@
 			<groupId>info.picocli</groupId>
 			<artifactId>picocli</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>dev.buildcli</groupId>
 			<artifactId>buildcli-core</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>dev.buildcli</groupId>
 			<artifactId>buildcli-plugin</artifactId>
@@ -38,6 +36,11 @@
 					<artifactId>buildcli-core</artifactId>
 				</exclusion>
 			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>dev.buildcli</groupId>
+			<artifactId>buildcli-hooks</artifactId>
+			<version>${project.version}</version>
 		</dependency>
 	</dependencies>
 
@@ -98,7 +101,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<version>3.2.5</version>
+				<version>3.5.3</version>
 				<configuration>
 					<forkCount>1</forkCount>
 					<argLine>

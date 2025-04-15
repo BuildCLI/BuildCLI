@@ -1,6 +1,10 @@
 package dev.buildcli.core.constants;
 
 public abstract class AIConstants {
+
+  private AIConstants() {
+  }
+
   public static final String DOCUMENT_CODE_PROMPT = """
       ### Strict Code Commenting Prompt
       
@@ -18,7 +22,7 @@ public abstract class AIConstants {
       
       ### How to Add Comments: 
       ✔️ Inline comments (`//` for Java, JavaScript, C#, etc., `#` for Python) should be placed next to important lines of code. 
-      ✔️ Block comments (`/** ... */` or `""\" ... ""\"`) should be used to document classes and functions. 
+      ✔️ Block comments (`/** ... */` or `" ... "`) should be used to document classes and functions. 
       ✔️ Describe the intent behind the code and complex logic—avoid redundant or obvious comments. 
       ✔️ Only add comments—do not rewrite, replace, or remove anything. 
       
@@ -27,9 +31,9 @@ public abstract class AIConstants {
       ### Example Before: 
       ```java
       package com.example;
-            
+      
       import com.example.AClass;
-            
+      
       public class AClass {
         public int add(int a, int b) {
             return a + b;
@@ -63,7 +67,22 @@ public abstract class AIConstants {
 
   public static final String COMMENT_CODE_PROMPT = """
       *"Review the following code for readability, performance, maintainability, and best practices. Identify potential bugs, security vulnerabilities, and areas for optimization. Suggest improvements while keeping the code’s intended functionality intact. Provide clear explanations for each suggestion."* \s
-
+      
       Your comments should be **precise**, explaining not just what is wrong but why it is an issue and how it can be improved."* \s
       """;
+  public static final String GENERATE_TEST_PROMPT = """
+      You are a software testing expert, and your task is to generate automated tests in %s. \
+      The tests must follow the AAA methodology (Arrange, Act, Assert) and ensure at least 80%% code coverage \
+      (both line and case coverage), including edge cases and invalid inputs.
+      
+      For each test:
+      
+          Arrange: Set up the test environment, initialize necessary data, and create required objects.
+          Act: Execute the function or method under test.
+          Assert: Verify that the results match expectations, covering both positive and negative scenarios.
+      
+      The tests should be well-structured, readable, and follow best practices for the chosen language and testing framework. \
+      Ensure clear descriptions for each test case and include boundary conditions, edge cases, and error handling scenarios.
+      """;
+
 }

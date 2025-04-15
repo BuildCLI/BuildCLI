@@ -43,7 +43,7 @@ if %errorlevel% neq 0 (
     exit /b 1
 )
 echo Building and packaging the project...
-mvn clean package -DskipTests || (
+call mvn clean package -DskipTests || (
     echo Maven build failed.
     pause
     exit /b 1
@@ -58,7 +58,7 @@ copy /Y cli\target\buildcli.jar "%USERPROFILE%\bin\buildcli.jar" >nul
 echo Creating buildcli.bat shortcut...
 (
     echo @echo off
-    echo java --enable-preview --add-modules jdk.incubator.vector -jar "%%USERPROFILE%%\bin\buildcli.jar"
+    echo java --enable-preview --add-modules jdk.incubator.vector -jar "%USERPROFILE%\bin\buildcli.jar" %*
 ) > "%USERPROFILE%\bin\buildcli.bat"
 echo Ensuring %USERPROFILE%\bin is in the PATH...
 echo If the command fails, add this manually to your environment variables:

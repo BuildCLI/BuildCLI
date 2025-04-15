@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+@Deprecated(forRemoval = true)
 public class ProjectCompiler {
 
     private static final Logger logger = Logger.getLogger(ProjectCompiler.class.getName());

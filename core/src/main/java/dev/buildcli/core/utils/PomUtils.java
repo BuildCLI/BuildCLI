@@ -99,6 +99,22 @@ public class PomUtils {
 			throw new ExtractionRuntimeException(e);
 		}
     }
+
+		public static Dependency convertToDependency(String dependencyString) {
+			String[] split = dependencyString.split(":");
+
+			if (split.length == 2) {
+				return new Dependency(split[0], split[1], null);
+			}
+
+			if (split.length == 3) {
+				return new Dependency(split[0], split[1], split[2]);
+			}
+
+			logger.log(Level.WARNING, "Invalid dependency format. Use 'groupId:artifactId'"
+					+ "or 'groupId:artifactId:version'.");
+			throw new RuntimeException();
+		}
     
     private static void loadPomData(File pomFile) throws 
     		ParserConfigurationException, SAXException, IOException, TransformerException  {

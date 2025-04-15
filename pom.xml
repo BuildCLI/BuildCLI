@@ -13,6 +13,7 @@
     <modules>
         <module>cli</module>
         <module>core</module>
+        <module>hooks</module>
         <module>plugin</module>
     </modules>
 
@@ -30,9 +31,30 @@
         </dependency>
 
         <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
+            <version>5.12.1</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-junit-jupiter</artifactId>
+            <version>5.17.0</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>5.17.0</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-core</artifactId>
-            <version>1.5.17</version>
+            <version>1.5.18</version>
         </dependency>
 
         <dependency>
@@ -44,7 +66,7 @@
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>1.5.17</version>
+            <version>1.5.18</version>
         </dependency>
     </dependencies>
 
@@ -66,9 +88,14 @@
                 <version>${project.version}</version>
             </dependency>
             <dependency>
+                <groupId>dev.buildcli</groupId>
+                <artifactId>buildcli-hooks</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.junit</groupId>
                 <artifactId>junit-bom</artifactId>
-                <version>5.11.4</version>
+                <version>5.12.1</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
