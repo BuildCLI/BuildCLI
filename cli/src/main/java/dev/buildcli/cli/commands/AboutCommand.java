@@ -2,7 +2,7 @@ package dev.buildcli.cli.commands;
 
 
 import dev.buildcli.core.domain.BuildCLICommand;
-import dev.buildcli.core.utils.BuildCLIService;
+import dev.buildcli.core.utils.AboutService;
 import picocli.CommandLine.Command;
 
 @Command(name = "about",
@@ -13,6 +13,6 @@ public class AboutCommand implements BuildCLICommand {
 
   @Override
   public void run() {
-    BuildCLIService.about();
+    AboutService.about();
   }
 }
