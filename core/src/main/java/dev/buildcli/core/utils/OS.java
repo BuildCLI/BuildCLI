@@ -1,27 +1,33 @@
 package dev.buildcli.core.utils;
 
+import dev.buildcli.core.domain.man.CommandMan;
+import dev.buildcli.core.exceptions.CommandExecutorRuntimeException;
+
 import java.util.logging.Logger;
 
 public abstract class OS {
   private static final Logger logger = Logger.getLogger(OS.class.getName());
+  private static RuntimeCommandExecutor runtimeCommandExecutor = new RuntimeCommandExecutor();
   private OS() {}
 
-  private static final String OS = System.getProperty("os.name").toLowerCase();
+  public static void setCommandExecutor(RuntimeCommandExecutor executor) {
+    runtimeCommandExecutor = executor;
+  }
 
   public static boolean isWindows() {
-    return OS.contains("win");
+    return getOSName().contains("win");
   }
 
   public static boolean isMac() {
-    return OS.contains("mac");
+    return getOSName().contains("mac");
   }
 
   public static boolean isLinux() {
-    return OS.contains("linux") || OS.contains("nix") || OS.contains("nux") || OS.contains("aix");
+    return getOSName().contains("linux") || getOSName().contains("nix") || getOSName().contains("nux") || getOSName().contains("aix");
   }
 
     public static String getOSName() {
-        return System.getProperty("os.name");
+        return System.getProperty("os.name").toLowerCase();
     }
 
     public static String getArchitecture() {
@@ -30,13 +36,9 @@ public abstract class OS {
 
   public static void cdDirectory(String path){
     try {
-        String[] command;
-        if (isWindows()) {
-            command = new String[]{"cmd", "/c", "cd", path};
-        } else {
-            command = new String[]{"sh", "-c", "cd", path};
-        }
-        Runtime.getRuntime().exec(command);
+      CommandMan command = CommandMan.create()
+                .addCommand("cd " + path);
+        executeCommand(command);
     } catch (Exception e) {
       logger.severe("Error changing directory: " + e.getMessage());
     }
@@ -44,13 +46,15 @@ public abstract class OS {
 
   public static void cpDirectoryOrFile(String source, String destination){
     try {
-      String[] command;
+      CommandMan command;
       if (isWindows()) {
-        command = new String[]{"cmd", "/c", "copy", source, destination};
+        command = CommandMan.create()
+            .addCommand("copy" + " " + source + " " + destination);
       } else {
-        command = new String[]{"sh", "-c", "cp",  source, destination};
+        command = CommandMan.create()
+            .addCommand("cp" + " " + source + " " + destination);
       }
-      Runtime.getRuntime().exec(command);
+      executeCommand(command);
     } catch (Exception e) {
       logger.severe("Error copying directory: " + e.getMessage());
     }
@@ -66,16 +70,29 @@ public abstract class OS {
       return homeBin;
   }
 
-  public static void chmodX(String path){
-      if(!isWindows()){
-            try {
-                String chmodCommand = "chmod +x " + path;
-                String[] command = new String[]{"sh", "-c", chmodCommand};
-                Runtime.getRuntime().exec(command);
-            } catch (Exception e) {
-                logger.severe("Error changing directory: " + e.getMessage());
-            }
+  public static void chmodX(String path) {
+    if (!isWindows()) {
+      try {
+        CommandMan commandMan = CommandMan.create()
+            .addCommand("chmod +x " + path);
+        executeCommand(commandMan);
+      } catch (Exception e) {
+        logger.severe("Error changing permissions: " + e.getMessage());
       }
+    }
+  }
 
+  private static void executeCommand(CommandMan commandMan) throws CommandExecutorRuntimeException {
+    try {
+      for (String cmd : commandMan.getCommands()) {
+        String[] command = isLinux() ? new String[]{"sh", "-c", cmd}
+                                     : new String[]{"cmd", "/c", cmd};
+        runtimeCommandExecutor.execute(command);
+      }
+    } catch (Exception e) {
+      String errorMessage = "Error executing command: " + e.getMessage();
+      logger.severe(errorMessage);
+      throw new CommandExecutorRuntimeException(e.getMessage());
+    }
   }
 }
