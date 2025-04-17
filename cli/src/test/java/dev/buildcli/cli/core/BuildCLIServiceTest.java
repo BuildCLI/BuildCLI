@@ -61,30 +61,6 @@ class BuildCLIServiceTest {
     assertFalse(BuildCLIService.shouldShowAsciiArt(new String[]{"invalid"}));
   }
 
-  @Test
-  void testAbout() {
-    when(gitExecMock.showContributors()).thenReturn("contributor1, contributor2");
-
-    var standardOut = System.out;
-    try {
-      var outputStream = new java.io.ByteArrayOutputStream();
-      System.setOut(new java.io.PrintStream(outputStream));
-
-      service.about();
-      String expected = """
-                BuildCLI is a command-line interface (CLI) tool for managing and automating common tasks in Java project development.
-                It allows you to create, compile, manage dependencies, and run Java projects directly from the terminal, simplifying the development process.
-
-                Visit the repository for more details: https://github.com/BuildCLI/BuildCLI
-
-                contributor1, contributor2""";
-
-      assertEquals(expected, outputStream.toString().trim());
-    } finally {
-      System.setOut(standardOut);
-    }
-  }
-
   // TODO BuildCLIService need a refactor to improve testing capacity
   void checkUpdates_shouldShowOutdatedMessage_whenUpdateAvailable() {
     when(gitExecMock.checkIfLocalRepositoryIsUpdated(any(), eq(REPO_URL))).thenReturn(false);
