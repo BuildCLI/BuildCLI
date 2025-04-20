@@ -111,7 +111,7 @@ public class BuildCLIService {
 
   private static void updateBuildCLI() {
     if (updateRepository()) {
-      generateBuildCLIJar();
+      JarGenerator.generateJar(buildCLIDirectory);
       String homeBuildCLI = OS.getHomeBinDirectory();
       OS.cpDirectoryOrFile(buildCLIDirectory + "/target/buildcli.jar", homeBuildCLI);
       OS.chmodX(homeBuildCLI + "/buildcli.jar");
@@ -138,21 +138,6 @@ public class BuildCLIService {
       return true;
     }
     return false;
-  }
-
-  private static void generateBuildCLIJar() {
-    OS.cdDirectory("");
-    OS.cdDirectory(buildCLIDirectory);
-
-    CommandLineProcess process = MavenProcess.createPackageProcessor(new File("."));
-
-    var exitedCode = process.run();
-
-    if (exitedCode == 0) {
-      System.out.println("Success...");
-    } else {
-      System.out.println("Failure...");
-    }
   }
 
   private static String getBuildCLIBuildDirectory() {
