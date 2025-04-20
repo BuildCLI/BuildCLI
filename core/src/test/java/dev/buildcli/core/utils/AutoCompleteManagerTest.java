@@ -9,20 +9,16 @@ import java.io.PrintStream;
 public class AutoCompleteManagerTest {
 
     private ByteArrayOutputStream outputStream;
-    AutoCompleteManager manager;
+    private AutoCompleteManager manager;
 
-    @BeforeEach
-    public void setUp() {
+    @Test
+    public void testSetupAutocomplete() {
+
         outputStream = new ByteArrayOutputStream();
         PrintStream printStream = new PrintStream(outputStream);
         System.setOut(printStream);
 
         manager = new AutoCompleteManager();
-    }
-
-
-    @Test
-    public void testSetupAutocomplete() {
 
         manager.setupAutocomplete();
         String output = outputStream.toString();
