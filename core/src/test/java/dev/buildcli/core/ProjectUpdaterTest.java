@@ -2,13 +2,15 @@ package dev.buildcli.core;
 
 import dev.buildcli.core.project.ProjectUpdater;
 import dev.buildcli.core.utils.PomUtils;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Objects;
 
@@ -16,20 +18,26 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ProjectUpdaterTest {
 
+	@TempDir
+	Path tempDir;
+
 	private static String backupPom;
 	private static String targetPom;
-
 	private ProjectUpdater updater;
-	
+
 	@BeforeEach
-	public void setUp() {
+	void setUp() throws IOException {
 		this.updater = new ProjectUpdater();
-	}
-	
-	@AfterEach
-	public void tearDown() throws IOException {
-		Files.delete(Paths.get(targetPom));
-		Files.move(Paths.get(backupPom), Paths.get(targetPom));
+
+		InputStream originPomStream = getClass().getResourceAsStream("/pom-core-test/pom.xml");
+
+		Path tempPom = tempDir.resolve("pom.xml");
+
+		Files.copy(originPomStream, tempPom, StandardCopyOption.REPLACE_EXISTING);
+
+		targetPom = tempPom.toString();
+		backupPom = targetPom + ".versionsBackup";
+
 	}
 
 	@Test

@@ -9,6 +9,7 @@ import java.io.PrintStream;
 public class AutoCompleteManagerTest {
 
     private ByteArrayOutputStream outputStream;
+
     private AutoCompleteManager manager;
 
     @Test
