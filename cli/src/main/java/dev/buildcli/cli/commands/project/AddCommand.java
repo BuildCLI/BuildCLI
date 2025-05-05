@@ -1,6 +1,10 @@
 package dev.buildcli.cli.commands.project;
 
+
+import dev.buildcli.cli.commands.ops.add.PipelineCommand;
 import dev.buildcli.cli.commands.project.add.*;
+import dev.buildcli.cli.commands.run.DockerfileCommand;
+
 import picocli.CommandLine.Command;
 
 @Command(name = "add", aliases = {"a"}, description = "Adds a new item to the project. This command "

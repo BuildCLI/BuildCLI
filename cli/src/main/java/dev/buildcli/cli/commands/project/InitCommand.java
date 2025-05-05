@@ -70,7 +70,7 @@ public class InitCommand implements BuildCLICommand {
       try (FileWriter writer = new FileWriter(javaClass)) {
         writer.write("""
                 package %s;
-            
+
                 public class Main {
                     public static void main(String[] args) {
                         System.out.println("Hello, World!");
@@ -82,7 +82,7 @@ public class InitCommand implements BuildCLICommand {
     }
   }
 
-  private void createPomFile(String projectName) throws IOException {
+  private void createPomFile(String projectName, String basePackage) throws IOException {
     File pomFile = new File("pom.xml");
     if (pomFile.createNewFile()) {
       try (FileWriter writer = new FileWriter(pomFile)) {
@@ -91,17 +91,17 @@ public class InitCommand implements BuildCLICommand {
                          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://www.apache.org/xsd/maven-4.0.0.xsd">
                     <modelVersion>4.0.0</modelVersion>
-            
-                    <groupId>org.%s</groupId>
+
+                    <groupId>%s</groupId>
                     <artifactId>%s</artifactId>
                     <version>1.0-SNAPSHOT</version>
-            
+
                     <properties>
                         <maven.compiler.source>%s</maven.compiler.source>
                         <maven.compiler.target>${maven.compiler.source}</maven.compiler.target>
                         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
                     </properties>
-            
+
                     <dependencies>
                         <dependency>
                             <groupId>org.junit.jupiter</groupId>
@@ -110,7 +110,7 @@ public class InitCommand implements BuildCLICommand {
                             <scope>test</scope>
                         </dependency>
                     </dependencies>
-            
+
                     <build>
                         <plugins>
                             <plugin>
@@ -129,7 +129,7 @@ public class InitCommand implements BuildCLICommand {
                                 <configuration>
                                     <archive>
                                         <manifest>
-                                            <mainClass>org.%s.Main</mainClass>
+                                            <mainClass>%s.Main</mainClass>
                                         </manifest>
                                     </archive>
                                 </configuration>
@@ -137,7 +137,7 @@ public class InitCommand implements BuildCLICommand {
                         </plugins>
                     </build>
                 </project>
-            """.formatted(projectName.toLowerCase(), projectName, jdkVersion, projectName.toLowerCase()));
+            """.formatted(basePackage, projectName, jdkVersion, basePackage));
       }
       SystemOutLogger.log("pom.xml file created with default configuration.");
     }
@@ -171,7 +171,7 @@ public class InitCommand implements BuildCLICommand {
       try {
         createReadme(projectName);
         createMainClass(basePackage);
-        createPomFile(projectName);
+        createPomFile(projectName, basePackage);
       } catch (IOException e) {
         throw new CommandExecutorRuntimeException(e);
       }

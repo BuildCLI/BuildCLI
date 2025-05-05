@@ -456,7 +456,7 @@ ollama run llama3.2
 ## Contribution
 
 Contributions are welcome! Feel free to open **Issues** and submit **Pull Requests**.
-See the [CONTRIBUTING.md](CONTRIBUTING.md) file for more details.
+See the [CONTRIBUTING.md](/.github/CONTRIBUTING.md) file for more details.
 
 Quick steps to contribute:
 
