@@ -11,6 +11,7 @@ import java.nio.file.Path;
 import java.util.Comparator;
 import java.util.List;
 
+import static dev.buildcli.core.constants.MavenConstants.MAVEN_CMD;
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -43,7 +44,7 @@ public class MavenProcessTest {
     mavenProcess = MavenProcess.createProcessor();
     assertEquals(MavenProcess.class, mavenProcess.getClass());
     assertFalse(mavenProcess.commands.isEmpty());
-    assertEquals("mvn", mavenProcess.commands.get(0));
+    assertEquals(MAVEN_CMD, mavenProcess.commands.get(0));
     assertFalse(mavenProcess.commands.contains("build"));
   }
 
@@ -52,7 +53,7 @@ public class MavenProcessTest {
     mavenProcess = MavenProcess.createProcessor("clean", "build", "-f");
 
     assertFalse(mavenProcess.commands.isEmpty());
-    assertEquals("mvn", mavenProcess.commands.get(0));
+    assertEquals(MAVEN_CMD, mavenProcess.commands.get(0));
     assertEquals("clean", mavenProcess.commands.get(1));
     assertEquals("build", mavenProcess.commands.get(2));
     assertEquals("-f", mavenProcess.commands.get(3));
@@ -69,7 +70,7 @@ public class MavenProcessTest {
       String expectedLogMessage = "Running maven package command: mvn clean package -f " + tempDir.toString();
       assertTrue(outputStream.toString().contains(expectedLogMessage));
       assertFalse(mavenProcess.commands.isEmpty());
-      assertEquals("mvn", mavenProcess.commands.get(0));
+      assertEquals(MAVEN_CMD, mavenProcess.commands.get(0));
       assertEquals("clean", mavenProcess.commands.get(1));
       assertEquals("package", mavenProcess.commands.get(2));
       assertEquals("-f", mavenProcess.commands.get(3));
@@ -90,7 +91,7 @@ public class MavenProcessTest {
       String expectedLogMessage = "Running maven compile command: mvn compile -f " + tempDir.toString();
       assertTrue(outputStream.toString().contains(expectedLogMessage));
       assertFalse(mavenProcess.commands.isEmpty());
-      assertEquals("mvn", mavenProcess.commands.get(0));
+      assertEquals(MAVEN_CMD, mavenProcess.commands.get(0));
       assertEquals("clean", mavenProcess.commands.get(1));
       assertEquals("compile", mavenProcess.commands.get(2));
       assertEquals("-f", mavenProcess.commands.get(3));
@@ -104,7 +105,7 @@ public class MavenProcessTest {
   void testCreateGetVersionProcess() {
     mavenProcess = MavenProcess.createGetVersionProcessor();
     assertFalse(mavenProcess.commands.isEmpty());
-    assertEquals("mvn", mavenProcess.commands.get(0));
+    assertEquals(MAVEN_CMD, mavenProcess.commands.get(0));
     assertEquals("-v", mavenProcess.commands.get(1));
   }
 
