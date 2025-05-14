@@ -1,8 +1,10 @@
 name: Auto Assign Maintainers as PR Reviewers
 
 on:
-  pull_request:
-    types: [opened, synchronize, reopened]
+  push:
+    branches:
+      - main
+      - auto-assign
 
 jobs:
   assign-reviewers:
