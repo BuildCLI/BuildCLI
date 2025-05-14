@@ -1,0 +1,25 @@
+name: Auto Assign Maintainers as PR Reviewers
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  assign-reviewers:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Get maintainers list
+        id: maintainers
+        run: |
+          maintainers=$(curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            https://api.github.com/repos/${{ github.repository }}/collaborators | jq -r '.[].login')
+          echo "MAINTAINERS=$maintainers" >> $GITHUB_ENV
+
+      - name: Assign maintainers as reviewers
+        uses: github/assign-reviewer-action@v1
+        with:
+          reviewers: ${{ env.MAINTAINERS }}
