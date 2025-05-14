@@ -12,6 +12,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      - name: Install jq
+        run: sudo apt-get install jq  # Εγκατάσταση του jq (αν δεν υπάρχει)
+
       - name: Get maintainers list
         id: maintainers
         run: |
@@ -20,6 +23,20 @@ jobs:
           echo "MAINTAINERS=$maintainers" >> $GITHUB_ENV
 
       - name: Assign maintainers as reviewers
-        uses: github/assign-reviewer-action@v1
+        uses: actions/github-script@v6
         with:
-          reviewers: ${{ env.MAINTAINERS }}
+          script: |
+            const reviewers = process.env.MAINTAINERS.split("\n");
+            const prNumber = context.issue.number;
+
+            try {
+              await github.rest.pulls.requestReviewers({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: prNumber,
+                reviewers: reviewers
+              });
+              console.log("✅ Maintainers assigned as reviewers.");
+            } catch (error) {
+              console.error("❌ Error assigning reviewers: ", error);
+            }
