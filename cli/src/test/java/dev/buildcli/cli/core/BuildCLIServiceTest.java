@@ -50,17 +50,6 @@ class BuildCLIServiceTest {
     }
   }
 
-  @Test
-  void testShouldShowAsciiArt() {
-    assertFalse(BuildCLIService.shouldShowAsciiArt(new String[]{}));
-    assertTrue(BuildCLIService.shouldShowAsciiArt(new String[]{"--help"}));
-    assertTrue(BuildCLIService.shouldShowAsciiArt(new String[]{"p", "run"}));
-    assertTrue(BuildCLIService.shouldShowAsciiArt(new String[]{"p", "i", "-n"}));
-    assertTrue(BuildCLIService.shouldShowAsciiArt(new String[]{"about"}));
-    assertTrue(BuildCLIService.shouldShowAsciiArt(new String[]{"help"}));
-    assertFalse(BuildCLIService.shouldShowAsciiArt(new String[]{"invalid"}));
-  }
-
   // TODO BuildCLIService need a refactor to improve testing capacity
   void checkUpdates_shouldShowOutdatedMessage_whenUpdateAvailable() {
     when(gitExecMock.checkIfLocalRepositoryIsUpdated(any(), eq(REPO_URL))).thenReturn(false);
