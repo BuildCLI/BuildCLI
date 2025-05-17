@@ -75,6 +75,7 @@ public class BuildCLIService {
     System.out.println();
   }
 
+
   private static void updateBuildCLI() {
     if (updateRepository()) {
       generateBuildCLIJar();
@@ -134,10 +135,10 @@ public class BuildCLIService {
 
   private static String getFallbackDirectory() {
     String classLocation = BuildCLIService.class
-            .getProtectionDomain()
-            .getCodeSource()
-            .getLocation()
-            .toString();
+        .getProtectionDomain()
+        .getCodeSource()
+        .getLocation()
+        .toString();
     File location = new File(classLocation);
     return location.getAbsolutePath();
   }
@@ -157,4 +158,5 @@ public class BuildCLIService {
       throw new RuntimeException("Error while trying to read the content of the MANIFEST.MF file", e);
     }
   }
+
 }
