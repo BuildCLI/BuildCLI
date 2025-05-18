@@ -1,55 +1,67 @@
-name: Auto Assign Maintainers as PR Reviewers
+name: Assign Reviewers
+
 on:
-  push:
-    branches:
-      - main
-      - auto-assign
+  pull_request:
+    types: [opened, reopened, synchronize]
+
 jobs:
   assign-reviewers:
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
+      contents: read
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-      
+
       - name: Get maintainers list
-        id: maintainers
         run: |
+          pr_author="${{ github.event.pull_request.user.login }}"
+
           maintainers=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
             "https://api.github.com/repos/${{ github.repository }}/collaborators" | \
-            jq -r '.[] | select(.permissions.push == true and .login != "${{ github.event.pull_request.user.login }}") | .login')
+            jq -r --arg author "$pr_author" '.[] | select(.permissions.push == true and .login != $author) | .login')
+
+          echo "Found maintainers:"
+          echo "$maintainers"
+
+          # Safe multiline export
           {
             echo 'MAINTAINERS<<EOF'
             echo "$maintainers"
             echo 'EOF'
           } >> $GITHUB_ENV
 
-
       - name: Assign maintainers as reviewers
         uses: actions/github-script@v6
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
+            const pr = context.payload.pull_request;
+
+            if (!pr) {
+              console.log("This script only runs on pull_request events.");
+              return;
+            }
+
+            const prAuthor = pr.user.login;
             const reviewers = process.env.MAINTAINERS.split("\n").filter(Boolean);
-            
-            // Remove PR author from reviewers list if present
-            const prAuthor = context.payload.pull_request.user.login;
-            const filteredReviewers = reviewers.filter(reviewer => reviewer !== prAuthor);
-            
+            const filteredReviewers = reviewers.filter(r => r !== prAuthor);
+
             if (filteredReviewers.length === 0) {
               console.log("No eligible reviewers found (excluding PR author).");
               return;
             }
-            
+
             try {
               await github.rest.pulls.requestReviewers({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                pull_number: context.issue.number,
+                pull_number: pr.number,
                 reviewers: filteredReviewers
               });
-              console.log(`✓ Assigned ${filteredReviewers.length} maintainers as reviewers.`);
+              console.log(`✓ Assigned ${filteredReviewers.length} reviewers:`, filteredReviewers);
             } catch (error) {
-              console.error("❌ Error assigning reviewers: ", error.message);
+              console.error("❌ Error assigning reviewers:", error.message);
             }
