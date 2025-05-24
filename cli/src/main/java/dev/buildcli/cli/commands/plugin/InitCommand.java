@@ -2,8 +2,6 @@ package dev.buildcli.cli.commands.plugin;
 
 import dev.buildcli.cli.utils.CommandUtils;
 import dev.buildcli.core.domain.BuildCLICommand;
-import dev.buildcli.core.domain.configs.BuildCLIConfig;
-import dev.buildcli.core.utils.config.ConfigContextLoader;
 import dev.buildcli.plugin.enums.PluginType;
 import dev.buildcli.plugin.builders.PluginBuilderFactory;
 import org.slf4j.Logger;
@@ -45,8 +43,6 @@ public class InitCommand implements BuildCLICommand {
       description = "Parent directory where the plugin project will be created"
   )
   private String outputDirectory;
-
-  private final BuildCLIConfig globalConfig = ConfigContextLoader.getAllConfigs();
 
   @Override
   public void run() {

@@ -18,7 +18,6 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class BuildCLIServiceTest {
 
-  private static final String GIT_PATH = "path/to/git";
   private static final String REPO_URL = "https://github.com/BuildCLI/BuildCLI.git";
 
   @Mock

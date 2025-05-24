@@ -1,14 +1,10 @@
 package dev.buildcli.core.utils.filesystem;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class FindFilesUtils {
-  private static final Logger logger = LoggerFactory.getLogger(FindFilesUtils.class);
   private FindFilesUtils() {
   }
 

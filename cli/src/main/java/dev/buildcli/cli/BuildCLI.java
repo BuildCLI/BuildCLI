@@ -3,7 +3,6 @@ package dev.buildcli.cli;
 import dev.buildcli.cli.commands.*;
 import dev.buildcli.cli.commands.AiCommand;
 import dev.buildcli.cli.commands.BugCommand;
-import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.HelpCommand;
 

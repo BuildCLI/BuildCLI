@@ -55,9 +55,13 @@ class ChangelogGeneratorTest {
 
     private void makeCommit(String message) throws GitAPIException, IOException {
         File newFile = new File(tempRepo, UUID.randomUUID().toString() + ".txt");
-        Files.writeString(newFile.toPath(), "Test content");
+        Files.writeString(newFile.toPath(), "Test content\n");
         git.add().addFilepattern(".").call();
-        git.commit().setMessage(message).call();
+        git.commit()
+           .setMessage(message)
+           .setAllowEmpty(false)
+           .setNoVerify(true)
+           .call();
     }
 
     private void deleteDirectory(File file) {
@@ -69,4 +73,3 @@ class ChangelogGeneratorTest {
         file.delete();
     }
 }
-
