@@ -33,7 +33,7 @@ jobs:
         with:
           reporter: github-check
           github_token: ${{ secrets.GITHUB_TOKEN }}
-      - uses: dbelyaev/action-checkstyle@b2a507c55df92dfe5bb243ab4d0cc5d5d70ea603 # v1.17.5
+      - uses: dbelyaev/action-checkstyle@8e5f0fa3791d3f5cb3d5fcaf2047fe1444d075dd # v1.19.1
         with:
           reporter: github-check
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -61,13 +61,13 @@ jobs:
         with:
           persist-credentials: false
       - name: Install uv
-        uses: astral-sh/setup-uv@22695119d769bdb6f7032ad67b9bca0ef8c4a174 # v5.4.0
+        uses: astral-sh/setup-uv@6b9c6063abd6010835644d4c2e1bef4cf5cd0fca # v6.0.1
       - name: Run zizmor
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: uvx zizmor --pedantic --format sarif . > results.sarif
       - name: Upload SARIF file for GitHub Advanced Security Dashboard
-        uses: github/codeql-action/upload-sarif@1b549b9259bda1cb5ddde3b41741a82a2d15a841 # v3.28.13
+        uses: github/codeql-action/upload-sarif@ff0a06e83cb2de871e5a09832bc6a81e7276941f # v3.28.18
         with:
           sarif_file: results.sarif
           category: zizmor

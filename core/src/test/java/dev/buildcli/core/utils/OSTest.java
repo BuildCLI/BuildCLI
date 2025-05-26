@@ -181,11 +181,10 @@ class OSTest {
   @Test
   void shouldNotExecuteChmod_whenOSIsWindows() throws Exception {
     File ex = Files.createTempFile("test", "sh").toFile();
-    assertFalse(ex.canExecute());
     try {
       System.setProperty("os.name", "Windows 10");
       OS.chmodX(ex.toString());
-      assertFalse(ex.canExecute());
+      verify(mockRuntimeCommandExecutor, times(0)).execute(any());
     } finally {
       System.setProperty("os.name", OS_NAME);
     }
@@ -207,6 +206,7 @@ class OSTest {
 
   @Test
   void shouldNotThrowException_whenChmodXCommandFails() throws Exception {
+    System.setProperty("os.name", "Linux");
     doThrow(new RuntimeException("Exec falhou")).when(mockRuntimeCommandExecutor).execute(any());
     OS.setCommandExecutor(mockRuntimeCommandExecutor);
     assertDoesNotThrow(() -> OS.chmodX("testFile"));
