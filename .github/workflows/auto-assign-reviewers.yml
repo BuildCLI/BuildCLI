@@ -19,7 +19,7 @@ jobs:
         run: |
           pr_author="${{ github.event.pull_request.user.login }}"
 
-          maintainers=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+          maintainers=$(curl -s -H "Authorization: token ${{ secrets.buildcli }}" \
             "https://api.github.com/repos/${{ github.repository }}/collaborators" | \
             jq -r --arg author "$pr_author" '.[] | select(.permissions.push == true and .login != $author) | .login')
 
@@ -36,7 +36,7 @@ jobs:
       - name: Assign maintainers as reviewers
         uses: actions/github-script@v6
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.buildcli }}
           script: |
             const pr = context.payload.pull_request;
 
