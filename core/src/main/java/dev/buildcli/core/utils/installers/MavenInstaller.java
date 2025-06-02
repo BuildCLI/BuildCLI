@@ -2,6 +2,7 @@ package dev.buildcli.core.utils.installers;
 
 import dev.buildcli.core.log.SystemOutLogger;
 import dev.buildcli.core.utils.DirectoryCleanup;
+import dev.buildcli.core.utils.EnvUtils;
 import dev.buildcli.core.utils.OS;
 import dev.buildcli.core.utils.compress.FileExtractor;
 
@@ -55,7 +56,7 @@ public abstract class MavenInstaller {
 
   public static File installProgramFilesDirectory() {
     if (OS.isWindows()) {
-      String programFiles = System.getenv("ProgramFiles");
+      String programFiles = EnvUtils.getEnv("ProgramFiles");
       if (programFiles == null) {
         programFiles = "C:\\Program Files";
       }
