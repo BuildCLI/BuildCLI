@@ -14,6 +14,15 @@ public final class DirectoryCleanup {
 
   private DirectoryCleanup() { }
 
+  /**
+   * Deletes all files and subdirectories in the given directory,
+   * including the directory itself.
+   * <p>
+   * If the directory does not exist, logs a message and does nothing.
+   * Logs an error message if an I/O exception occurs during deletion.
+   *
+   * @param directory the path to the directory to clean
+   */
   public static void cleanup(final String directory) {
     var targetPath = new File(directory).toPath();
 
