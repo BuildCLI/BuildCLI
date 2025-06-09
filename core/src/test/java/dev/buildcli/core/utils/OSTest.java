@@ -57,6 +57,19 @@ class OSTest {
     assertTrue(matchesOS);
   }
 
+
+@org.junit.jupiter.api.DisplayName("Should return lowercase OS name when os.name is overridden")
+@Test
+void shouldReturnCorrectOSName_whenSystemPropertyIsOverridden() {
+    System.setProperty("os.name", "CustomOS");
+    try {
+        assertEquals("customos", OS.getOSName(), "Expected OS name to be 'customos'");
+    } finally {
+        System.setProperty("os.name", OS_NAME); // Επαναφορά στην αρχική τιμή για να μην επηρεαστούν άλλα tests
+    }
+}
+
+
   @Test
   void shouldReturnKnownArchitecture_whenGetArchitectureIsCalled() {
     String osArchitecture = OS.getArchitecture().toLowerCase();
@@ -212,5 +225,21 @@ class OSTest {
     assertDoesNotThrow(() -> OS.chmodX("testFile"));
     verify(mockRuntimeCommandExecutor, times(1)).execute(any());
   }
+
+  @Test
+void shouldHandleUnknownOSGracefully() {
+    System.setProperty("os.name", "Solaris10");
+    try {
+        assertFalse(OS.isWindows());
+        assertFalse(OS.isMac());
+        assertFalse(OS.isLinux()); // Προαιρετικά, ανάλογα τι θεωρείς 'Linux-like'
+        String osName = OS.getOSName();
+        assertNotNull(osName);
+        assertTrue(osName.contains("solaris"));
+    } finally {
+        System.setProperty("os.name", OS_NAME); // reset
+    }
+}
+
 
 }
