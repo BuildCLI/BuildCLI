@@ -13,15 +13,17 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Get maintainers list
         run: |
           pr_author="${{ github.event.pull_request.user.login }}"
+          pr_author_safe=$(echo "$pr_author" | sed 's/[^a-zA-Z0-9_-]//g')
 
-          maintainers=$(curl -s -H "Authorization: token ${{ secrets.buildcli }}" \
+
+          maintainers=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
             "https://api.github.com/repos/${{ github.repository }}/collaborators" | \
-            jq -r --arg author "$pr_author" '.[] | select(.permissions.push == true and .login != $author) | .login')
+            jq -r --arg author "$pr_author_safe" '.[] | select(.permissions.push == true and .login != $author) | .login')
 
           echo "Found maintainers:"
           echo "$maintainers"
@@ -36,7 +38,7 @@ jobs:
       - name: Assign maintainers as reviewers
         uses: actions/github-script@v6
         with:
-          github-token: ${{ secrets.buildcli }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const pr = context.payload.pull_request;
 
