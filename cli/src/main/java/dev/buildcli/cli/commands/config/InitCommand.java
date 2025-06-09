@@ -1,4 +1,4 @@
-package dev.buildcli.cli.commands.project;
+package dev.buildcli.cli.commands.config;
 
 import dev.buildcli.core.domain.BuildCLICommand;
 import dev.buildcli.core.exceptions.CommandExecutorRuntimeException;
@@ -17,20 +17,17 @@ import java.util.LinkedList;
 import static dev.buildcli.core.utils.console.input.InteractiveInputUtils.options;
 import static dev.buildcli.core.utils.console.input.InteractiveInputUtils.question;
 
-@Command(
-    name = "init",
-    aliases = {"i"},
-    description = "Initializes a new project. This command sets up a new project structure.",
-    mixinStandardHelpOptions = true
-)
+@Command(name = "init", aliases = {
+    "i" }, description = "Initializes a new project. This command sets up a new project structure.", mixinStandardHelpOptions = true)
 public class InitCommand implements BuildCLICommand {
-  @Option(names = {"--name", "-n"}, defaultValue = "buildcli")
+  @Option(names = { "--name", "-n" }, defaultValue = "buildcli")
   private String projectName;
 
-  @Option(names = {"--jdk", "-j"}, defaultValue = "17")
+  @Option(names = { "--jdk", "-j" }, defaultValue = "17")
   private String jdkVersion;
 
-  @Option(names = {"--template", "-t"}, description = "Choose project initializr by available templates", defaultValue = "false")
+  @Option(names = { "--template",
+      "-t" }, description = "Choose project initializr by available templates", defaultValue = "false")
   private boolean template;
 
   @Override
@@ -85,58 +82,60 @@ public class InitCommand implements BuildCLICommand {
     File pomFile = new File(root, "pom.xml");
     if (pomFile.createNewFile()) {
       try (FileWriter writer = new FileWriter(pomFile)) {
-        writer.write("""
-                <project xmlns="http://maven.apache.org/POM/4.0.0"
-                         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://www.apache.org/xsd/maven-4.0.0.xsd">
-                    <modelVersion>4.0.0</modelVersion>
+        writer.write(
+            """
+                    <project xmlns="http://maven.apache.org/POM/4.0.0"
+                             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                             xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://www.apache.org/xsd/maven-4.0.0.xsd">
+                        <modelVersion>4.0.0</modelVersion>
 
-                    <groupId>org.%s</groupId>
-                    <artifactId>%s</artifactId>
-                    <version>1.0-SNAPSHOT</version>
+                        <groupId>org.%s</groupId>
+                        <artifactId>%s</artifactId>
+                        <version>1.0-SNAPSHOT</version>
 
-                    <properties>
-                        <maven.compiler.source>%s</maven.compiler.source>
-                        <maven.compiler.target>${maven.compiler.source}</maven.compiler.target>
-                        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-                    </properties>
+                        <properties>
+                            <maven.compiler.source>%s</maven.compiler.source>
+                            <maven.compiler.target>${maven.compiler.source}</maven.compiler.target>
+                            <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+                        </properties>
 
-                    <dependencies>
-                        <dependency>
-                            <groupId>org.junit.jupiter</groupId>
-                            <artifactId>junit-jupiter-engine</artifactId>
-                            <version>5.8.1</version>
-                            <scope>test</scope>
-                        </dependency>
-                    </dependencies>
+                        <dependencies>
+                            <dependency>
+                                <groupId>org.junit.jupiter</groupId>
+                                <artifactId>junit-jupiter-engine</artifactId>
+                                <version>5.8.1</version>
+                                <scope>test</scope>
+                            </dependency>
+                        </dependencies>
 
-                    <build>
-                        <plugins>
-                            <plugin>
-                                <groupId>org.apache.maven.plugins</groupId>
-                                <artifactId>maven-compiler-plugin</artifactId>
-                                <version>3.8.1</version>
-                                <configuration>
-                                    <source>${maven.compiler.source}</source>
-                                    <target>${maven.compiler.target}</target>
-                                </configuration>
-                            </plugin>
-                            <plugin>
-                                <groupId>org.apache.maven.plugins</groupId>
-                                <artifactId>maven-jar-plugin</artifactId>
-                                <version>3.2.0</version>
-                                <configuration>
-                                    <archive>
-                                        <manifest>
-                                            <mainClass>org.%s.Main</mainClass>
-                                        </manifest>
-                                    </archive>
-                                </configuration>
-                            </plugin>
-                        </plugins>
-                    </build>
-                </project>
-            """.formatted(projectName.toLowerCase(), projectName, jdkVersion, projectName.toLowerCase()));
+                        <build>
+                            <plugins>
+                                <plugin>
+                                    <groupId>org.apache.maven.plugins</groupId>
+                                    <artifactId>maven-compiler-plugin</artifactId>
+                                    <version>3.8.1</version>
+                                    <configuration>
+                                        <source>${maven.compiler.source}</source>
+                                        <target>${maven.compiler.target}</target>
+                                    </configuration>
+                                </plugin>
+                                <plugin>
+                                    <groupId>org.apache.maven.plugins</groupId>
+                                    <artifactId>maven-jar-plugin</artifactId>
+                                    <version>3.2.0</version>
+                                    <configuration>
+                                        <archive>
+                                            <manifest>
+                                                <mainClass>org.%s.Main</mainClass>
+                                            </manifest>
+                                        </archive>
+                                    </configuration>
+                                </plugin>
+                            </plugins>
+                        </build>
+                    </project>
+                """
+                .formatted(projectName.toLowerCase(), projectName, jdkVersion, projectName.toLowerCase()));
       }
       SystemOutLogger.log("pom.xml file created with default configuration.");
     }

@@ -7,7 +7,7 @@
         <groupId>dev.buildcli</groupId>
         <artifactId>buildcli-parent</artifactId>
         <version>0.14.0</version>
-        <relativePath>../pom.xml</relativePath>
+        <relativePath>../buildcli-parent/pom.xml</relativePath>
     </parent>
 
     <artifactId>buildcli-plugin</artifactId>
