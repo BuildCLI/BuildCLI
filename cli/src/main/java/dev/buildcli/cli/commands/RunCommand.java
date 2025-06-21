@@ -8,6 +8,7 @@ import dev.buildcli.core.actions.commandline.JavaProcess;
 import dev.buildcli.core.actions.commandline.MavenProcess;
 import dev.buildcli.cli.commands.run.DockerfileCommand;
 import dev.buildcli.core.domain.BuildCLICommand;
+import dev.buildcli.core.utils.DirectoryService;
 import dev.buildcli.core.utils.ProfileManager;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
@@ -30,6 +31,7 @@ import java.util.logging.Logger;
 public class RunCommand implements BuildCLICommand {
   private final Logger logger = Logger.getLogger(RunCommand.class.getName());
   private final ProfileManager profileManager = new ProfileManager();
+  private final DirectoryService directoryService = new DirectoryService();
 
   @Parameters(index = "0", description = "The file or directory to run. If a directory, it will package and run the project.", arity = "0..1", paramLabel = "<file-or-dir>", defaultValue = ".")
   private File file;
@@ -86,9 +88,9 @@ public class RunCommand implements BuildCLICommand {
     System.out.println(profileMessage);
 
     MavenProcess.createPackageProcessor(file).run();
-    var jarPath = findJar();
+    File jarFile = directoryService.findJar(file);
 
-    return JavaProcess.createRunJarProcess(jarPath);
+    return JavaProcess.createRunJarProcess(jarFile.getAbsolutePath());
   }
 
   private Properties loadProfileProperties(String profile) {
@@ -108,22 +110,5 @@ public class RunCommand implements BuildCLICommand {
       logger.warning(messageWarning);
     }
     return properties;
-  }
-
-  private String findJar() throws IOException, InterruptedException {
-    File targetDir = new File(file, "target");
-    if (!targetDir.exists() || !targetDir.isDirectory()) {
-      throw new IOException("Target directory does not exist or is not a directory.");
-    }
-
-    // Busca pelo arquivo JAR na pasta target
-    File[] jarFiles = targetDir.listFiles((dir, name) -> name.endsWith(".jar"));
-    if (jarFiles == null || jarFiles.length == 0) {
-      throw new IOException("No JAR file found in target directory.");
-    }
-
-    // Assume que o primeiro arquivo JAR encontrado é o correto
-    File jarFile = jarFiles[0];
-    return jarFile.getAbsolutePath();
   }
 }

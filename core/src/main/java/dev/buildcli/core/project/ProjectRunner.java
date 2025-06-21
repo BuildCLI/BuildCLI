@@ -2,6 +2,7 @@ package dev.buildcli.core.project;
 
 import dev.buildcli.core.utils.ProfileManager;
 import dev.buildcli.core.utils.SystemCommands;
+import dev.buildcli.core.utils.DirectoryService;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,9 +18,11 @@ import java.util.logging.Logger;
 public class ProjectRunner {
     private static final Logger logger = Logger.getLogger(ProjectRunner.class.getName());
     private final ProfileManager profileManager;
+    private final DirectoryService directoryService;
 
     public ProjectRunner() {
         this.profileManager = new ProfileManager();
+        this.directoryService = new DirectoryService();
     }
 
     public void runProject() {
@@ -64,19 +67,7 @@ public class ProjectRunner {
     }
 
     private void runJar() throws IOException, InterruptedException {
-        File targetDir = new File("target");
-        if (!targetDir.exists() || !targetDir.isDirectory()) {
-            throw new IOException("Target directory does not exist or is not a directory.");
-        }
-
-        // Busca pelo arquivo JAR na pasta target
-        File[] jarFiles = targetDir.listFiles((dir, name) -> name.endsWith(".jar"));
-        if (jarFiles == null || jarFiles.length == 0) {
-            throw new IOException("No JAR file found in target directory.");
-        }
-
-        // Assume que o primeiro arquivo JAR encontrado é o correto
-        File jarFile = jarFiles[0];
+        File jarFile = directoryService.findJar(new File("."));
         String jarPath = jarFile.getAbsolutePath();
 
         // Executa o arquivo JAR
@@ -92,7 +83,6 @@ public class ProjectRunner {
             throw new IOException("Failed to run project JAR. Process exited with code " + exitCode);
         }
     }
-
 
     private Properties loadProfileProperties(String profile) {
         Properties properties = new Properties();
