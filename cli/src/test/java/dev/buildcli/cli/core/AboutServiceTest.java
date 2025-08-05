@@ -8,7 +8,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertLinesMatch;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -38,7 +40,11 @@ class AboutServiceTest {
 
                 contributor1, contributor2""";
 
-            assertEquals(expected, outputStream.toString().trim());
+            List<String> expectedLines = expected.lines().toList();
+            List<String> actualLines = outputStream.toString().lines().toList();
+
+            assertLinesMatch(expectedLines, actualLines);
+
         } finally {
             System.setOut(standardOut);
         }

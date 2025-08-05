@@ -46,7 +46,7 @@ public class ListCommand implements BuildCLICommand {
       SystemOutLogger.log(buildCliConfig.toString());
 
     } catch (Exception e) {
-      System.err.println("Error loading configuration: " + e.getMessage());
+      SystemOutLogger.error("Error loading configuration: " + e.getMessage(), e);
     }
 
   }
