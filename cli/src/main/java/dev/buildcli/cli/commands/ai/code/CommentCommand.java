@@ -4,12 +4,11 @@ import dev.buildcli.core.actions.ai.AIChat;
 import dev.buildcli.core.actions.ai.factories.GeneralAIServiceFactory;
 import dev.buildcli.core.constants.AIConstants;
 import dev.buildcli.core.domain.BuildCLICommand;
-import dev.buildcli.core.domain.configs.BuildCLIConfig;
 import dev.buildcli.core.utils.async.Async;
-import dev.buildcli.core.utils.config.ConfigContextLoader;
 import dev.buildcli.core.utils.filesystem.FindFilesUtils;
 import dev.buildcli.core.utils.ai.IAParamsUtils;
 import dev.buildcli.core.utils.console.markdown.MarkdownInterpreter;
+import dev.buildcli.core.log.SystemOutLogger;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import picocli.CommandLine.Command;
@@ -40,8 +39,6 @@ public class CommentCommand implements BuildCLICommand {
 
   @Option(names = {"--context"}, description = "Overwrite the default AI command")
   private String context;
-
-  private final BuildCLIConfig allConfigs = ConfigContextLoader.getAllConfigs();
 
   @Override
   public void run() {
@@ -92,12 +89,12 @@ public class CommentCommand implements BuildCLICommand {
 
   private Consumer<String> printCommentedCode(File file) {
     return comment -> {
-      System.out.println(brightGreenFg("=").repeat(130));
-      System.out.printf("Commented file: %s%n%n", blueFg(file.getAbsolutePath()));
+      SystemOutLogger.println(brightGreenFg("=").repeat(130));
+      SystemOutLogger.println("Commented file: " + blueFg(file.getAbsolutePath()) + "\n");
 
-      System.out.println(new MarkdownInterpreter().interpret(comment));
+      SystemOutLogger.println(new MarkdownInterpreter().interpret(comment));
 
-      System.out.println(brightGreenFg("=").repeat(130));
+      SystemOutLogger.println(brightGreenFg("=").repeat(130));
     };
   }
 
