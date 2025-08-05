@@ -4,6 +4,7 @@ import dev.buildcli.cli.commands.ConfigCommand;
 import dev.buildcli.core.domain.BuildCLICommand;
 import dev.buildcli.core.domain.configs.BuildCLIConfig;
 import dev.buildcli.core.exceptions.ConfigException;
+import dev.buildcli.core.log.SystemOutLogger;
 import dev.buildcli.core.utils.config.ConfigContextLoader;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
@@ -81,9 +82,10 @@ public class SetCommand implements BuildCLICommand {
 
     try {
       saveConfigFunction.save(buildCliConfig);
-      System.out.printf("Configuration successfully updated in %s scope.%n", isLocalScope ? "local" : "global");
+      String scope = isLocalScope ? "local" : "global";
+      SystemOutLogger.success("Configuration successfully updated in " + scope + " scope.");
     } catch (Exception e) {
-      System.err.println("Failed to save configuration: " + e.getMessage());
+      SystemOutLogger.error("Failed to save configuration: " + e.getMessage(), e);
     }
   }
 

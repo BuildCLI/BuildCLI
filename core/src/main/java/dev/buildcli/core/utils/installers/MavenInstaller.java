@@ -111,9 +111,9 @@ public abstract class MavenInstaller {
 
           String progressBar = "=".repeat(filledLength) + " ".repeat(progressBarLength - filledLength);
 
-          System.out.printf("\r[%s] %d%%", progressBar, progress);
+          SystemOutLogger.print(String.format("\r[%s] %d%%", progressBar, progress));
         }
-        System.out.println();
+        SystemOutLogger.println("");
       }
     }
 
