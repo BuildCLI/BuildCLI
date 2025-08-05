@@ -8,6 +8,7 @@ import dev.buildcli.core.actions.commandline.JavaProcess;
 import dev.buildcli.core.actions.commandline.MavenProcess;
 import dev.buildcli.cli.commands.run.DockerfileCommand;
 import dev.buildcli.core.domain.BuildCLICommand;
+import dev.buildcli.core.log.SystemOutLogger;
 import dev.buildcli.core.utils.ProfileManager;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
@@ -82,8 +83,8 @@ public class RunCommand implements BuildCLICommand {
     String profileMessage = properties.getProperty("app.message", "Running with no specific profile");
 
     // Exibir a mensagem do perfil ativo no console
-    System.out.println("Active Profile: " + activeProfile);
-    System.out.println(profileMessage);
+            SystemOutLogger.info("Active Profile: " + activeProfile);
+        SystemOutLogger.info(profileMessage);
 
     MavenProcess.createPackageProcessor(file).run();
     return JavaProcess.createRunJarProcess(findJar());
