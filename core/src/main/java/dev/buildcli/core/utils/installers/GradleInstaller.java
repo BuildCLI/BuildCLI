@@ -103,9 +103,9 @@ public abstract class GradleInstaller {
 
           String progressBar = "=".repeat(filledLength) + " ".repeat(progressBarLength - filledLength);
 
-          System.out.printf("\r[%s] %d%%", progressBar, progress);
+          SystemOutLogger.print(String.format("\r[%s] %d%%", progressBar, progress));
         }
-        System.out.println();
+        SystemOutLogger.println("");
       }
     }
 
@@ -163,4 +163,3 @@ public abstract class GradleInstaller {
     return s.isEmpty() ? 0 : Long.parseLong(s);
   }
 }
-

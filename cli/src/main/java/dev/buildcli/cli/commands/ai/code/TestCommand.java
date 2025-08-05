@@ -4,14 +4,13 @@ import dev.buildcli.cli.commands.ai.CodeCommand;
 import dev.buildcli.core.actions.ai.AIChat;
 import dev.buildcli.core.actions.ai.factories.GeneralAIServiceFactory;
 import dev.buildcli.core.domain.BuildCLICommand;
-import dev.buildcli.core.domain.configs.BuildCLIConfig;
 import dev.buildcli.core.utils.LanguageDetector;
 import dev.buildcli.core.utils.ai.CodeUtils;
 import dev.buildcli.core.utils.ai.IAParamsUtils;
 import dev.buildcli.core.utils.async.Async;
-import dev.buildcli.core.utils.config.ConfigContextLoader;
 import dev.buildcli.core.utils.filesystem.FindFilesUtils;
 import dev.buildcli.core.utils.console.markdown.MarkdownInterpreter;
+import dev.buildcli.core.log.SystemOutLogger;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import picocli.CommandLine.Command;
@@ -44,7 +43,7 @@ import static dev.buildcli.core.utils.console.input.InteractiveInputUtils.confir
 )
 public class TestCommand implements BuildCLICommand {
   private static final Logger logger = LoggerFactory.getLogger("AICodeTestCommand");
-  private final BuildCLIConfig allConfigs = ConfigContextLoader.getAllConfigs();
+
   @ParentCommand
   private CodeCommand parent;
   @Parameters(description = "Set of files or directories to comment sources")
@@ -88,9 +87,9 @@ public class TestCommand implements BuildCLICommand {
 
   private Function<String, String> printFormattedCode(File file) {
     return s -> {
-      System.out.println();
-      System.out.println("File: " + blueFg(file.toString()));
-      System.out.println(new MarkdownInterpreter().interpret(s));
+      SystemOutLogger.println("");
+      SystemOutLogger.println("File: " + blueFg(file.toString()));
+      SystemOutLogger.println(new MarkdownInterpreter().interpret(s));
       return s;
     };
   }

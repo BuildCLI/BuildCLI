@@ -1,5 +1,7 @@
 package dev.buildcli.core.utils;
 
+import dev.buildcli.core.log.SystemOutLogger;
+
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,7 +21,7 @@ public class DockerBuildRunner {
                 logger.severe("Failed to build Docker image. Exit code: " + buildExitCode);
                 return;
             }
-            System.out.println("Docker image built successfully.");
+            SystemOutLogger.success("Docker image built successfully.");
 
             // Executar o comando "docker run"
             ProcessBuilder runProcess = new ProcessBuilder(
@@ -30,7 +32,7 @@ public class DockerBuildRunner {
             if (runExitCode != 0) {
                 logger.severe("Failed to run Docker container. Exit code: " + runExitCode);
             } else {
-                System.out.println("Docker container is running on port 8080.");
+                SystemOutLogger.success("Docker container is running on port 8080.");
             }
         } catch (IOException | InterruptedException e) {
             logger.log(Level.SEVERE, "Failed to build or run Docker container", e);

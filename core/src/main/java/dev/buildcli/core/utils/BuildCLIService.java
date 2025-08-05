@@ -58,7 +58,7 @@ public class BuildCLIService {
         var path = Path.of(configs.getProperty(ConfigDefaultConstants.BANNER_PATH).get());
         if (Files.exists(path) && Files.isRegularFile(path)) {
           try {
-            System.out.println(Files.readString(path));
+            SystemOutLogger.println(Files.readString(path));
           } catch (IOException e) {
             throw new RuntimeException(e);
           }
@@ -70,12 +70,13 @@ public class BuildCLIService {
   }
 
   private static void printOfficialBanner() {
-    System.out.println(",-----.          ,--.,--.   ,--. ,-----.,--.   ,--.");
-    System.out.println("|  |) /_ ,--.,--.`--'|  | ,-|  |'  .--./|  |   |  |");
-    System.out.printf("|  .-.  \\|  ||  |,--.|  |' .-. ||  |    |  |   |  |       %s%n", content("Built by the community, for the community").blueFg().italic());
-    System.out.println("|  '--' /'  ''  '|  ||  |\\ `-' |'  '--'\\|  '--.|  |");
-    System.out.println("`------'  `----' `--'`--' `---'  `-----'`-----'`--'");
-    System.out.println();
+    // Banner output should go directly to console for user experience
+    SystemOutLogger.println(",-----.          ,--.,--.   ,--. ,-----.,--.   ,--.");
+    SystemOutLogger.println("|  |) /_ ,--.,--.`--'|  | ,-|  |'  .--./|  |   |  |");
+    SystemOutLogger.println("|  .-.  \\|  ||  |,--.|  |' .-. ||  |    |  |   |  |       " + content("Built by the community, for the community").blueFg().italic());
+    SystemOutLogger.println("|  '--' /'  ''  '|  ||  |\\ `-' |'  '--'\\|  '--.|  |");
+    SystemOutLogger.println("`------'  `----' `--'`--' `---'  `-----'`-----'`--'");
+    SystemOutLogger.println("");
   }
 
   public static boolean shouldShowAsciiArt(String[] args) {
@@ -149,9 +150,9 @@ public class BuildCLIService {
     var exitedCode = process.run();
 
     if (exitedCode == 0) {
-      System.out.println("Success...");
+      SystemOutLogger.success("Build completed successfully");
     } else {
-      System.out.println("Failure...");
+      SystemOutLogger.error("Build failed");
     }
   }
 

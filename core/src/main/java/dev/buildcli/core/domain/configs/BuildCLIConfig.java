@@ -1,5 +1,6 @@
 package dev.buildcli.core.domain.configs;
 import dev.buildcli.core.exceptions.ConfigException;
+import dev.buildcli.core.log.SystemOutLogger;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -33,7 +34,7 @@ public class BuildCLIConfig {
         //Add support to env vars system
         if (value != null && value.matches("^\\$\\{[A-Z]+}$")) {
           value = value.substring(value.indexOf("${") + 2, value.indexOf("}"));
-          System.out.println(key + " = " + value);
+          SystemOutLogger.debug(key + " = " + value);
           value = System.getenv(value);
         }
 
@@ -159,7 +160,7 @@ public class BuildCLIConfig {
         try (FileWriter writer = new FileWriter(pathFile)) {
           writer.write(content);
         }
-        System.out.println("Default configuration file created: " + BUILD_CLI_CONFIG_GLOBAL_FILE.toAbsolutePath());
+        SystemOutLogger.success("Default configuration file created: " + BUILD_CLI_CONFIG_GLOBAL_FILE.toAbsolutePath());
       }
     } catch (IOException e) {
       throw new ConfigException("Error writing properties file to: " + pathFile.toString(), e);
