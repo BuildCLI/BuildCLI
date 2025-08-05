@@ -58,7 +58,7 @@ public class BuildCLIService {
         var path = Path.of(configs.getProperty(ConfigDefaultConstants.BANNER_PATH).get());
         if (Files.exists(path) && Files.isRegularFile(path)) {
           try {
-            System.out.println(Files.readString(path));
+            SystemOutLogger.println(Files.readString(path));
           } catch (IOException e) {
             throw new RuntimeException(e);
           }
@@ -70,12 +70,13 @@ public class BuildCLIService {
   }
 
   private static void printOfficialBanner() {
-    System.out.println(",-----.          ,--.,--.   ,--. ,-----.,--.   ,--.");
-    System.out.println("|  |) /_ ,--.,--.`--'|  | ,-|  |'  .--./|  |   |  |");
-    System.out.printf("|  .-.  \\|  ||  |,--.|  |' .-. ||  |    |  |   |  |       %s%n", content("Built by the community, for the community").blueFg().italic());
-    System.out.println("|  '--' /'  ''  '|  ||  |\\ `-' |'  '--'\\|  '--.|  |");
-    System.out.println("`------'  `----' `--'`--' `---'  `-----'`-----'`--'");
-    System.out.println();
+    // Banner output should go directly to console for user experience
+    SystemOutLogger.println(",-----.          ,--.,--.   ,--. ,-----.,--.   ,--.");
+    SystemOutLogger.println("|  |) /_ ,--.,--.`--'|  | ,-|  |'  .--./|  |   |  |");
+    SystemOutLogger.println("|  .-.  \\|  ||  |,--.|  |' .-. ||  |    |  |   |  |       " + content("Built by the community, for the community").blueFg().italic());
+    SystemOutLogger.println("|  '--' /'  ''  '|  ||  |\\ `-' |'  '--'\\|  '--.|  |");
+    SystemOutLogger.println("`------'  `----' `--'`--' `---'  `-----'`-----'`--'");
+    SystemOutLogger.println("");
   }
 
   public static boolean shouldShowAsciiArt(String[] args) {
@@ -111,7 +112,7 @@ public class BuildCLIService {
 
   private static void updateBuildCLI() {
     if (updateRepository()) {
-      generateBuildCLIJar();
+      JarGenerator.generateJar(buildCLIDirectory);
       String homeBuildCLI = OS.getHomeBinDirectory();
       OS.cpDirectoryOrFile(buildCLIDirectory + "/target/buildcli.jar", homeBuildCLI);
       OS.chmodX(homeBuildCLI + "/buildcli.jar");
@@ -138,21 +139,6 @@ public class BuildCLIService {
       return true;
     }
     return false;
-  }
-
-  private static void generateBuildCLIJar() {
-    OS.cdDirectory("");
-    OS.cdDirectory(buildCLIDirectory);
-
-    CommandLineProcess process = MavenProcess.createPackageProcessor(new File("."));
-
-    var exitedCode = process.run();
-
-    if (exitedCode == 0) {
-      System.out.println("Success...");
-    } else {
-      System.out.println("Failure...");
-    }
   }
 
   private static String getBuildCLIBuildDirectory() {

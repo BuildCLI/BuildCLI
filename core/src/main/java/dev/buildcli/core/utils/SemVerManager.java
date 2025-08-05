@@ -1,5 +1,7 @@
 package dev.buildcli.core.utils;
 
+import dev.buildcli.core.log.SystemOutLogger;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -17,7 +19,7 @@ public class SemVerManager {
             String newVersion = incrementVersion(currentVersion, versionType);
             Files.writeString(VERSION_FILE, newVersion);
 
-            System.out.printf("Version updated: %s -> %s%n", currentVersion, newVersion);
+            SystemOutLogger.success("Version updated: " + currentVersion + " -> " + newVersion);
         } catch (IOException e) {
             logger.log(Level.SEVERE, "Failed to manage versioning", e);
         }

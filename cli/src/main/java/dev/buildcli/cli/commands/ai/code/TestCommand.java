@@ -10,6 +10,7 @@ import dev.buildcli.core.utils.ai.IAParamsUtils;
 import dev.buildcli.core.utils.async.Async;
 import dev.buildcli.core.utils.filesystem.FindFilesUtils;
 import dev.buildcli.core.utils.console.markdown.MarkdownInterpreter;
+import dev.buildcli.core.log.SystemOutLogger;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import picocli.CommandLine.Command;
@@ -86,9 +87,9 @@ public class TestCommand implements BuildCLICommand {
 
   private Function<String, String> printFormattedCode(File file) {
     return s -> {
-      System.out.println();
-      System.out.println("File: " + blueFg(file.toString()));
-      System.out.println(new MarkdownInterpreter().interpret(s));
+      SystemOutLogger.println("");
+      SystemOutLogger.println("File: " + blueFg(file.toString()));
+      SystemOutLogger.println(new MarkdownInterpreter().interpret(s));
       return s;
     };
   }
