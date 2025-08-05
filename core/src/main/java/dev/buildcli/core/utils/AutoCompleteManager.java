@@ -1,6 +1,7 @@
 package dev.buildcli.core.utils;
 
 import picocli.AutoComplete;
+import dev.buildcli.core.log.SystemOutLogger;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -23,11 +24,11 @@ public class AutoCompleteManager {
             List<String> availableShells = detectAvailableShells();
 
             if (availableShells.isEmpty()) {
-                System.out.println("No supported shell detected. Skipping autocomplete setup.");
+                SystemOutLogger.warn("No supported shell detected. Skipping autocomplete setup.");
                 return;
             }
 
-            System.out.println("Detected shells: " + availableShells);
+            SystemOutLogger.info("Detected shells: " + availableShells);
 
             for (String shell : availableShells) {
                 Path completionPath = Path.of(System.getProperty("user.home"), "." + commandName + "-completion." + shell);
@@ -35,10 +36,10 @@ public class AutoCompleteManager {
                 configureAutoCompleteDynamically(shell, completionPath);
             }
 
-            System.out.println("Autocomplete setup completed successfully!");
+            SystemOutLogger.success("Autocomplete setup completed successfully!");
 
         } catch (Exception e) {
-            System.err.println("Failed to set up autocomplete: " + e.getMessage());
+            SystemOutLogger.error("Failed to set up autocomplete: " + e.getMessage(), e);
         }
     }
 
@@ -67,13 +68,13 @@ public class AutoCompleteManager {
     private void generateAutoComplete(String fullyQualifiedClassName, String commandName, Path completionPath) {
         try {
             if (Files.exists(completionPath)) {
-                System.out.println("Existing autocomplete script detected for " + commandName + ". Overwriting...");
+                SystemOutLogger.info("Existing autocomplete script detected for " + commandName + ". Overwriting...");
                 AutoComplete.main(new String[]{fullyQualifiedClassName, "-n=" + commandName, "-o=" + completionPath.toString(), "--force"});
             } else {
                 AutoComplete.main(new String[]{fullyQualifiedClassName, "-n=" + commandName, "-o=" + completionPath.toString()});
             }
         } catch (Exception e) {
-            System.err.println("Error generating autocomplete script for " + commandName + ": " + e.getMessage());
+            SystemOutLogger.error("Error generating autocomplete script for " + commandName + ": " + e.getMessage(), e);
         }
     }
 
@@ -82,7 +83,7 @@ public class AutoCompleteManager {
             List<String> configFiles = detectConfigFiles(shell);
 
             if (configFiles.isEmpty()) {
-                System.out.printf("No configuration files detected for %s.%n", shell);
+                SystemOutLogger.debug("No configuration files detected for " + shell + ".");
                 return;
             }
 
@@ -92,21 +93,21 @@ public class AutoCompleteManager {
                 Path configFilePath = Path.of(configFile.replace("~", System.getProperty("user.home")));
 
                 if (!Files.exists(configFilePath)) {
-                    System.out.printf("Configuration file not found: %s. Skipping.%n", configFile);
+                    SystemOutLogger.debug("Configuration file not found: " + configFile + ". Skipping.");
                     continue;
                 }
 
                 String configContent = Files.readString(configFilePath);
                 if (configContent.contains(sourceCommand)) {
-                    System.out.printf("Autocomplete already configured in %s.%n", configFile);
+                    SystemOutLogger.debug("Autocomplete already configured in " + configFile + ".");
                     continue;
                 }
 
                 Files.writeString(configFilePath, sourceCommand, StandardOpenOption.APPEND);
-                System.out.printf("Autocomplete configured in %s. Restart your terminal or run 'source %s'.%n", configFile, configFile);
+                SystemOutLogger.success("Autocomplete configured in " + configFile + ". Restart your terminal or run 'source " + configFile + "'.");
             }
         } catch (IOException e) {
-            System.err.printf("Failed to configure autocomplete for %s: %s%n", shell, e.getMessage());
+            SystemOutLogger.error("Failed to configure autocomplete for " + shell + ": " + e.getMessage(), e);
         }
     }
 
@@ -128,7 +129,7 @@ public class AutoCompleteManager {
                 possibleFiles.add(home + "/.config/fish/config.fish");
                 break;
             default:
-                System.out.println("Unrecognized shell: " + shell);
+                SystemOutLogger.warn("Unrecognized shell: " + shell);
                 return Collections.emptyList();
         }
 
