@@ -1,6 +1,7 @@
 package dev.buildcli.core.actions.tools;
 
 import dev.buildcli.core.actions.commandline.JavaProcess;
+import dev.buildcli.core.log.SystemOutLogger;
 
 public class JDKChecker implements ToolChecker {
   @Override
@@ -35,7 +36,6 @@ public class JDKChecker implements ToolChecker {
 
   @Override
   public void fixIssue() {
-    System.out.println("Fixing JDK issues is not automated. Follow the installation instructions.");
+    SystemOutLogger.warn("Fixing JDK issues is not automated. Follow the installation instructions.");
   }
 }
-
