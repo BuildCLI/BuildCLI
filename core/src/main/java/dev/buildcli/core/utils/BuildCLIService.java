@@ -55,7 +55,7 @@ public class BuildCLIService {
         var path = Path.of(configs.getProperty(ConfigDefaultConstants.BANNER_PATH).get());
         if (Files.exists(path) && Files.isRegularFile(path)) {
           try {
-            System.out.println(Files.readString(path));
+            SystemOutLogger.println(Files.readString(path));
           } catch (IOException e) {
             throw new RuntimeException(e);
           }
@@ -67,18 +67,19 @@ public class BuildCLIService {
   }
 
   private static void printOfficialBanner() {
-    System.out.println(",-----.          ,--.,--.   ,--. ,-----.,--.   ,--.");
-    System.out.println("|  |) /_ ,--.,--.`--'|  | ,-|  |'  .--./|  |   |  |");
-    System.out.printf("|  .-.  \\|  ||  |,--.|  |' .-. ||  |    |  |   |  |       %s%n", content("Built by the community, for the community").blueFg().italic());
-    System.out.println("|  '--' /'  ''  '|  ||  |\\ `-' |'  '--'\\|  '--.|  |");
-    System.out.println("`------'  `----' `--'`--' `---'  `-----'`-----'`--'");
-    System.out.println();
+    // Banner output should go directly to console for user experience
+    SystemOutLogger.println(",-----.          ,--.,--.   ,--. ,-----.,--.   ,--.");
+    SystemOutLogger.println("|  |) /_ ,--.,--.`--'|  | ,-|  |'  .--./|  |   |  |");
+    SystemOutLogger.println("|  .-.  \\|  ||  |,--.|  |' .-. ||  |    |  |   |  |       " + content("Built by the community, for the community").blueFg().italic());
+    SystemOutLogger.println("|  '--' /'  ''  '|  ||  |\\ `-' |'  '--'\\|  '--.|  |");
+    SystemOutLogger.println("`------'  `----' `--'`--' `---'  `-----'`-----'`--'");
+    SystemOutLogger.println("");
   }
 
 
   private static void updateBuildCLI() {
     if (updateRepository()) {
-      generateBuildCLIJar();
+      JarGenerator.generateJar(buildCLIDirectory);
       String homeBuildCLI = OS.getHomeBinDirectory();
       OS.cpDirectoryOrFile(buildCLIDirectory + "/target/buildcli.jar", homeBuildCLI);
       OS.chmodX(homeBuildCLI + "/buildcli.jar");
@@ -107,21 +108,6 @@ public class BuildCLIService {
     return false;
   }
 
-  private static void generateBuildCLIJar() {
-    OS.cdDirectory("");
-    OS.cdDirectory(buildCLIDirectory);
-
-    CommandLineProcess process = MavenProcess.createPackageProcessor(new File("."));
-
-    var exitedCode = process.run();
-
-    if (exitedCode == 0) {
-      System.out.println("Success...");
-    } else {
-      System.out.println("Failure...");
-    }
-  }
-
   private static String getBuildCLIBuildDirectory() {
     try (InputStream inputStream = BuildCLIService.class.getClassLoader().getResourceAsStream("META-INF/MANIFEST.MF")) {
       if (inputStream == null || !inputStream.toString().endsWith(".jar")) {
@@ -144,8 +130,8 @@ public class BuildCLIService {
   }
 
   private static String readManifest(InputStream inputStream) {
-    try {
-      Manifest manifest = new Manifest(inputStream);
+      ManifestReader manifestReader = new DefaultManifestReader();
+      Manifest manifest = manifestReader.readManifest(inputStream);
       Attributes attributes = manifest.getMainAttributes();
       String buildDirectory = attributes.getValue("Build-Directory");
 
@@ -154,9 +140,6 @@ public class BuildCLIService {
       }
 
       return buildDirectory;
-    } catch (IOException e) {
-      throw new RuntimeException("Error while trying to read the content of the MANIFEST.MF file", e);
-    }
   }
 
 }
