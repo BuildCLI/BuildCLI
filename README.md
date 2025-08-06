@@ -197,7 +197,7 @@ buildcli project add profile dev
 Runs the Java project using Spring Boot:
 
 ```bash
-buildcli project run
+buildcli run
 ```
 
 ### 6. Generate Documentation for Java Code
