@@ -7,152 +7,80 @@
     <groupId>dev.buildcli</groupId>
     <artifactId>buildcli-parent</artifactId>
     <version>0.14.0</version>
+
     <packaging>pom</packaging>
-
-    <name>buildcli</name>
-    <description>BuildCLI is a command-line interface (CLI) tool for managing and automating common tasks in Java project development.</description>
-    <url>http://buildcli.dev</url>
-
-    <licenses>
-        <license>
-            <name>The MIT License</name>
-            <url>https://opensource.org/license/MIT</url>
-        </license>
-    </licenses>
-
-    <developers>
-        <!-- BuildCLI developers -->
-        <developer>
-            <name>Breno Andrade</name>
-        </developer>
-        <developer>
-            <name>Dumildes Paulo Fernando</name>
-        </developer>
-        <developer>
-            <name>Luiz Amorim</name>
-        </developer>
-        <developer>
-            <name>Matheus Oliveira</name>
-        </developer>
-        <developer>
-            <name>Thiago Nascimento</name>
-        </developer>
-        <developer>
-            <name>Wheslley Rimar</name>
-        </developer>
-    </developers>
-
-    <scm>
-        <connection>scm:git:git://github.com/BuildCLI/BuildCLI.git</connection>
-        <developerConnection>scm:git:ssh://git@github.com:BuildCLI/BuildCLI.git</developerConnection>
-        <url>https://github.com/BuildCLI/BuildCLI/tree/main</url>
-        <!-- <tag>HEAD</tag> --> <!-- The maven-release-plugin manages the tag -->
-    </scm>
-
-    <distributionManagement>
-        <snapshotRepository>
-            <id>ossrh</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-        </snapshotRepository>
-        <repository>
-            <id>ossrh</id>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-        </repository>
-    </distributionManagement>
 
     <modules>
         <module>cli</module>
         <module>core</module>
-        <module>plugin</module>
         <module>hooks</module>
+        <module>plugin</module>
     </modules>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <junit.jupiter.version>5.11.0</junit.jupiter.version> <!-- Update if necessary -->
-        <junit.bom.version>5.11.0</junit.bom.version> <!-- Keep synchronized with jupiter -->
-        <mockito.version>5.12.0</mockito.version> <!-- Check latest version -->
-        <logback.version>1.5.6</logback.version> <!-- Check latest version -->
-        <slf4j.version>2.0.13</slf4j.version> <!-- Check latest version -->
-        <picocli.version>4.7.6</picocli.version>
-        <!-- Plugin Versions -->
-        <maven-source-plugin.version>3.3.1</maven-source-plugin.version>
-        <maven-javadoc-plugin.version>3.8.0</maven-javadoc-plugin.version> <!-- Latest version -->
-        <maven-gpg-plugin.version>3.2.4</maven-gpg-plugin.version> <!-- Latest version -->
-        <nexus-staging-maven-plugin.version>1.7.0</nexus-staging-maven-plugin.version> <!-- Latest version -->
-        <maven-release-plugin.version>3.1.1</maven-release-plugin.version> <!-- Latest version -->
-        <maven-resources-plugin.version>3.3.1</maven-resources-plugin.version>
     </properties>
 
-    <!-- Common dependencies for all modules (mainly test and logging) -->
     <dependencies>
-        <!-- JUnit 5 - Managed by BOM -->
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>${slf4j.version}</version>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <version>${logback.version}</version>
-        </dependency>
+
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-params</artifactId>
+            <version>5.12.1</version>
             <scope>test</scope>
         </dependency>
 
-        <!-- Mockito -->
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-junit-jupiter</artifactId>
-            <version>${mockito.version}</version>
+            <version>5.17.0</version>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-core</artifactId>
-            <version>${mockito.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>${slf4j.version}</version>
         </dependency>
 
         <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <version>${logback.version}</version>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>5.17.0</version>
+            <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-core</artifactId>
-            <version>${logback.version}</version>
+            <version>1.5.18</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>2.0.17</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.5.18</version>
         </dependency>
     </dependencies>
 
     <dependencyManagement>
         <dependencies>
-            <!-- JUnit 5 BOM -->
-            <dependency>
-                <groupId>org.junit</groupId>
-                <artifactId>junit-bom</artifactId>
-                <version>${junit.bom.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-
-            <!-- Project Modules -->
             <dependency>
                 <groupId>dev.buildcli</groupId>
                 <artifactId>buildcli-core</artifactId>
                 <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>info.picocli</groupId>
+                <artifactId>picocli</artifactId>
+                <version>4.7.6</version>
             </dependency>
             <dependency>
                 <groupId>dev.buildcli</groupId>
@@ -164,186 +92,13 @@
                 <artifactId>buildcli-hooks</artifactId>
                 <version>${project.version}</version>
             </dependency>
-
-            <!-- External Dependencies -->
             <dependency>
-                <groupId>info.picocli</groupId>
-                <artifactId>picocli</artifactId>
-                <version>${picocli.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-api</artifactId>
-                <version>${slf4j.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>ch.qos.logback</groupId>
-                <artifactId>logback-classic</artifactId>
-                <version>${logback.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>ch.qos.logback</groupId>
-                <artifactId>logback-core</artifactId>
-                <version>${logback.version}</version>
+                <groupId>org.junit</groupId>
+                <artifactId>junit-bom</artifactId>
+                <version>5.12.1</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
-
-    <build>
-        <!-- Manage plugin versions here -->
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-source-plugin</artifactId>
-                    <version>${maven-source-plugin.version}</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-javadoc-plugin</artifactId>
-                    <version>${maven-javadoc-plugin.version}</version>
-                    <configuration>
-                        <!-- Add global javadoc configurations here if needed -->
-                        <!-- Ex: <doclint>none</doclint> to ignore lint errors -->
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-gpg-plugin</artifactId>
-                    <version>${maven-gpg-plugin.version}</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.sonatype.plugins</groupId>
-                    <artifactId>nexus-staging-maven-plugin</artifactId>
-                    <version>${nexus-staging-maven-plugin.version}</version>
-                    <extensions>true</extensions>
-                    <configuration>
-                        <serverId>ossrh</serverId>
-                        <nexusUrl>https://oss.sonatype.org/service/local/</nexusUrl>
-                        <autoReleaseAfterClose>true</autoReleaseAfterClose>
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-release-plugin</artifactId>
-                    <version>${maven-release-plugin.version}</version>
-                    <configuration>
-                        <autoVersionSubmodules>true</autoVersionSubmodules>
-                        <useReleaseProfile>false</useReleaseProfile> <!-- Kept as false -->
-                        <releaseProfiles>release</releaseProfiles> <!-- Activates the 'release' profile -->
-                        <goals>deploy</goals> <!-- Deploy activates GPG and Nexus Staging plugins -->
-                        <!-- Add <tagNameFormat>v@{project.version}</tagNameFormat> if you want 'v' prefix in the tag -->
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-resources-plugin</artifactId>
-                    <version>${maven-resources-plugin.version}</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.13.0</version> <!-- Explicit version -->
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-surefire-plugin</artifactId>
-                    <version>3.3.1</version> <!-- Explicit version for tests -->
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-jar-plugin</artifactId>
-                    <version>3.4.2</version> <!-- Explicit version -->
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-install-plugin</artifactId>
-                    <version>3.1.2</version> <!-- Explicit version -->
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-deploy-plugin</artifactId>
-                    <version>3.1.2</version> <!-- Explicit version -->
-                </plugin>
-            </plugins>
-        </pluginManagement>
-
-        <plugins>
-            <!-- Source Plugin: Generally useful to always have -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>attach-sources</id>
-                        <goals>
-                            <goal>jar-no-fork</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <!-- Release Plugin: Main configuration -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-release-plugin</artifactId>
-                <!-- Configuration is in pluginManagement and will be inherited -->
-            </plugin>
-
-            <!-- Other plugins that should always run (e.g., compiler, surefire, resources) -->
-            <!-- They don't need to be declared here if the default configuration is sufficient -->
-            <!-- or if they are configured in child modules -->
-        </plugins>
-    </build>
-
-    <profiles>
-        <profile>
-            <id>release</id>
-            <build>
-                <plugins>
-                    <!-- Javadoc Plugin: Activated only in the 'release' profile -->
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-javadoc-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>attach-javadocs</id>
-                                <goals>
-                                    <goal>jar</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-
-                    <!-- GPG Plugin: Activated only in the 'release' profile -->
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-gpg-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>sign-artifacts</id>
-                                <!-- Binds to the 'verify' phase which occurs before 'install' and 'deploy' -->
-                                <phase>verify</phase>
-                                <goals>
-                                    <goal>sign</goal>
-                                </goals>
-                                <!-- Add keyname/passphrase configuration if necessary, -->
-                            </execution>
-                        </executions>
-                    </plugin>
-
-                    <!-- Nexus Staging Plugin: Configured here to ensure it's active -->
-                    <!-- during the 'deploy' invoked by release:perform -->
-                    <plugin>
-                        <groupId>org.sonatype.plugins</groupId>
-                        <artifactId>nexus-staging-maven-plugin</artifactId>
-                        <!-- The main configuration is in pluginManagement -->
-                        <!-- The extension is already set to true there -->
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
-
 </project>

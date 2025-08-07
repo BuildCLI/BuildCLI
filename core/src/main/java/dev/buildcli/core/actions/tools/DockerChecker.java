@@ -1,7 +1,6 @@
 package dev.buildcli.core.actions.tools;
 
 import dev.buildcli.core.actions.commandline.DockerProcess;
-import dev.buildcli.core.log.SystemOutLogger;
 
 public class DockerChecker implements ToolChecker {
   @Override
@@ -40,6 +39,6 @@ public class DockerChecker implements ToolChecker {
 
   @Override
   public void fixIssue() {
-    SystemOutLogger.warn("Fixing Docker issues is not automated. Please ensure Docker is installed and running.");
+    System.out.println("Fixing Docker issues is not automated. Please ensure Docker is installed and running.");
   }
 }

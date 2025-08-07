@@ -18,6 +18,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class BuildCLIServiceTest {
 
+  private static final String GIT_PATH = "path/to/git";
   private static final String REPO_URL = "https://github.com/BuildCLI/BuildCLI.git";
 
   @Mock
@@ -58,6 +59,30 @@ class BuildCLIServiceTest {
     assertTrue(BuildCLIService.shouldShowAsciiArt(new String[]{"about"}));
     assertTrue(BuildCLIService.shouldShowAsciiArt(new String[]{"help"}));
     assertFalse(BuildCLIService.shouldShowAsciiArt(new String[]{"invalid"}));
+  }
+
+  @Test
+  void testAbout() {
+    when(gitExecMock.showContributors()).thenReturn("contributor1, contributor2");
+
+    var standardOut = System.out;
+    try {
+      var outputStream = new java.io.ByteArrayOutputStream();
+      System.setOut(new java.io.PrintStream(outputStream));
+
+      service.about();
+      String expected = """
+                BuildCLI is a command-line interface (CLI) tool for managing and automating common tasks in Java project development.
+                It allows you to create, compile, manage dependencies, and run Java projects directly from the terminal, simplifying the development process.
+
+                Visit the repository for more details: https://github.com/BuildCLI/BuildCLI
+
+                contributor1, contributor2""";
+
+      assertEquals(expected, outputStream.toString().trim());
+    } finally {
+      System.setOut(standardOut);
+    }
   }
 
   // TODO BuildCLIService need a refactor to improve testing capacity

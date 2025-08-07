@@ -2,8 +2,10 @@ package dev.buildcli.cli.commands.plugin;
 
 import dev.buildcli.cli.utils.CommandUtils;
 import dev.buildcli.core.domain.BuildCLICommand;
+import dev.buildcli.core.domain.configs.BuildCLIConfig;
 import dev.buildcli.core.domain.jar.Jar;
 import dev.buildcli.core.utils.ProjectUtils;
+import dev.buildcli.core.utils.config.ConfigContextLoader;
 import dev.buildcli.core.utils.filesystem.FindFilesUtils;
 import dev.buildcli.core.utils.net.FileDownloader;
 import dev.buildcli.plugin.utils.BuildCLIPluginUtils;
@@ -35,6 +37,7 @@ import static dev.buildcli.core.utils.console.input.InteractiveInputUtils.questi
 public class AddCommand implements BuildCLICommand {
   private static final Logger logger = LoggerFactory.getLogger("AddPluginCommand");
   private static final String PLUGINS_DIR = Path.of(System.getProperty("user.home"), ".buildcli", "plugins").toString();
+  private final BuildCLIConfig globalConfig = ConfigContextLoader.getAllConfigs();
   @Option(names = {"--file", "-f"}, description = "File can be a project or jar locally or remote")
   private String file;
 

@@ -2,7 +2,6 @@ package dev.buildcli.core.utils.installers;
 
 import dev.buildcli.core.log.SystemOutLogger;
 import dev.buildcli.core.utils.DirectoryCleanup;
-import dev.buildcli.core.utils.EnvUtils;
 import dev.buildcli.core.utils.OS;
 import dev.buildcli.core.utils.compress.FileExtractor;
 
@@ -56,7 +55,7 @@ public abstract class MavenInstaller {
 
   public static File installProgramFilesDirectory() {
     if (OS.isWindows()) {
-      String programFiles = EnvUtils.getEnv("ProgramFiles");
+      String programFiles = System.getenv("ProgramFiles");
       if (programFiles == null) {
         programFiles = "C:\\Program Files";
       }
@@ -112,9 +111,9 @@ public abstract class MavenInstaller {
 
           String progressBar = "=".repeat(filledLength) + " ".repeat(progressBarLength - filledLength);
 
-          SystemOutLogger.print(String.format("\r[%s] %d%%", progressBar, progress));
+          System.out.printf("\r[%s] %d%%", progressBar, progress);
         }
-        SystemOutLogger.println("");
+        System.out.println();
       }
     }
 

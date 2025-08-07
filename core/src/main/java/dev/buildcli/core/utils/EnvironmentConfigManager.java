@@ -6,8 +6,6 @@ import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.logging.Logger;
 
-import dev.buildcli.core.log.SystemOutLogger;
-
 public class EnvironmentConfigManager {
 
     private static final Logger logger = Logger.getLogger(EnvironmentConfigManager.class.getName());
@@ -23,10 +21,10 @@ public class EnvironmentConfigManager {
             String content = "active.profile=" + environment; // Formata a string no formato chave-valor
             Files.writeString(configPath, content, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
             logger.info("Environment set to: " + environment);
-            SystemOutLogger.success("Environment set to: " + environment);
+            System.out.println("Environment set to: " + environment);
         } catch (IOException e) {
             logger.severe("Failed to set environment: " + e.getMessage());
-            SystemOutLogger.error("Could not set environment.");
+            System.err.println("Error: Could not set environment.");
         }
     }
 

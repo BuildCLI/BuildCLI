@@ -9,6 +9,8 @@ import java.util.function.Supplier;
 
 public class Async<T> {
   private final CompletableFuture<T> execsAsync;
+  private T value;
+  private Function<Throwable, Void> throwableVoidFunction;
 
   public Async(Supplier<T> supplier) {
     this.execsAsync = CompletableFuture.supplyAsync(supplier, ThreadPoolUtils.virtual());

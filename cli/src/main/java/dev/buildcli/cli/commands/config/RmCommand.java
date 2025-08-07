@@ -66,10 +66,9 @@ public class RmCommand implements BuildCLICommand {
 
     try {
       saveConfigFunction.save(buildCliConfig);
-      String scope = isLocal ? "local" : "global";
-      SystemOutLogger.success("Successfully removed " + removedCount + " configuration properties from " + scope + " scope.");
+      SystemOutLogger.log("Successfully removed %d configuration properties from %s scope.".formatted(removedCount, isLocal ? "local" : "global"));
     } catch (Exception e) {
-      SystemOutLogger.error("Failed to remove configuration properties: " + e.getMessage(), e);
+      System.err.println("Failed to remove configuration properties: " + e.getMessage());
     }
   }
 

@@ -10,7 +10,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Comparator;
 
-import static dev.buildcli.core.constants.GradleConstants.GRADLE_CMD;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class GradleProcessTest {
@@ -41,7 +40,7 @@ public class GradleProcessTest {
     GradleProcess gradleProcess = GradleProcess.createProcessor();
     assertEquals(GradleProcess.class, gradleProcess.getClass());
     assertFalse(gradleProcess.commands.isEmpty());
-    assertEquals(GRADLE_CMD, gradleProcess.commands.get(0));
+    assertEquals("gradle", gradleProcess.commands.get(0));
     assertFalse(gradleProcess.commands.contains("build"));
   }
 
@@ -50,7 +49,7 @@ public class GradleProcessTest {
     GradleProcess gradleProcess = GradleProcess.createProcessor("clean", "build", "-f");
 
     assertFalse(gradleProcess.commands.isEmpty());
-    assertEquals(GRADLE_CMD, gradleProcess.commands.get(0));
+    assertEquals("gradle", gradleProcess.commands.get(0));
     assertEquals("clean", gradleProcess.commands.get(1));
     assertEquals("build", gradleProcess.commands.get(2));
     assertEquals("-f", gradleProcess.commands.get(3));
@@ -67,7 +66,7 @@ public class GradleProcessTest {
       String expectedLogMessage = "Running gradle package command: gradle clean build -f " + tempDir.toString();
       assertTrue(outputStream.toString().contains(expectedLogMessage));
       assertFalse(gradleProcess.commands.isEmpty());
-      assertEquals(GRADLE_CMD, gradleProcess.commands.get(0));
+      assertEquals("gradle", gradleProcess.commands.get(0));
       assertEquals("clean", gradleProcess.commands.get(1));
       assertEquals("build", gradleProcess.commands.get(2));
       assertEquals("-f", gradleProcess.commands.get(3));
@@ -87,7 +86,7 @@ public class GradleProcessTest {
       String expectedLogMessage = "Running gradle compile command: gradle clean classes -f " + tempDir.toString();
       assertTrue(outputStream.toString().contains(expectedLogMessage));
       assertFalse(gradleProcess.commands.isEmpty());
-      assertEquals(GRADLE_CMD, gradleProcess.commands.get(0));
+      assertEquals("gradle", gradleProcess.commands.get(0));
       assertEquals("clean", gradleProcess.commands.get(1));
       assertEquals("classes", gradleProcess.commands.get(2));
       assertEquals("-f", gradleProcess.commands.get(3));
@@ -100,7 +99,7 @@ public class GradleProcessTest {
   void testCreateGetVersionProcess() {
     GradleProcess gradleProcess = GradleProcess.createGetVersionProcess();
     assertFalse(gradleProcess.commands.isEmpty());
-    assertEquals(GRADLE_CMD, gradleProcess.commands.get(0));
+    assertEquals("gradle", gradleProcess.commands.get(0));
     assertEquals("--version", gradleProcess.commands.get(1));
   }
 }

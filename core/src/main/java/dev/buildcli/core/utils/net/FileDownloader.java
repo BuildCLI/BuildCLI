@@ -1,6 +1,5 @@
 package dev.buildcli.core.utils.net;
 
-import dev.buildcli.core.exceptions.DownloadFailedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,9 +15,7 @@ import java.time.Duration;
 public final class FileDownloader {
   private static final Logger log = LoggerFactory.getLogger(FileDownloader.class);
 
-  private FileDownloader(){ }
-
-  public static File download(String url) throws DownloadFailedException {
+  public static File download(String url) {
     try (var client = HttpClient.newHttpClient()) {
       var request = HttpRequest.newBuilder().GET().uri(URI.create(url)).timeout(Duration.ofMinutes(30)).build();
 
@@ -42,7 +39,7 @@ public final class FileDownloader {
         throw new IOException("Failed to download file: " + response.statusCode());
       }
 
-      var filename = contentDisposition.map(s -> s.split("=")[1].replace("\"", "")).orElse("");
+      var filename = contentDisposition.map(s -> s.split("=")[1].replaceAll("\"", "")).orElse("");
 
       if (filename.isEmpty()) {
         throw new IOException("Failed to download file: " + response.statusCode());
@@ -65,18 +62,16 @@ public final class FileDownloader {
             int filledLength = (int) ((progress / 100.0) * progressBarLength);
 
             String progressBar = "=".repeat(filledLength) + " ".repeat(progressBarLength - filledLength);
-            log.info("Download progress: [{}] {}%", progressBar, progress);
+
+            System.out.printf("\r[%s] %d%%", progressBar, progress);
           }
+          System.out.println();
         }
       }
-      log.info("Download completed successfully. File saved as: {}", filename);
+
       return file;
-    } catch (IOException e) {
-      throw new DownloadFailedException(e.getMessage());
-    } catch (InterruptedException e) {
-      log.error("Thread was interrupted. Cleanup performed. {}", e.getMessage());
-      Thread.currentThread().interrupt();
+    } catch (IOException | InterruptedException e) {
+      throw new RuntimeException(e);
     }
-    return null;
   }
 }
