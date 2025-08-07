@@ -2,14 +2,13 @@ package dev.buildcli.cli.commands.ops.add;
 
 import dev.buildcli.core.actions.commandline.JavaProcess;
 import dev.buildcli.core.domain.BuildCLICommand;
+import dev.buildcli.core.log.SystemOutLogger;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -57,16 +56,16 @@ public class DockerCommand implements BuildCLICommand {
           builder.append("ENTRYPOINT ").append("[\"java\", \"-jar\", \"app.jar\"]").append("\n");
 
           writer.write(builder.toString());
-          System.out.println("Dockerfile generated.");
+          SystemOutLogger.success("Dockerfile generated.");
         }
       } else {
-        System.out.println("Dockerfile already exists.");
+        SystemOutLogger.warn("Dockerfile already exists.");
       }
-      System.out.println("Dockerfile created successfully.");
-      System.out.println("Use 'buildcli project run docker' to build and run the Docker container.");
+      SystemOutLogger.success("Dockerfile created successfully.");
+      SystemOutLogger.info("Use 'buildcli project run docker' to build and run the Docker container.");
     } catch (IOException e) {
       logger.log(Level.SEVERE, "Failed to setup Docker", e);
-      System.err.println("Error: Could not setup Docker environment.");
+      SystemOutLogger.error("Could not setup Docker environment.");
     }
   }
 

@@ -1,5 +1,6 @@
 package dev.buildcli.core.project;
 
+import dev.buildcli.core.log.SystemOutLogger;
 import dev.buildcli.core.utils.ProfileManager;
 import dev.buildcli.core.utils.SystemCommands;
 import dev.buildcli.core.utils.DirectoryService;
@@ -39,8 +40,8 @@ public class ProjectRunner {
             String profileMessage = properties.getProperty("app.message", "Running with no specific profile");
 
             // Exibir a mensagem do perfil ativo no console
-            System.out.println("Active Profile: " + activeProfile);
-            System.out.println(profileMessage);
+            SystemOutLogger.info("Active Profile: " + activeProfile);
+            SystemOutLogger.info(profileMessage);
 
             // Compilar e executar o projeto
             compileProject(); // Garante que o projeto está compilado
@@ -63,7 +64,7 @@ public class ProjectRunner {
         if (exitCode != 0) {
             throw new IOException("Failed to compile project. Maven exited with code " + exitCode);
         }
-        System.out.println("Project compiled successfully.");
+        SystemOutLogger.success("Project compiled successfully.");
     }
 
     private void runJar() throws IOException, InterruptedException {
