@@ -1,18 +1,11 @@
 package dev.buildcli.core.constants;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.io.PrintWriter;
 import java.nio.file.Path;
 import java.util.Map;
 
 import static dev.buildcli.core.utils.BeautifyShell.*;
 
 public abstract class ConfigDefaultConstants {
-
-  private static final Logger log = LoggerFactory.getLogger(ConfigDefaultConstants.class);
-
   public static final String BUILD_CLI_CONFIG_FILE_NAME = "buildcli.properties";
   public static final Path BUILD_CLI_CONFIG_GLOBAL_FILE = Path.of(System.getProperty("user.home"), ".buildcli", BUILD_CLI_CONFIG_FILE_NAME);
 
@@ -27,8 +20,8 @@ public abstract class ConfigDefaultConstants {
 
   //Project
   public static final String PROJECT_PARENT = "project";
-  public static final String PROJECT_NAME = composePropertyName(PROJECT_PARENT, "name");
-  public static final String PROJECT_TYPE = composePropertyName(PROJECT_PARENT, "type");
+  public static final String PROJECT_NAME = composePropertyName(PROJECT_PARENT, "project", "name");
+  public static final String PROJECT_TYPE = composePropertyName(PROJECT_PARENT, "project", "type");
 
   //AI
   public static final String AI_PARENT = "ai";
@@ -40,6 +33,8 @@ public abstract class ConfigDefaultConstants {
   //Plugins
   public static final String PLUGIN_PARENT = "plugin";
   public static final String PLUGIN_PATHS = composePropertyName(PLUGIN_PARENT, "paths");
+
+
 
   private static final Map<String, String> configs;
 
@@ -71,12 +66,11 @@ public abstract class ConfigDefaultConstants {
     return builder.toString();
   }
 
-  public static void listAll(PrintWriter out) {
-    log.info("List of all configs:");
+  public static void listAll() {
+    System.out.println("List of all configs:");
     for (var entry : configs.entrySet()) {
       var line = content(entry.getKey()).blueFg().bold() + " - " + italic(entry.getValue());
-      out.println("  " + line);
-      log.info("  {}", line);
+      System.out.println("  " + line);
     }
   }
 }

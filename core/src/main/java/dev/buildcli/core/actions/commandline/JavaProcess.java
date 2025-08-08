@@ -29,7 +29,7 @@ public class JavaProcess extends AbstractCommandLineProcess {
     return process;
   }
 
-  public static JavaProcess createRunClassProcess(String absolutePath, String...args) {
+  public static CommandLineProcess createRunClassProcess(String absolutePath, String...args) {
     return createProcess(absolutePath, mergeArgs(args));
   }
 

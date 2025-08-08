@@ -3,7 +3,6 @@ package dev.buildcli.cli.commands.plugin;
 import dev.buildcli.core.domain.BuildCLICommand;
 import dev.buildcli.core.domain.configs.BuildCLIConfig;
 import dev.buildcli.core.domain.jar.Jar;
-import dev.buildcli.core.log.SystemOutLogger;
 import dev.buildcli.core.utils.config.ConfigContextLoader;
 import dev.buildcli.core.utils.filesystem.FindFilesUtils;
 import dev.buildcli.plugin.utils.BuildCLIPluginUtils;
@@ -52,7 +51,7 @@ public class ListCommand implements BuildCLICommand {
     List<PluginInfo> plugins = findInstalledPlugins();
 
     if (plugins.isEmpty()) {
-      SystemOutLogger.warn("No plugins installed.");
+      System.out.println("No plugins installed.");
       return;
     }
 
@@ -112,22 +111,22 @@ public class ListCommand implements BuildCLICommand {
 
   private void displayPlugins(List<PluginInfo> plugins) {
     if (nameOnly) {
-      plugins.forEach(plugin -> SystemOutLogger.println(plugin.name()));
+      plugins.forEach(plugin -> System.out.println(plugin.name()));
       return;
     }
 
-    SystemOutLogger.println(yellowFg("Found " + plugins.size() + " plugin(s):\n"));
+    System.out.println(yellowFg("Found " + plugins.size() + " plugin(s):\n"));
 
     for (PluginInfo plugin : plugins) {
-      SystemOutLogger.println(blueFg("Plugin: ") + bold(plugin.name()));
-      SystemOutLogger.println(blueFg("Version: ") + plugin.version());
+      System.out.println(blueFg("Plugin: ") + bold(plugin.name()));
+      System.out.println(blueFg("Version: ") + plugin.version());
 
       if (verbose) {
-        SystemOutLogger.println(blueFg("Description: ") + plugin.description());
-        SystemOutLogger.println(blueFg("Path: ") + plugin.path());
+        System.out.println(blueFg("Description: ") + plugin.description());
+        System.out.println(blueFg("Path: ") + plugin.path());
       }
 
-      SystemOutLogger.println(""); // Empty line between plugins
+      System.out.println(); // Empty line between plugins
     }
   }
 

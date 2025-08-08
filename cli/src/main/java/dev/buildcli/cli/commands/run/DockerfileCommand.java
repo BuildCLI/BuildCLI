@@ -1,41 +1,36 @@
 package dev.buildcli.cli.commands.run;
 
+import dev.buildcli.core.actions.commandline.DockerProcess;
 import dev.buildcli.core.domain.BuildCLICommand;
-import dev.buildcli.core.log.SystemOutLogger;
 import picocli.CommandLine.Command;
+import picocli.CommandLine.Option;
 
-import java.io.IOException;
+import java.util.logging.Logger;
 
-@Command(name = "dockerfile", description = "Build and run Docker container", mixinStandardHelpOptions = true)
+@Command(name = "dockerfile", aliases = {"docker", "d"}, description = "Builds and runs a Docker image for the project."
+        + " Alias: 'docker' and 'd'. Builds the Docker image and starts the container, exposing port 8080.")
 public class DockerfileCommand implements BuildCLICommand {
+  private final Logger logger = Logger.getLogger(DockerfileCommand.class.getName());
 
-    @Override
-    public void run() {
-        try {
-            // Executar o comando "docker build"
-            ProcessBuilder buildProcess = new ProcessBuilder(
-                    "docker", "build", "-t", "buildcli-app", "."
-            );
-            buildProcess.inheritIO();
-            int buildExitCode = buildProcess.start().waitFor();
-            if (buildExitCode != 0) {
-                throw new RuntimeException("Failed to build Docker image. Exit code: " + buildExitCode);
-            }
-            SystemOutLogger.success("Docker image built successfully.");
+  @Option(names = {"--name", "-n"}, description = "", defaultValue = "buildcli-app")
+  private String name;
 
-            // Executar o comando "docker run"
-            ProcessBuilder runProcess = new ProcessBuilder(
-                    "docker", "run", "-p", "8080:8080", "buildcli-app"
-            );
-            runProcess.inheritIO();
-            int runExitCode = runProcess.start().waitFor();
-            if (runExitCode != 0) {
-                throw new RuntimeException("Failed to run Docker container. Exit code: " + runExitCode);
-            } else {
-                SystemOutLogger.success("Docker container is running on port 8080.");
-            }
-        } catch (IOException | InterruptedException e) {
-            throw new RuntimeException("Failed to build or run Docker container", e);
-        }
+  @Override
+  public void run() {
+    var buildExitCode = DockerProcess.createBuildProcess(name).run();
+
+    if (buildExitCode != 0) {
+      logger.severe("Failed to build Docker image. Exit code: " + buildExitCode);
+      return;
     }
+    System.out.println("Docker image built successfully.");
+
+    // Executar o comando "docker run"
+    int runExitCode = DockerProcess.createRunProcess(name).run();
+    if (runExitCode != 0) {
+      logger.severe("Failed to run Docker container. Exit code: " + runExitCode);
+    } else {
+      System.out.println("Docker container is running on port 8080.");
+    }
+  }
 }

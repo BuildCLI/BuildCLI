@@ -10,9 +10,9 @@ import picocli.CommandLine.HelpCommand;
     version = "BuildCLI 0.0.14",
     description = "BuildCLI - A CLI for Java Project Management",
     subcommands = {
-        AboutCommand.class, AiCommand.class, AutocompleteCommand.class, ChangelogCommand.class, ConfigCommand.class,
-        DoctorCommand.class, HookCommand.class, ProjectCommand.class, PluginCommand.class, RunCommand.class,
-        VersionCommand.class, HelpCommand.class, BugCommand.class, ManCommand.class
+        AboutCommand.class, AiCommand.class, AutocompleteCommand.class, BugCommand.class, ChangelogCommand.class, ConfigCommand.class,
+        DoctorCommand.class, HookCommand.class, ManCommand.class, ProjectCommand.class, PluginCommand.class, RunCommand.class,
+        VersionCommand.class, HelpCommand.class
     }
 )
 public class BuildCLI {
