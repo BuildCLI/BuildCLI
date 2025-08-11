@@ -33,7 +33,7 @@ jobs:
         with:
           reporter: github-check
           github_token: ${{ secrets.GITHUB_TOKEN }}
-      - uses: dbelyaev/action-checkstyle@8e5f0fa3791d3f5cb3d5fcaf2047fe1444d075dd # v1.19.1
+      - uses: dbelyaev/action-checkstyle@8cf9c6f2656938f2a745dca3179929d14e7a5316 # v2.0.0
         with:
           reporter: github-check
           github_token: ${{ secrets.GITHUB_TOKEN }}
