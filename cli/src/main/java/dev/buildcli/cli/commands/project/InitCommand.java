@@ -12,7 +12,12 @@ import picocli.CommandLine.Option;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.LinkedList;
+
+import javax.annotation.Nullable;
 
 import static dev.buildcli.core.utils.console.input.InteractiveInputUtils.options;
 import static dev.buildcli.core.utils.console.input.InteractiveInputUtils.question;
@@ -48,8 +53,8 @@ public class InitCommand implements BuildCLICommand {
     }
   }
 
-  private void createReadme(String projectName) throws IOException {
-    File readme = new File("README.md");
+  private void createReadme(String projectName, @Nullable Path rootDir) throws IOException {
+    File readme = new File(rootDir.toString(), "README.md");
     if (readme.createNewFile()) {
       try (FileWriter writer = new FileWriter(readme)) {
         writer.write("# " + projectName + "\n\nThis is the " + projectName + " project.");
@@ -58,8 +63,8 @@ public class InitCommand implements BuildCLICommand {
     }
   }
 
-  private void createMainClass(String basePackage) throws IOException {
-    String packagePath = "src/main/java/" + basePackage.replace('.', '/');
+  private void createMainClass(String basePackage, @Nullable Path rootDir) throws IOException {
+    String packagePath = (rootDir != null) ? rootDir.toString() + "src/main/java/" + basePackage.replace('.', '/') : "src/main/java/" + basePackage.replace('.', '/');
     File packageDir = new File(packagePath);
     if (!packageDir.exists() && !packageDir.mkdirs()) {
       throw new IOException("Could not create package directory: " + packagePath);
@@ -82,8 +87,8 @@ public class InitCommand implements BuildCLICommand {
     }
   }
 
-  private void createPomFile(String projectName, String basePackage) throws IOException {
-    File pomFile = new File("pom.xml");
+  private void createPomFile(String projectName, String basePackage, @Nullable Path roothDir) throws IOException {
+    File pomFile = new File(roothDir.toString(), "pom.xml");
     if (pomFile.createNewFile()) {
       try (FileWriter writer = new FileWriter(pomFile)) {
         writer.write("""
@@ -143,13 +148,12 @@ public class InitCommand implements BuildCLICommand {
     }
   }
 
-  private void createRootDir(String projectName) throws IOException {
-    File rootDir = new File(projectName);
-    if (rootDir.mkdir()) {
-      SystemOutLogger.log("Root project directory " + projectName + " created successfully.");
-    } else {
-      SystemOutLogger.log("Failed to create root directory.");
-    }
+  private Path createRootDir(String projectName) throws IOException {
+    Path currentDir = Paths.get("").toAbsolutePath();
+    Path rootDir = currentDir.resolve(projectName);
+    Files.createDirectories(rootDir);
+    SystemOutLogger.log("Root directory created successfully.");
+    return rootDir;
   }
 
   private class QuickStartProject extends dev.buildcli.plugin.BuildCLITemplatePlugin {
@@ -178,10 +182,10 @@ public class InitCommand implements BuildCLICommand {
       }
 
       try {
-        createRootDir(projectName);
-        createReadme(projectName);
-        createMainClass(basePackage);
-        createPomFile(projectName, basePackage);
+        Path rootDir = createRootDir(projectName);
+        createReadme(projectName, rootDir);
+        createMainClass(basePackage, rootDir);
+        createPomFile(projectName, basePackage, rootDir);
       } catch (IOException e) {
         throw new CommandExecutorRuntimeException(e);
       }
