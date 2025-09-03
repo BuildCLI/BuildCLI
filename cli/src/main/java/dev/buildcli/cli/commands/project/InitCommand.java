@@ -143,6 +143,15 @@ public class InitCommand implements BuildCLICommand {
     }
   }
 
+  private void createRootDir(String projectName) throws IOException {
+    File rootDir = new File(projectName);
+    if (rootDir.mkdir()) {
+      SystemOutLogger.log("Root project directory " + projectName + " created successfully.");
+    } else {
+      SystemOutLogger.log("Failed to create root directory.");
+    }
+  }
+
   private class QuickStartProject extends dev.buildcli.plugin.BuildCLITemplatePlugin {
     @Override
     public TemplateType type() {
@@ -169,6 +178,7 @@ public class InitCommand implements BuildCLICommand {
       }
 
       try {
+        createRootDir(projectName);
         createReadme(projectName);
         createMainClass(basePackage);
         createPomFile(projectName, basePackage);
