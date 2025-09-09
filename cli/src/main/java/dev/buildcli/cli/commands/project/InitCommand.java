@@ -54,7 +54,7 @@ public class InitCommand implements BuildCLICommand {
   }
 
   private void createReadme(String projectName, @Nullable Path rootDir) throws IOException {
-    File readme = new File(rootDir.toString(), "README.md");
+    File readme = rootDir == null ? new File("README.md") : new File(rootDir.toString(), "README.md");
     if (readme.createNewFile()) {
       try (FileWriter writer = new FileWriter(readme)) {
         writer.write("# " + projectName + "\n\nThis is the " + projectName + " project.");
@@ -64,7 +64,7 @@ public class InitCommand implements BuildCLICommand {
   }
 
   private void createMainClass(String basePackage, @Nullable Path rootDir) throws IOException {
-    String packagePath = (rootDir != null) ? rootDir.toString() + "src/main/java/" + basePackage.replace('.', '/') : "src/main/java/" + basePackage.replace('.', '/');
+    String packagePath = rootDir == null ? "src/main/java/" + basePackage.replace('.', '/') : rootDir.toString() + "src/main/java/" + basePackage.replace('.', '/');
     File packageDir = new File(packagePath);
     if (!packageDir.exists() && !packageDir.mkdirs()) {
       throw new IOException("Could not create package directory: " + packagePath);
@@ -87,8 +87,8 @@ public class InitCommand implements BuildCLICommand {
     }
   }
 
-  private void createPomFile(String projectName, String basePackage, @Nullable Path roothDir) throws IOException {
-    File pomFile = new File(roothDir.toString(), "pom.xml");
+  private void createPomFile(String projectName, String basePackage, @Nullable Path rootDir) throws IOException {
+    File pomFile = rootDir == null ? new File("pom.xml") : new File(rootDir.toString(), "pom.xml");
     if (pomFile.createNewFile()) {
       try (FileWriter writer = new FileWriter(pomFile)) {
         writer.write("""
