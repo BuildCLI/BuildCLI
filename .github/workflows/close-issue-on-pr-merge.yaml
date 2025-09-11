@@ -4,14 +4,10 @@ on:
   pull_request:
     types: [closed]
 
-permissions: {}
-
 jobs:
   close-issue:
     runs-on: ubuntu-latest
     if: github.event.pull_request.merged == true
-    permissions:
-        issues: write
 
     steps:
       - name: Extract Issue Number and Close Issue

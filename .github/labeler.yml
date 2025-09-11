@@ -1,93 +1,88 @@
 # Apply the "bug" label if the issue contains the word "bug" or comes from a bug report template.
 # Also applies if the PR affects bug-related files or paths.
 bug:
-  - "bug"
-  - "Bug report"
-  - "fix/**"
-  - "**/*.bug"
-  - "hotfix/**"
+  - title: '/(?i)\bbug\b|fix|hotfix/'
+  - body: '/(?i)\bbug\b|fix|hotfix/'
+  - changed-files:
+      any-glob-to-any-file:
+        - 'fix/**'
+        - '**/*.bug'
+        - 'hotfix/**'
 
 # Apply the "feature" label if the issue mentions "feature" or is a feature request.
 # Also applies if the PR affects feature-related files.
 feature:
-  - "feature"
-  - "Feature request"
-  - "feat/**"
-  - "**/*.feature"
+  - title: '/(?i)\bfeature\b|feature request|feat/'
+  - body: '/(?i)\bfeature\b|feature request|feat/'
+  - changed-files:
+      any-glob-to-any-file:
+        - 'feat/**'
+        - '**/*.feature'
 
 # Apply the "documentation" label if the issue mentions "documentation"
 # or if the PR modifies markdown documentation files.
 documentation:
-  - "documentation"
-  - "docs/**"
-  - "**/*.md"
-  - "README.md"
-  - "CONTRIBUTING.md"
+  - title: '/(?i)\bdocumentation\b|docs?/'
+  - body: '/(?i)\bdocumentation\b|docs?/'
+  - changed-files:
+      any-glob-to-any-file:
+        - 'docs/**'
+        - '**/*.md'
+        - 'README.md'
+        - 'CONTRIBUTING.md'
 
 # Apply the "security" label if the issue contains "security" or "vulnerability."
 # Also applies if the issue references a CVE or exploit.
 security:
-  - "security"
-  - "vulnerability"
-  - "exploit"
-  - "CVE-"
+  - title: '/(?i)\bsecurity\b|vulnerability|exploit|CVE-\d{4}-\d+/'
+  - body: '/(?i)\bsecurity\b|vulnerability|exploit|CVE-\d{4}-\d+/'
 
 # Apply the "good first issue" label if the issue is marked as a beginner-friendly task.
-good first issue:
-  - "good first issue"
-  - "beginner"
-  - "starter"
-  - "easy"
+"good first issue":
+  - title: '/(?i)good first issue|beginner|starter|easy/'
+  - body: '/(?i)good first issue|beginner|starter|easy/'
 
 # Apply the "high priority" label if the issue is urgent or critical.
-high priority:
-  - "high priority"
-  - "urgent"
-  - "critical"
-  - "blocker"
-  - "must-fix"
+"high priority":
+  - title: '/(?i)high priority|urgent|critical|blocker|must[- ]fix/'
+  - body: '/(?i)high priority|urgent|critical|blocker|must[- ]fix/'
 
 # Apply the "low priority" label if the issue is minor or not urgent.
-low priority:
-  - "low priority"
-  - "minor"
-  - "non-urgent"
-  - "nice to have"
+"low priority":
+  - title: '/(?i)low priority|minor|non-urgent|nice to have/'
+  - body: '/(?i)low priority|minor|non-urgent|nice to have/'
 
 # Apply the "dependencies" label if the PR modifies dependency files.
 dependencies:
-  - "package.json"
-  - "package-lock.json"
-  - "requirements.txt"
+  - changed-files:
+      any-glob-to-any-file:
+        - 'package.json'
+        - 'package-lock.json'
+        - 'requirements.txt'
 
 # Apply the "tests" label if the PR modifies test-related files or mentions testing.
 tests:
-  - "tests/**"
-  - "**/*.test.*"
-  - "unit test"
-  - "integration test"
+  - title: '/(?i)\btests?\b|unit test|integration test/'
+  - body: '/(?i)\btests?\b|unit test|integration test/'
+  - changed-files:
+      any-glob-to-any-file:
+        - 'tests/**'
+        - '**/*.test.*'
 
 # Apply the "ci/cd" label if the PR modifies GitHub Actions, CI/CD, or related workflows.
-ci/cd:
-  - ".github/workflows/**"
-  - ".gitlab-ci.yml"
-  - "Jenkinsfile"
+"ci/cd":
+  - changed-files:
+      any-glob-to-any-file:
+        - '.github/workflows/**'
+        - '.gitlab-ci.yml'
+        - 'Jenkinsfile'
 
 # Apply the "refactor" label if the PR is focused on code improvements without functional changes.
 refactor:
-  - "refactor"
-  - "code improvement"
-  - "cleanup"
+  - title: '/(?i)\brefactor\b|code improvement|cleanup/'
+  - body: '/(?i)\brefactor\b|code improvement|cleanup/'
 
 # Apply the "ui/ux" label if the PR involves UI, frontend, or design changes.
-ui/ux:
-  - "ui"
-  - "ux"
-  - "frontend"
-  - "design"
-  - "css"
-  - "user experience"
-
-# Apply the "other" label if no other categories match.
-other:
-  - "*"
+"ui/ux":
+  - title: '/(?i)\bui\b|\bux\b|frontend|design|css|user experience/'
+  - body: '/(?i)\bui\b|\bux\b|frontend|design|css|user experience/'
