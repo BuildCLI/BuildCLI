@@ -64,7 +64,7 @@ public class InitCommand implements BuildCLICommand {
   }
 
   private void createMainClass(String basePackage, @Nullable Path rootDir) throws IOException {
-    String packagePath = rootDir == null ? "src/main/java/" + basePackage.replace('.', '/') : rootDir.toString() + "src/main/java/" + basePackage.replace('.', '/');
+    String packagePath = rootDir == null ? "src/main/java/" + basePackage.replace('.', '/') : rootDir.toString() + "/src/main/java/" + basePackage.replace('.', '/');
     File packageDir = new File(packagePath);
     if (!packageDir.exists() && !packageDir.mkdirs()) {
       throw new IOException("Could not create package directory: " + packagePath);
@@ -174,15 +174,16 @@ public class InitCommand implements BuildCLICommand {
           "src/test/java/" + basePackage.replace('.', '/')
       };
 
+      try {
+      Path rootDir = createRootDir(projectName);
+
       for (String dir : dirs) {
-        File directory = new File(dir);
+        File directory = new File(rootDir.toFile(), dir);
         if (directory.mkdirs()) {
           SystemOutLogger.log("Directory created: " + dir);
         }
       }
 
-      try {
-        Path rootDir = createRootDir(projectName);
         createReadme(projectName, rootDir);
         createMainClass(basePackage, rootDir);
         createPomFile(projectName, basePackage, rootDir);
