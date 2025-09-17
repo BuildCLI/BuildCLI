@@ -13,7 +13,8 @@ public class CommandLineRunner {
   public static void main(String[] args) {
     LoggingConfig.configure();
 
-    BuildCLIService.welcome();
+    BuildCLIService buildCLIService = new BuildCLIService();
+    buildCLIService.welcome();
 
     BuildCLIConfig.initialize();
     var commandLine = new CommandLine(new BuildCLI());
@@ -24,7 +25,7 @@ public class CommandLineRunner {
     HookManager hook = new HookManager(commandLine);
     hook.executeHook(args, commandLine);
 
-    BuildCLIService.checkUpdatesBuildCLIAndUpdate();
+    buildCLIService.checkUpdatesBuildCLIAndUpdate();
 
     System.exit(0);
   }

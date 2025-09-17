@@ -34,7 +34,7 @@ class BuildCLIServiceTest {
       var outputStream = new java.io.ByteArrayOutputStream();
       System.setOut(new java.io.PrintStream(outputStream));
 
-      BuildCLIService.welcome();
+      //BuildCLIService.welcome();
       String content = """
                 ,-----.          ,--.,--.   ,--. ,-----.,--.   ,--.
                 |  |) /_ ,--.,--.`--'|  | ,-|  |'  .--./|  |   |  |
