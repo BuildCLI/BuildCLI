@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 public class EnvironmentConfigManager {
 
     private static final Logger logger = Logger.getLogger(EnvironmentConfigManager.class.getName());
-    private static final Path configPath = Path.of("environment.config");
+    private static Path configPath = Path.of("environment.config");
 
     /**
      * Sets the environment configuration.
@@ -47,4 +47,9 @@ public class EnvironmentConfigManager {
             return null;
         }
     }
+
+    public static void setConfigPathForTest(Path newPath) {
+        configPath = newPath;
+    }
+
 }

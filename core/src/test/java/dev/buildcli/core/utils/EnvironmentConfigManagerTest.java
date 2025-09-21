@@ -59,4 +59,6 @@ class EnvironmentConfigManagerTest {
         String content = Files.readString(configFile);
         assertEquals("active.profile=new", content);
     }
+
+
 }
