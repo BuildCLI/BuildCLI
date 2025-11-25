@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check comment and assign user
-        uses: actions/github-script@v7
+        uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
@@ -91,7 +91,7 @@ jobs:
 
                   if (assignedUser === commenter) {
                     console.log(`⚠️ ${commenter} is already assigned.`);
-                    
+            
                     await github.rest.issues.createComment({
                       owner: repoOwner,
                       repo: repoName,
@@ -144,7 +144,7 @@ jobs:
 
       - name: Inform how to use the bot when a new issue is created
         if: github.event.action == 'opened'
-        uses: actions/github-script@v7
+        uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
