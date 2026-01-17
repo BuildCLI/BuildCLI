@@ -46,35 +46,6 @@ public class BuildCLIService {
     this.localRepository = localRepository;
   }
 
-  public static void welcome() {
-    var configs = ConfigContextLoader.getAllConfigs();
-    if (configs.getPropertyAsBoolean(ConfigDefaultConstants.BANNER_ENABLED).orElse(true)) {
-      if (configs.getProperty(ConfigDefaultConstants.BANNER_PATH).isEmpty()) {
-        printOfficialBanner();
-      } else {
-        var path = Path.of(configs.getProperty(ConfigDefaultConstants.BANNER_PATH).get());
-        if (Files.exists(path) && Files.isRegularFile(path)) {
-          try {
-            System.out.println(Files.readString(path));
-          } catch (IOException e) {
-            throw new RuntimeException(e);
-          }
-        } else {
-          printOfficialBanner();
-        }
-      }
-    }
-  }
-
-  private static void printOfficialBanner() {
-    System.out.println(",-----.          ,--.,--.   ,--. ,-----.,--.   ,--.");
-    System.out.println("|  |) /_ ,--.,--.`--'|  | ,-|  |'  .--./|  |   |  |");
-    System.out.printf("|  .-.  \\|  ||  |,--.|  |' .-. ||  |    |  |   |  |       %s%n", content("Built by the community, for the community").blueFg().italic());
-    System.out.println("|  '--' /'  ''  '|  ||  |\\ `-' |'  '--'\\|  '--.|  |");
-    System.out.println("`------'  `----' `--'`--' `---'  `-----'`-----'`--'");
-    System.out.println();
-  }
-
 
   private static void updateBuildCLI() {
     if (updateRepository()) {
