@@ -31,20 +31,17 @@ import static dev.buildcli.core.utils.BeautifyShell.*;
 public class ListCommand implements BuildCLICommand {
   private static final Logger logger = LoggerFactory.getLogger("ListPluginCommand");
   private static final String DEFAULT_PLUGINS_DIR = System.getProperty("user.home") + "/.buildcli/plugins";
-
+  private final BuildCLIConfig globalConfig = ConfigContextLoader.getAllConfigs();
   @Option(
       names = {"--verbose", "-v"},
       description = "Show detailed information about each plugin"
   )
   private boolean verbose = false;
-
   @Option(
       names = {"--name-only", "-n"},
       description = "Show only plugin names"
   )
   private boolean nameOnly = false;
-
-  private final BuildCLIConfig globalConfig = ConfigContextLoader.getAllConfigs();
 
   @Override
   public void run() {

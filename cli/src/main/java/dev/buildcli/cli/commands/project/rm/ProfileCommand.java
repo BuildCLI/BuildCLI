@@ -11,7 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @Command(name = "profile", aliases = {"p"}, description = "Deletes a configuration profile from the project. "
-        + "Alias: 'p'. Removes the corresponding application-{profile}.properties file.", mixinStandardHelpOptions = true)
+    + "Alias: 'p'. Removes the corresponding application-{profile}.properties file.", mixinStandardHelpOptions = true)
 public class ProfileCommand implements BuildCLICommand {
   private final Logger LOGGER = Logger.getLogger(ProfileCommand.class.getName());
 

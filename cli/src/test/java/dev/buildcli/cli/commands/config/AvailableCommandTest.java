@@ -1,6 +1,6 @@
 package dev.buildcli.cli.commands.config;
 
-import dev.buildcli.cli.BuildCLI;
+import dev.buildcli.cli.CommandLineRunner;
 import dev.buildcli.cli.utils.CommandUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -17,30 +17,20 @@ class AvailableCommandTest {
     CommandUtils.call("config", "set", "buildcli.logging.banner.enabled=false");
   }
 
-  @Test
-  void shouldListAllConfigs_whenRunAvailableCommand() {
-    var cmd = new CommandLine(new BuildCLI());
+  @ParameterizedTest
+  @ValueSource(strings = {"available", "a"})
+  void shouldSuccess_whenRunValidCommands(String command) {
+    var result = TestUtils.executeCommand(CommandLineRunner.class, "config", command);
 
-    var sw = new StringWriter();
-    cmd.setOut(new PrintWriter(sw));
-
-    int exitCode = cmd.execute("config", "available");
-
-    System.out.println(sw.toString());
-
-    Assertions.assertEquals(0, exitCode);
-    /*Assertions.assertTrue(sw.toString().contains("buildcli.logging.banner.enabled"));
-    Assertions.assertTrue(sw.toString().contains("buildcli.logging.banner.path"));
-    Assertions.assertTrue(sw.toString().contains("buildcli.ai.vendor"));
-    Assertions.assertTrue(sw.toString().contains("buildcli.ai.model"));
-    Assertions.assertTrue(sw.toString().contains("buildcli.ai.url"));
-    Assertions.assertTrue(sw.toString().contains("buildcli.ai.token"));
-    Assertions.assertTrue(sw.toString().contains("buildcli.plugins.paths"));*/
+    Assertions.assertEquals(0, result.exitCode);
+    ConfigKeys.ALL_KEYS.forEach(
+        key -> Assertions.assertTrue(result.output.contains(key), "Key not found: " + key));
   }
 
-  @Test
-  void shouldListAllConfigs_whenRunACommand() {
-    var cmd = new CommandLine(new BuildCLI());
+  @ParameterizedTest
+  @ValueSource(strings = {"az"})
+  void shouldFail_whenRunInvalidCommands(String command) {
+    var result = TestUtils.executeCommand(CommandLineRunner.class, "config", command);
 
     var sw = new StringWriter();
     cmd.setOut(new PrintWriter(sw));

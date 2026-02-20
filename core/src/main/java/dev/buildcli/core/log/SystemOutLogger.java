@@ -6,11 +6,12 @@ import org.slf4j.LoggerFactory;
 
 public class SystemOutLogger {
 
-	private static final Logger logger = LoggerFactory.getLogger("BuildCLI");
+  private static final Logger logger = LoggerFactory.getLogger("BuildCLI");
 
-	private SystemOutLogger() { }
+  private SystemOutLogger() {
+  }
 
-	public static void log(String message) {
-		logger.info(message);
-	}
+  public static void log(String message) {
+    logger.info(message);
+  }
 }

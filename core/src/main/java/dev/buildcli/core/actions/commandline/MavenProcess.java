@@ -9,6 +9,7 @@ import java.util.Arrays;
 
 public class MavenProcess extends AbstractCommandLineProcess {
   private static final Logger logger = LoggerFactory.getLogger(MavenProcess.class);
+
   private MavenProcess(boolean printOutput) {
     super(MavenConstants.MAVEN_CMD, printOutput);
   }

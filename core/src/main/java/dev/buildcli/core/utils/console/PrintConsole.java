@@ -1,7 +1,7 @@
 package dev.buildcli.core.utils.console;
 
 public final class PrintConsole {
-  public static void print(Object...o) {
+  public static void print(Object... o) {
     var builder = new StringBuilder();
 
     for (Object o1 : o) {
@@ -15,7 +15,7 @@ public final class PrintConsole {
     System.out.print(builder);
   }
 
-  public static void println(Object...o) {
+  public static void println(Object... o) {
     var builder = new StringBuilder();
 
     for (Object o1 : o) {

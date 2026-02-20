@@ -17,13 +17,13 @@ import java.nio.file.Paths;
 import java.util.Scanner;
 
 public abstract class GradleInstaller {
-  private GradleInstaller() {
-  }
-
   private static final String GRADLE_VERSION = "8.12.1";
   private static final String GRADLE_NAME = "gradle-%s".formatted(GRADLE_VERSION);
   private static final String GRADLE_DOWNLOAD_URL = "https://services.gradle.org/distributions/%s-bin.zip".formatted(GRADLE_NAME);
   private static final String USER_HOME = System.getProperty("user.home");
+  private GradleInstaller() {
+  }
+
   public static void installGradle() {
     SystemOutLogger.log("Installing Gradle operation started...");
     try {
@@ -80,7 +80,7 @@ public abstract class GradleInstaller {
       throw new IOException("Failed to download maven artifact: " + response.statusCode());
     }
 
-    var gradleZip = new File(GRADLE_NAME +  ".zip");
+    var gradleZip = new File(GRADLE_NAME + ".zip");
 
     if (gradleZip.exists()) {
       SystemOutLogger.log("Cleaning up previous Gradle zip: " + gradleZip);
@@ -122,7 +122,7 @@ public abstract class GradleInstaller {
 
   public static void configurePath(String gradleExtractedDir) throws IOException {
     if (OS.isWindows()) {
-      Runtime.getRuntime().exec(new String[] {"setx PATH \"%PATH%;" + gradleExtractedDir + "\\bin\""});
+      Runtime.getRuntime().exec(new String[]{"setx PATH \"%PATH%;" + gradleExtractedDir + "\\bin\""});
     } else {
       String shellConfigFile;
       String shell = System.getenv("SHELL");
@@ -147,10 +147,10 @@ public abstract class GradleInstaller {
       if (response.equals("y") || response.equals("yes")) {
         SystemOutLogger.log("Running the commands...");
 
-        Runtime.getRuntime().exec(new String[] {"sudo chmod +x " + gradleExtractedDir + "/bin/gradle"});
+        Runtime.getRuntime().exec(new String[]{"sudo chmod +x " + gradleExtractedDir + "/bin/gradle"});
 
         String sourceCommand = "bash -c 'source ~/" + shellConfigFile + " && echo \"Source command executed\"'";
-        Runtime.getRuntime().exec(new String[] {sourceCommand});
+        Runtime.getRuntime().exec(new String[]{sourceCommand});
       } else {
         SystemOutLogger.log("You can run the commands later.");
       }

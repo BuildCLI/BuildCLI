@@ -17,40 +17,40 @@ public class CommandPluginBuilder implements PluginBuilder {
   };
 
   private static final String COMMAND_TEMPLATE = """
-        package dev.buildcli.plugin.%s;
-        
-        import dev.buildcli.plugin.BuildCLICommandPlugin;
-        import picocli.CommandLine.Command;
-        
-        @Command(name = "%s", mixinStandardHelpOptions = true)
-        public class %sCommand extends BuildCLICommandPlugin {
-          @Override
-          public void run() {
-            // Plugin implementation
-            System.out.println("Hello World, %s!");
-          }
-        
-          @Override
-          public String version() {
-            return "0.0.1-SNAPSHOT";
-          }
-        
-          @Override
-          public String name() {
-            return "%s";
-          }
-        
-          @Override
-          public String description() {
-            return "Build CLI Plugin";
-          }
-        
-          @Override
-          public String[] parents() {
-            return null;
-          }
+      package dev.buildcli.plugin.%s;
+      
+      import dev.buildcli.plugin.BuildCLICommandPlugin;
+      import picocli.CommandLine.Command;
+      
+      @Command(name = "%s", mixinStandardHelpOptions = true)
+      public class %sCommand extends BuildCLICommandPlugin {
+        @Override
+        public void run() {
+          // Plugin implementation
+          System.out.println("Hello World, %s!");
         }
-        """;
+      
+        @Override
+        public String version() {
+          return "0.0.1-SNAPSHOT";
+        }
+      
+        @Override
+        public String name() {
+          return "%s";
+        }
+      
+        @Override
+        public String description() {
+          return "Build CLI Plugin";
+        }
+      
+        @Override
+        public String[] parents() {
+          return null;
+        }
+      }
+      """;
 
   private static final String POM_TEMPLATE = """
       <?xml version="1.0" encoding="UTF-8"?>

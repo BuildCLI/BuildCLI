@@ -1,7 +1,7 @@
 package dev.buildcli.core.utils;
 
 import java.util.List;
-import java.util.function.Function;
+import java.util.function.UnaryOperator;
 
 /**
  * BeautifyShell - A utility class for styling terminal content with colors and formatting
@@ -287,6 +287,18 @@ public class BeautifyShell {
     return builder.toString();
   }
 
+  public static String padding(Object content, int top, int right, int bottom, int left) {
+    return content(content).padding(top, right, bottom, left).toString();
+  }
+
+  public static String padding(Object content, int topBottom, int rightLeft) {
+    return content(content).padding(topBottom, rightLeft).toString();
+  }
+
+  public static String padding(Object content, int padding) {
+    return content(content).padding(padding).toString();
+  }
+
   @Override
   public String toString() {
     return builder + RESET;
@@ -297,7 +309,7 @@ public class BeautifyShell {
     return this;
   }
 
-  public BeautifyShell append(Object content, Function<String, String> styling) {
+  public BeautifyShell append(Object content, UnaryOperator<String> styling) {
     builder.append(styling.apply(content.toString()));
     return this;
   }
@@ -525,9 +537,54 @@ public class BeautifyShell {
   }
 
   public BeautifyShell rainbow() {
-    String originalcontent = builder.toString();
+    String originalContent = builder.toString();
     builder.setLength(0);
-    builder.append(rainbow(originalcontent));
+    builder.append(rainbow(originalContent));
     return this;
+  }
+
+  public BeautifyShell padding(int top, int right, int bottom, int left) {
+    var width = width();
+    String pad = " ".repeat(left) + " ".repeat(width) + " ".repeat(right) + "\n";
+
+    //Top
+    var tPad = pad.repeat(top);
+
+    //Bottom
+    var bPad = pad.repeat(bottom);
+
+    var lines = builder.toString().split("\n");
+    builder.setLength(0);
+    if (top != 0) builder.append(tPad);
+
+    for (var line : lines) {
+      builder.append(left != 0 ? " ".repeat(left) : "").append(line).append(" ".repeat(right + (width - line.length()))).append("\n");
+    }
+
+    if (bottom != 0) builder.append(bPad);
+
+    return this;
+  }
+
+  public BeautifyShell padding(int topBottom, int rightLeft) {
+    return padding(topBottom, rightLeft, topBottom, rightLeft);
+  }
+
+  public BeautifyShell padding(int padding) {
+    return padding(padding, padding, padding, padding);
+  }
+
+  public int width() {
+    var width = 0;
+
+    for (var line : builder.toString().split("\n")) {
+      width = Math.max(line.length(), width);
+    }
+
+    return width;
+  }
+
+  public int height() {
+    return builder.toString().split("\n").length;
   }
 }

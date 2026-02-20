@@ -1,16 +1,12 @@
 package dev.buildcli.core.utils.tools.maven;
 
-import jakarta.xml.bind.JAXBContext;
 import dev.buildcli.core.constants.MavenConstants;
 import dev.buildcli.core.exceptions.ExtractionRuntimeException;
 import dev.buildcli.core.model.Dependency;
 import dev.buildcli.core.model.Pom;
 import dev.buildcli.core.utils.NamespaceFilter;
-import org.w3c.dom.Comment;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
+import jakarta.xml.bind.JAXBContext;
+import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 
 import javax.xml.XMLConstants;
@@ -225,6 +221,7 @@ public class PomReader {
   public static void appendNewLineWith3Indentation(Document doc, Node parentNode) {
     parentNode.appendChild(doc.createTextNode("\n\t\t\t"));
   }
+
   public static void appendNewLineWith4Indentation(Document doc, Node parentNode) {
     parentNode.appendChild(doc.createTextNode("\n\t\t\t\t"));
   }

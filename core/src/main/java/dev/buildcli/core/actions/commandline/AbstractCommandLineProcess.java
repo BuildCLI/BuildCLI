@@ -8,8 +8,8 @@ import java.util.List;
 
 public abstract class AbstractCommandLineProcess implements CommandLineProcess {
   protected final List<String> commands = new ArrayList<>();
-  private BufferedReader reader = null;
   private final boolean printOutput;
+  private BufferedReader reader = null;
 
   protected AbstractCommandLineProcess(String mainCommand, boolean printOutput) {
     commands.add(mainCommand);

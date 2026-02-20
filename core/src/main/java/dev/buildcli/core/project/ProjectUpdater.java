@@ -5,29 +5,29 @@ import java.util.Objects;
 
 public class ProjectUpdater extends ProjectExecutor {
 
-	private static final String MVN_CHECK_UPDATES = "versions:display-dependency-updates";
-	private static final String MVN_LATEST_RELEASES = "versions:use-latest-releases";
-	
-	private boolean isUpdateNow;
-	
-	@Override
-	protected void addMvnCommand() {
-		this.command.add(this.isUpdateNow ? MVN_LATEST_RELEASES : MVN_CHECK_UPDATES);
-	}
+  private static final String MVN_CHECK_UPDATES = "versions:display-dependency-updates";
+  private static final String MVN_LATEST_RELEASES = "versions:use-latest-releases";
 
-	@Override
-	protected String getErrorMessage() {
-		return "Failed to check/update dependencies";
-	}
+  private boolean isUpdateNow;
 
-	public void setAdditionalParameters(List<String> additionalParameters) {
-		if (Objects.nonNull(additionalParameters)) {
-			this.command.addAll(additionalParameters);
-		}
-	}
-	
-	public ProjectUpdater updateNow(boolean update) {
-		this.isUpdateNow = update;
-		return this;
-	}
+  @Override
+  protected void addMvnCommand() {
+    this.command.add(this.isUpdateNow ? MVN_LATEST_RELEASES : MVN_CHECK_UPDATES);
+  }
+
+  @Override
+  protected String getErrorMessage() {
+    return "Failed to check/update dependencies";
+  }
+
+  public void setAdditionalParameters(List<String> additionalParameters) {
+    if (Objects.nonNull(additionalParameters)) {
+      this.command.addAll(additionalParameters);
+    }
+  }
+
+  public ProjectUpdater updateNow(boolean update) {
+    this.isUpdateNow = update;
+    return this;
+  }
 }

@@ -28,11 +28,9 @@ import static dev.buildcli.core.utils.console.input.InteractiveInputUtils.questi
 public class RmCommand implements BuildCLICommand {
   private static final Logger logger = LoggerFactory.getLogger("RmPluginCommand");
   private static final String DEFAULT_PLUGINS_DIR = System.getProperty("user.home") + "/.buildcli/plugins";
-
+  private final BuildCLIConfig globalConfig = ConfigContextLoader.getAllConfigs();
   @Parameters(description = "Names of the plugins to remove (without .jar extension)")
   private List<String> names;
-
-  private final BuildCLIConfig globalConfig = ConfigContextLoader.getAllConfigs();
 
   @Override
   public void run() {

@@ -9,7 +9,9 @@ import dev.buildcli.core.utils.async.Async;
 import dev.buildcli.core.utils.config.ConfigContextLoader;
 import dev.buildcli.core.utils.filesystem.FindFilesUtils;
 import dev.buildcli.core.utils.ai.IAParamsUtils;
+import dev.buildcli.core.utils.async.Async;
 import dev.buildcli.core.utils.console.markdown.MarkdownInterpreter;
+import dev.buildcli.core.utils.filesystem.FindFilesUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import picocli.CommandLine.Command;
@@ -28,7 +30,7 @@ import java.util.function.Supplier;
 import static dev.buildcli.core.utils.BeautifyShell.blueFg;
 import static dev.buildcli.core.utils.BeautifyShell.brightGreenFg;
 
-@Command(name = "comment", aliases = {"c"}, description = "Comments out the selected code.",mixinStandardHelpOptions = true)
+@Command(name = "comment", aliases = {"c"}, description = "Comments out the selected code.", mixinStandardHelpOptions = true)
 public class CommentCommand implements BuildCLICommand {
   private final Logger logger = LoggerFactory.getLogger("AICodeCommentCommand");
 

@@ -9,7 +9,7 @@ import picocli.CommandLine.Parameters;
 
 import java.util.ArrayList;
 
-import static dev.buildcli.core.utils.BeautifyShell.*;
+import static dev.buildcli.core.utils.BeautifyShell.content;
 import static dev.buildcli.core.utils.console.PrintConsole.println;
 import static dev.buildcli.core.utils.console.input.InteractiveInputUtils.confirm;
 import static dev.buildcli.core.utils.console.input.InteractiveInputUtils.options;
@@ -41,11 +41,13 @@ public class ManCommand implements BuildCLICommand {
 
     var chosenCommand = options("Choose a command", foundCommand, CommandMan::getLongCommand);
 
-    println("Commands:", content(join(", ", chosenCommand.getCommands())).blueFg().bold());
-    println("Description:", content(chosenCommand.getDescription()).bold());
+    if (chosenCommand != null) {
+      println("Commands:", content(join(", ", chosenCommand.getCommands())).blueFg().bold());
+      println("Description:", content(chosenCommand.getDescription()).bold());
 
-    if (confirm("Do you want to run this command?")) {
-      CommandUtils.call(chosenCommand.getLongCommand());
+      if (confirm("Do you want to run this command?")) {
+        CommandUtils.call(chosenCommand.getLongCommand());
+      }
     }
   }
 }

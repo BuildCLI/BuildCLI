@@ -1,6 +1,6 @@
 package dev.buildcli.cli.commands;
 
-import dev.buildcli.cli.BuildCLI;
+import dev.buildcli.cli.CommandLineRunner;
 import dev.buildcli.core.domain.BuildCLICommand;
 import picocli.CommandLine;
 
@@ -9,6 +9,6 @@ public class VersionCommand implements BuildCLICommand {
 
   @Override
   public void run() {
-    new CommandLine(new BuildCLI()).execute("-V");
+    new CommandLine(new CommandLineRunner()).execute("-V");
   }
 }

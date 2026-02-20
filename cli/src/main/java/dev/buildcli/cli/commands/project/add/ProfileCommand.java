@@ -11,8 +11,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 @Command(name = "profile", aliases = {"p"}, description = "Adds a new dependency to the project. Alias: 'p'. "
-        + "This command allows adding profile file (e.g., test, dev, production) with extension .properties.",
-        mixinStandardHelpOptions = true)
+    + "This command allows adding profile file (e.g., test, dev, production) with extension .properties.",
+    mixinStandardHelpOptions = true)
 public class ProfileCommand implements BuildCLICommand {
   private final Logger LOGGER = LoggerFactory.getLogger(ProfileCommand.class.getName());
 

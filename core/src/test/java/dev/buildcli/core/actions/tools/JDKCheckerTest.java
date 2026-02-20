@@ -85,7 +85,8 @@ public class JDKCheckerTest {
   @Test
   void testInstall_Instructions() {
     String result = jdkChecker.installInstructions();
-    String expected = "Install JDK: https://www.oracle.com/java/technologies/javase-downloads.html";;
+    String expected = "Install JDK: https://www.oracle.com/java/technologies/javase-downloads.html";
+    ;
     assertEquals(expected, result);
   }
 
@@ -101,7 +102,7 @@ public class JDKCheckerTest {
 
       String output = outputStream.toString().trim();
       assertEquals(content, output);
-    }finally {
+    } finally {
       System.setOut(standardOut);
     }
   }

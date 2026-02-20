@@ -5,9 +5,9 @@ import java.util.logging.LogRecord;
 
 public class SystemOutFormatter extends Formatter {
 
-	@Override
-	public String format(LogRecord logRecord) {
-		return logRecord.getMessage();
-	}
+  @Override
+  public String format(LogRecord logRecord) {
+    return logRecord.getMessage();
+  }
 
 }

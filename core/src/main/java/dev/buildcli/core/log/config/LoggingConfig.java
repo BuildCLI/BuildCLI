@@ -6,18 +6,18 @@ import java.util.logging.LogManager;
 
 public class LoggingConfig {
 
-    private LoggingConfig() {
-    }
+  private LoggingConfig() {
+  }
 
-    public static void configure() {
-        try (InputStream configFile = LoggingConfig.class.getResourceAsStream("/logging.properties")) {
-            if (configFile != null) {
-                LogManager.getLogManager().readConfiguration(configFile);
-            } else {
-                System.err.println("Could not find logging.properties file.");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+  public static void configure() {
+    try (InputStream configFile = LoggingConfig.class.getResourceAsStream("/logging.properties")) {
+      if (configFile != null) {
+        LogManager.getLogManager().readConfiguration(configFile);
+      } else {
+        System.err.println("Could not find logging.properties file.");
+      }
+    } catch (IOException e) {
+      e.printStackTrace();
     }
+  }
 }

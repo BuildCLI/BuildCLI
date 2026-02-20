@@ -9,6 +9,7 @@ import java.util.Arrays;
 
 public class GradleProcess extends AbstractCommandLineProcess {
   private static final Logger logger = LoggerFactory.getLogger(GradleProcess.class);
+
   private GradleProcess(boolean printOutput) {
     super(GradleConstants.GRADLE_CMD, printOutput);
   }

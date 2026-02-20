@@ -2,15 +2,15 @@ name: Auto Label Issues and Pull Requests
 
 on:
   issues:
-    types: [opened, edited]
+    types: [ opened, edited ]
   pull_request:
-    types: [opened, synchronize, reopened]
+    types: [ opened, synchronize, reopened ]
 
-permissions:  
+permissions:
   contents: read
   pull-requests: write
   issues: write
-  
+
 jobs:
   auto-label-pr:
     runs-on: ubuntu-latest

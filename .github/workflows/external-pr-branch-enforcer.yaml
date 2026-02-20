@@ -2,7 +2,7 @@ name: External PR Branch Enforcer
 
 on:
   pull_request:
-    types: [opened, edited, synchronize]
+    types: [ opened, edited, synchronize ]
 
 permissions:
   pull-requests: write
@@ -27,13 +27,13 @@ jobs:
                   issue_number: pr.number,
                   body: '🤖 Attention! Always use the develop branch for your PRs instead of ' + pr.base.ref + '.' 
                 });
-                
+            
                 await github.rest.pulls.update({
                   ...context.repo,
                   pull_number: pr.number,
                   base: 'develop'
                 });
-                
+            
                 await github.rest.issues.createComment({
                   ...context.repo,
                   issue_number: pr.number,

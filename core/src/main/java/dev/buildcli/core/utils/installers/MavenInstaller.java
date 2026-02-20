@@ -16,13 +16,11 @@ import java.net.http.HttpResponse;
 import java.nio.file.Paths;
 
 public abstract class MavenInstaller {
-  private MavenInstaller() {
-  }
-
   private static final String MAVEN_VERSION = "3.9.9";
   private static final String MAVEN_NAME = "apache-maven-%s".formatted(MAVEN_VERSION);
   private static final String MAVEN_DOWNLOAD_URL = "https://dlcdn.apache.org/maven/maven-3/%s/binaries/%s-bin.".formatted(MAVEN_VERSION, MAVEN_NAME);
-
+  private MavenInstaller() {
+  }
 
   public static void installMaven() {
     SystemOutLogger.log("Installing Maven operation started...");
@@ -136,7 +134,7 @@ public abstract class MavenInstaller {
   public static void configurePath(String mavenBinPath) throws IOException {
     var isWindows = OS.isWindows();
     if (isWindows) {
-      Runtime.getRuntime().exec(new String[] {"setx PATH \"%PATH%;" + mavenBinPath  + "\\\\bin\""});
+      Runtime.getRuntime().exec(new String[]{"setx PATH \"%PATH%;" + mavenBinPath + "\\\\bin\""});
     } else {
       File bashrc = new File(System.getProperty("user.home"), ".bashrc");
       try (FileWriter fw = new FileWriter(bashrc, true)) {

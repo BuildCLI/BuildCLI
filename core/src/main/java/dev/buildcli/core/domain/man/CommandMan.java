@@ -1,6 +1,8 @@
 package dev.buildcli.core.domain.man;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 public class CommandMan {
   private final Set<String> commands;
@@ -19,7 +21,7 @@ public class CommandMan {
     return this;
   }
 
-  public CommandMan addCommands(String...command) {
+  public CommandMan addCommands(String... command) {
     if (command == null) {
       return this;
     }

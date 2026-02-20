@@ -25,51 +25,51 @@ import static org.mockito.Mockito.verify;
 @ExtendWith({MockitoExtension.class, LogbackExtension.class})
 class OrchestrationUpCommandTest {
 
-    @Mock
-    private DockerManager dockerManagerMock;
+  @Mock
+  private DockerManager dockerManagerMock;
 
-    @InjectMocks
-    private OrchestrationUpCommand command;
+  @InjectMocks
+  private OrchestrationUpCommand command;
 
-    @Test
-    @DisplayName("Test run() success - Start all containers")
-    void testRunSuccessStartAllContainers(List<ILoggingEvent> logs) throws DockerException {
+  @Test
+  @DisplayName("Test run() success - Start all containers")
+  void testRunSuccessStartAllContainers(List<ILoggingEvent> logs) throws DockerException {
 
-        command.run();
-        verify(dockerManagerMock).upContainer(false);
-        assertTrue(logs
-                .stream()
-                .anyMatch(event -> event.getFormattedMessage().equals("All containers have been successfully started.")));
-    }
+    command.run();
+    verify(dockerManagerMock).upContainer(false);
+    assertTrue(logs
+        .stream()
+        .anyMatch(event -> event.getFormattedMessage().equals("All containers have been successfully started.")));
+  }
 
-    @Test
-    @DisplayName("Test run() success - Start all containers with rebuild")
-    void testRunSuccessStartAllContainersWithRebuild(List<ILoggingEvent> logs) throws DockerException {
+  @Test
+  @DisplayName("Test run() success - Start all containers with rebuild")
+  void testRunSuccessStartAllContainersWithRebuild(List<ILoggingEvent> logs) throws DockerException {
 
-        CommandLine cmd = new CommandLine(command);
-        int exitCode = cmd.execute("--build");
+    CommandLine cmd = new CommandLine(command);
+    int exitCode = cmd.execute("--build");
 
-        assertEquals(0, exitCode);
-        verify(dockerManagerMock).upContainer(true);
-        assertTrue(logs
-                .stream()
-                .anyMatch(event -> event.getFormattedMessage().equals("All containers have been successfully started.")));
-    }
+    assertEquals(0, exitCode);
+    verify(dockerManagerMock).upContainer(true);
+    assertTrue(logs
+        .stream()
+        .anyMatch(event -> event.getFormattedMessage().equals("All containers have been successfully started.")));
+  }
 
-    @Test
-    @DisplayName("Test run() failure - Exception thrown with 'Failed to start containers: ' message")
-    void testRunFailureExceptionMessage() throws Exception {
+  @Test
+  @DisplayName("Test run() failure - Exception thrown with 'Failed to start containers: ' message")
+  void testRunFailureExceptionMessage() throws Exception {
 
-        DockerException exception = new DockerException("Test exception");
-        doThrow(exception).when(dockerManagerMock).upContainer(anyBoolean());
+    DockerException exception = new DockerException("Test exception");
+    doThrow(exception).when(dockerManagerMock).upContainer(anyBoolean());
 
-        CommandLine.ExecutionException thrown = assertThrows(CommandLine.ExecutionException.class,
-                command::run,
-                "Expected run() to throw CommandLine.ExecutionException");
+    CommandLine.ExecutionException thrown = assertThrows(CommandLine.ExecutionException.class,
+        command::run,
+        "Expected run() to throw CommandLine.ExecutionException");
 
-        assertTrue(thrown.getMessage().contains("Failed to start containers: Test exception"),
-                "Exception message should contain 'Failed to start containers: Test exception'");
+    assertTrue(thrown.getMessage().contains("Failed to start containers: Test exception"),
+        "Exception message should contain 'Failed to start containers: Test exception'");
 
-        assertEquals(exception, thrown.getCause());
-    }
+    assertEquals(exception, thrown.getCause());
+  }
 }

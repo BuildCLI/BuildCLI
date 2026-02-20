@@ -20,23 +20,23 @@ public abstract class OS {
     return OS.contains("linux") || OS.contains("nix") || OS.contains("nux") || OS.contains("aix");
   }
 
-    public static String getOSName() {
-        return System.getProperty("os.name");
-    }
+  public static String getOSName() {
+    return System.getProperty("os.name");
+  }
 
-    public static String getArchitecture() {
-        return System.getProperty("os.arch");
-    }
+  public static String getArchitecture() {
+    return System.getProperty("os.arch");
+  }
 
   public static void cdDirectory(String path){
     try {
-        String[] command;
-        if (isWindows()) {
-            command = new String[]{"cmd", "/c", "cd", path};
-        } else {
-            command = new String[]{"sh", "-c", "cd", path};
-        }
-        Runtime.getRuntime().exec(command);
+      String[] command;
+      if (isWindows()) {
+        command = new String[]{"cmd", "/c", "cd", path};
+      } else {
+        command = new String[]{"sh", "-c", "cd", path};
+      }
+      Runtime.getRuntime().exec(command);
     } catch (Exception e) {
       logger.severe("Error changing directory: " + e.getMessage());
     }
@@ -57,25 +57,25 @@ public abstract class OS {
   }
 
   public static String getHomeBinDirectory(){
-      String homeBin="";
-      if(isWindows()){
-          homeBin= System.getenv("HOMEPATH")+"//bin";
-      }else {
-            homeBin= System.getenv("HOME")+"/bin";
-      }
-      return homeBin;
+    String homeBin="";
+    if(isWindows()){
+      homeBin= System.getenv("HOMEPATH")+"//bin";
+    }else {
+      homeBin= System.getenv("HOME")+"/bin";
+    }
+    return homeBin;
   }
 
   public static void chmodX(String path){
-      if(!isWindows()){
-            try {
-                String chmodCommand = "chmod +x " + path;
-                String[] command = new String[]{"sh", "-c", chmodCommand};
-                Runtime.getRuntime().exec(command);
-            } catch (Exception e) {
-                logger.severe("Error changing directory: " + e.getMessage());
-            }
+    if(!isWindows()){
+      try {
+        String chmodCommand = "chmod +x " + path;
+        String[] command = new String[]{"sh", "-c", chmodCommand};
+        Runtime.getRuntime().exec(command);
+      } catch (Exception e) {
+        logger.severe("Error changing directory: " + e.getMessage());
       }
+    }
 
   }
 }

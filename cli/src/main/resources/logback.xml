@@ -1,5 +1,5 @@
 <configuration debug="false">
-  <statusListener class="ch.qos.logback.core.status.NopStatusListener" />
+  <statusListener class="ch.qos.logback.core.status.NopStatusListener"/>
 
   <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
     <encoder>
@@ -15,11 +15,11 @@
   </appender>
 
   <root level="INFO">
-    <appender-ref ref="STDOUT" />
-    <appender-ref ref="FILE" />
+    <appender-ref ref="STDOUT"/>
+    <appender-ref ref="FILE"/>
   </root>
 
   <logger name="org.apache.sshd" level="WARN"/>
-  <logger name="org.pf4j" level="OFF" />
+  <logger name="org.pf4j" level="OFF"/>
 
 </configuration>

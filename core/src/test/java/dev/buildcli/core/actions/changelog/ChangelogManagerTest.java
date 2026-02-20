@@ -1,13 +1,13 @@
 package dev.buildcli.core.actions.changelog;
 
 import dev.buildcli.core.domain.git.GitOperations;
-import picocli.CommandLine;
-import picocli.CommandLine.Model.CommandSpec;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import picocli.CommandLine;
+import picocli.CommandLine.Model.CommandSpec;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,105 +16,111 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ChangelogManagerTest {
 
-    private File tempRepo;
-    private Git git;
-    private GitOperations gitOperations;
-    private ChangelogManager changelogManager;
-    private CommandSpec spec;
+  private File tempRepo;
+  private Git git;
+  private GitOperations gitOperations;
+  private ChangelogManager changelogManager;
+  private CommandSpec spec;
 
-    @BeforeEach
-    void setUp() throws GitAPIException, IOException {
-        CommandLine commandLine = new CommandLine(new DummyCommand());
-        spec = commandLine.getCommandSpec();
-        tempRepo = Files.createTempDirectory("testRepo").toFile();
-        String repositoryDir = tempRepo.getAbsolutePath();
+  @BeforeEach
+  void setUp() throws GitAPIException, IOException {
+    CommandLine commandLine = new CommandLine(new DummyCommand());
+    spec = commandLine.getCommandSpec();
+    tempRepo = Files.createTempDirectory("testRepo").toFile();
+    String repositoryDir = tempRepo.getAbsolutePath();
 
-        changelogManager = new ChangelogManager(spec, repositoryDir);
-        git = Git.init().setDirectory(tempRepo).call();
-        gitOperations = new GitOperations();
+    changelogManager = new ChangelogManager(spec, repositoryDir);
+    git = Git.init().setDirectory(tempRepo).call();
+    gitOperations = new GitOperations();
+  }
+
+  @AfterEach
+  void tearDown() throws IOException {
+    git.close();
+    deleteDirectory(tempRepo);
+  }
+
+  private void makeCommit(String message) throws GitAPIException, IOException {
+    File newFile = new File(tempRepo, UUID.randomUUID().toString() + ".txt");
+    Files.writeString(newFile.toPath(), "Test content\n");
+    git.add().addFilepattern(".").call();
+    git.commit()
+        .setMessage(message)
+        .setAllowEmpty(false)
+        .setNoVerify(true)
+        .call();
+  }
+
+  private void deleteDirectory(File file) {
+    if (file.isDirectory()) {
+      for (File sub : file.listFiles()) {
+        deleteDirectory(sub);
+      }
     }
+    file.delete();
+  }
 
-    @AfterEach
-    void tearDown() throws IOException {
-        git.close();
-        deleteDirectory(tempRepo);
-    }
+  @Test
+  void testGenerateChangelog_withValidInputs() throws IOException, GitAPIException {
+    makeCommit("chore: initial commit");
+    makeCommit("feat(api): add new endpoint");
+    makeCommit("fix(auth): resolve login issue");
 
-    private void makeCommit(String message) throws GitAPIException, IOException {
-        File newFile = new File(tempRepo, UUID.randomUUID().toString() + ".txt");
-        Files.writeString(newFile.toPath(), "Test content");
-        git.add().addFilepattern(".").call();
-        git.commit().setMessage(message).call();
-    }
+    String version = "v1.0.0";
+    String outputFile = "changelog.md";
+    String format = "markdown";
+    List<String> includeTypes = Arrays.asList("feat", "fix");
 
-    private void deleteDirectory(File file) {
-        if (file.isDirectory()) {
-            for (File sub : file.listFiles()) {
-                deleteDirectory(sub);
-            }
-        }
-        file.delete();
-    }
+    changelogManager.generateChangelog(version, outputFile, format, includeTypes);
 
-    @Test
-    void testGenerateChangelog_withValidInputs() throws IOException, GitAPIException {
-        makeCommit("chore: initial commit");
-        makeCommit("feat(api): add new endpoint");
-        makeCommit("fix(auth): resolve login issue");
+    File output = new File(outputFile);
+    assertTrue(output.exists(), "Output file should exist.");
+    assertTrue(output.length() > 0, "Output file should not be empty.");
+  }
 
-        String version = "v1.0.0";
-        String outputFile = "changelog.md";
-        String format = "markdown";
-        List<String> includeTypes = Arrays.asList("feat", "fix");
+  // Test 2: Generate changelog with null version (use latest tag)
+  @Test
+  void testGenerateChangelog_withNullVersion() throws IOException, GitAPIException {
+    makeCommit("chore: initial commit");
+    makeCommit("feat(api): add new endpoint");
+    makeCommit("fix(auth): resolve login issue");
 
-        changelogManager.generateChangelog(version, outputFile, format, includeTypes);
+    String version = null; // Version is null
+    String outputFile = "changelog.md";
+    String format = "markdown";
+    List<String> includeTypes = Arrays.asList("feat", "fix");
 
-        File output = new File(outputFile);
-        assertTrue(output.exists(), "Output file should exist.");
-        assertTrue(output.length() > 0, "Output file should not be empty.");
-    }
+    changelogManager.generateChangelog(version, outputFile, format, includeTypes);
 
-    // Test 2: Generate changelog with null version (use latest tag)
-    @Test
-    void testGenerateChangelog_withNullVersion() throws IOException, GitAPIException {
-        makeCommit("chore: initial commit");
-        makeCommit("feat(api): add new endpoint");
-        makeCommit("fix(auth): resolve login issue");
+    File output = new File(outputFile);
+    assertTrue(output.exists(), "Output file should exist.");
+    assertTrue(output.length() > 0, "Output file should not be empty.");
+  }
 
-        String version = null;  // Version is null
-        String outputFile = "changelog.md";
-        String format = "markdown";
-        List<String> includeTypes = Arrays.asList("feat", "fix");
+  @Test
+  void testGenerateChangelog_withInvalidRepoPath() {
+    String version = "v1.0.0";
+    String outputFile = "changelog.md";
+    String format = "markdown";
+    List<String> includeTypes = Arrays.asList("feat", "fix");
+    String repositoryDir = "/invalid/path/to/repo";
 
-        changelogManager.generateChangelog(version, outputFile, format, includeTypes);
+    ChangelogManager invalidRepoChangelogManager = new ChangelogManager(spec, repositoryDir);
 
-        File output = new File(outputFile);
-        assertTrue(output.exists(), "Output file should exist.");
-        assertTrue(output.length() > 0, "Output file should not be empty.");
-    }
+    Exception exception = assertThrows(RuntimeException.class, () -> {
+      invalidRepoChangelogManager.generateChangelog(version, outputFile, format, includeTypes);
+    });
 
-    @Test
-    void testGenerateChangelog_withInvalidRepoPath() {
-        String version = "v1.0.0";
-        String outputFile = "changelog.md";
-        String format = "markdown";
-        List<String> includeTypes = Arrays.asList("feat", "fix");
-        String repositoryDir = "/invalid/path/to/repo";
+    assertTrue(exception.getMessage().contains("repository not found"));
+  }
 
-        ChangelogManager invalidRepoChangelogManager = new ChangelogManager(spec, repositoryDir);
-
-        Exception exception = assertThrows(RuntimeException.class, () -> {
-            invalidRepoChangelogManager.generateChangelog(version, outputFile, format, includeTypes);
-        });
-
-        assertTrue(exception.getMessage().contains("repository not found"));
-    }
-
-    // Dummy Command class to satisfy Picocli
-    @CommandLine.Command
-    static class DummyCommand {}
+  // Dummy Command class to satisfy Picocli
+  @CommandLine.Command
+  static class DummyCommand {
+  }
 }
