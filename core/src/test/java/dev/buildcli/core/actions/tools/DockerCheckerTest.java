@@ -9,8 +9,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 public class DockerCheckerTest {
-  
-  private DockerChecker dockerChecker= new DockerChecker();
+
+  private DockerChecker dockerChecker = new DockerChecker();
 
   @Test
   void testName() {
@@ -30,13 +30,13 @@ public class DockerCheckerTest {
     }
   }
 
-   @Test
+  @Test
   void testIsInstalled_WhenDockerIsNotInstalled_ShouldReturnFalse() {
     DockerProcess mockProcess = mock(DockerProcess.class);
     when(mockProcess.run()).thenReturn(1);
 
-     try (var mockedStatic = mockStatic(DockerProcess.class)) {
-       mockedStatic.when(DockerProcess::createGetVersionProcess).thenReturn(mockProcess);
+    try (var mockedStatic = mockStatic(DockerProcess.class)) {
+      mockedStatic.when(DockerProcess::createGetVersionProcess).thenReturn(mockProcess);
       assertFalse(dockerChecker.isInstalled());
     }
   }
@@ -124,7 +124,7 @@ public class DockerCheckerTest {
 
       String output = outputStream.toString().trim();
       assertEquals(content, output);
-    }finally {
+    } finally {
       System.setOut(standardOut);
     }
   }

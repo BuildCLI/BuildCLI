@@ -1,7 +1,7 @@
 package dev.buildcli.cli.commands.project.update;
 
-import dev.buildcli.core.project.ProjectUpdater;
 import dev.buildcli.core.domain.BuildCLICommand;
+import dev.buildcli.core.project.ProjectUpdater;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 

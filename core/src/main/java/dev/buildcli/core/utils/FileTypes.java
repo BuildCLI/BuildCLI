@@ -1,36 +1,36 @@
 package dev.buildcli.core.utils;
 
 public enum FileTypes {
-    MARKDOWN("markdown", ".md"),
-    HTML("html", ".html"),
-    JSON("json", ".json");
+  MARKDOWN("markdown", ".md"),
+  HTML("html", ".html"),
+  JSON("json", ".json");
 
-    private final String type;
-    private final String extension;
+  private final String type;
+  private final String extension;
 
-    FileTypes(String type, String extension) {
-        this.type = type;
-        this.extension = extension;
+  FileTypes(String type, String extension) {
+    this.type = type;
+    this.extension = extension;
+  }
+
+  public static String fromExtension(String format) {
+    if (format == null || format.isBlank()) {
+      return MARKDOWN.getExtension();
     }
 
-    public String getType() {
-        return type;
+    for (FileTypes fileTypes : FileTypes.values()) {
+      if (fileTypes.getType().equals(format)) {
+        return fileTypes.getExtension();
+      }
     }
+    return MARKDOWN.getExtension();
+  }
 
-    public String getExtension() {
-        return extension;
-    }
+  public String getType() {
+    return type;
+  }
 
-    public static String fromExtension(String format) {
-        if (format == null || format.isBlank()) {
-            return MARKDOWN.getExtension();
-        }
-
-        for (FileTypes fileTypes : FileTypes.values()) {
-            if (fileTypes.getType().equals(format)) {
-                return fileTypes.getExtension();
-            }
-        }
-        return MARKDOWN.getExtension();
-    }
+  public String getExtension() {
+    return extension;
+  }
 }

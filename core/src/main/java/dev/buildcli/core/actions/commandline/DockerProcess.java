@@ -3,7 +3,7 @@ package dev.buildcli.core.actions.commandline;
 import java.util.List;
 import java.util.Objects;
 
-public class DockerProcess extends AbstractCommandLineProcess{
+public class DockerProcess extends AbstractCommandLineProcess {
   private DockerProcess(boolean printOutput) {
     super("docker", printOutput);
   }

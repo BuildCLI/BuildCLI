@@ -10,20 +10,20 @@ class GitlabPipelineGenerator implements PipelineFileGenerator {
     File gitlabCIFile = new File(".gitlab-ci.yml");
     try (FileWriter writer = new FileWriter(gitlabCIFile)) {
       writer.write("""
-                stages:
-                  - build
-                  - test
-
-                build:
-                  stage: build
-                  script:
-                    - mvn clean install
-
-                test:
-                  stage: test
-                  script:
-                    - mvn test
-                """);
+          stages:
+            - build
+            - test
+          
+          build:
+            stage: build
+            script:
+              - mvn clean install
+          
+          test:
+            stage: test
+            script:
+              - mvn test
+          """);
     }
   }
 }

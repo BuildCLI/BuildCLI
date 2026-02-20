@@ -8,6 +8,7 @@ import dev.buildcli.core.utils.ProjectUtils;
 import dev.buildcli.core.utils.config.ConfigContextLoader;
 import dev.buildcli.core.utils.filesystem.FindFilesUtils;
 import dev.buildcli.core.utils.net.FileDownloader;
+import dev.buildcli.plugin.utils.BuildCLIPluginManager;
 import dev.buildcli.plugin.utils.BuildCLIPluginUtils;
 import org.eclipse.jgit.api.Git;
 import org.slf4j.Logger;
@@ -40,6 +41,8 @@ public class AddCommand implements BuildCLICommand {
   private final BuildCLIConfig globalConfig = ConfigContextLoader.getAllConfigs();
   @Option(names = {"--file", "-f"}, description = "File can be a project or jar locally or remote")
   private String file;
+  @Option(names = "-y", description = "Accept all overwrite", defaultValue = "false")
+  private boolean overwrite;
 
   @Override
   public void run() {
@@ -143,10 +146,9 @@ public class AddCommand implements BuildCLICommand {
     Path destPath = Path.of(PLUGINS_DIR, jar.getFile().getName());
     Files.createDirectories(destPath.getParent());
 
-    // Usar um nome de arquivo temporário para evitar conflitos
     Path tempDestPath = Path.of(PLUGINS_DIR, jar.getFile().getName() + ".tmp");
 
-    if (Files.exists(destPath)) {
+    if (Files.exists(destPath) && !overwrite) {
       if (!confirm("Do you want to overwrite existing plugin file?")) {
         logger.info("Plugin installation cancelled by user");
         return;
@@ -155,29 +157,23 @@ public class AddCommand implements BuildCLICommand {
 
     while (retries > 0 && !copied) {
       try {
-        // Primeiro copiar para o arquivo temporário
         Files.copy(jar.getFile().toPath(), tempDestPath, StandardCopyOption.REPLACE_EXISTING);
 
-        // Tentar diferentes abordagens para substituir o arquivo original
         if (Files.exists(destPath)) {
           try {
-            // Tentar renomear o arquivo temporário para o destino final
             Files.move(tempDestPath, destPath, StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.ATOMIC_MOVE);
             copied = true;
           } catch (IOException e) {
-            // Se falhar com ATOMIC_MOVE, tentar sem essa opção
             try {
               Files.move(tempDestPath, destPath, StandardCopyOption.REPLACE_EXISTING);
               copied = true;
             } catch (IOException e2) {
-              // Se ainda falhar, tentar primeiro excluir e depois copiar
               tryDeleteWithRetries(destPath, 3);
               Files.move(tempDestPath, destPath);
               copied = true;
             }
           }
         } else {
-          // Se o arquivo de destino não existir, basta renomear o temporário
           Files.move(tempDestPath, destPath);
           copied = true;
         }
@@ -186,7 +182,6 @@ public class AddCommand implements BuildCLICommand {
         logger.info("Retrying ({} attempts left)", retries - 1);
         retries--;
 
-        // Aumentar o tempo de espera progressivamente entre as tentativas
         try {
           TimeUnit.MILLISECONDS.sleep(2000L + (maxRetries - retries) * 1000L);
         } catch (InterruptedException ex) {
@@ -196,7 +191,6 @@ public class AddCommand implements BuildCLICommand {
       }
     }
 
-    // Limpar arquivo temporário se ainda existir
     if (Files.exists(tempDestPath)) {
       try {
         Files.delete(tempDestPath);
@@ -218,26 +212,22 @@ public class AddCommand implements BuildCLICommand {
 
     for (int i = 0; i < retries; i++) {
       try {
+        BuildCLIPluginManager.removePlugins();
         Files.delete(path);
-        return; // Sucesso, saindo da função
+        return;
       } catch (IOException e) {
         lastException = e;
         logger.warn("Failed to delete file (attempt {}): {}", i + 1, path);
 
         try {
-          // Aguardar antes de tentar novamente (tempo crescente)
           TimeUnit.MILLISECONDS.sleep(1000L * (i + 1));
         } catch (InterruptedException ie) {
           Thread.currentThread().interrupt();
           throw new IOException("Operation interrupted", ie);
         }
-
-        // Sugerir ao GC que execute para liberar recursos
-        System.gc();
       }
     }
 
-    // Se chegou aqui, todas as tentativas falharam
     if (lastException != null) {
       throw lastException;
     }

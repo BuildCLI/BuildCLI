@@ -1,13 +1,16 @@
 package dev.buildcli.core.actions.ai.service;
 
-import dev.langchain4j.data.message.SystemMessage;
-import dev.langchain4j.data.message.UserMessage;
-import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.buildcli.core.actions.ai.AIChat;
 import dev.buildcli.core.actions.ai.AIService;
+import dev.langchain4j.data.message.SystemMessage;
+import dev.langchain4j.data.message.UserMessage;
+import dev.langchain4j.memory.ChatMemory;
+import dev.langchain4j.memory.chat.MessageWindowChatMemory;
+import dev.langchain4j.model.chat.ChatLanguageModel;
 
 public abstract class AbstractLangchain4jAIService implements AIService {
   private final ChatLanguageModel model;
+  private final ChatMemory memory;
 
   protected AbstractLangchain4jAIService() {
     this(null);
@@ -15,15 +18,26 @@ public abstract class AbstractLangchain4jAIService implements AIService {
 
   protected AbstractLangchain4jAIService(ChatLanguageModel model) {
     this.model = model;
+    this.memory = MessageWindowChatMemory.withMaxMessages(20);
   }
 
   @Override
   public String generate(AIChat chat) {
-    var aiMessageResponse = model.generate(
-        new SystemMessage(chat.getSystemMessage()),
-        new UserMessage(chat.getUserMessage())
-    );
+    var systemMessage = new SystemMessage(chat.getSystemMessage());
+    var userMessage = new UserMessage(chat.getUserMessage());
 
-    return aiMessageResponse.content().text();
+    memory.add(systemMessage);
+    memory.add(userMessage);
+
+    var aiMessageResponse = model.chat(memory.messages());
+    var response = aiMessageResponse.aiMessage();
+
+    memory.add(response);
+
+    if (!chat.isPersistent()) {
+      memory.clear();
+    }
+
+    return response.text();
   }
 }

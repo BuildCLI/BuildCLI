@@ -27,7 +27,7 @@ class BuildCLIServiceTest {
   @InjectMocks
   private BuildCLIService service;
 
-//TODO: fix this test when BuildCLIService is refactored
+  //TODO: fix this test when BuildCLIService is refactored
   void testWelcome() {
     var standardOut = System.out;
     try {
@@ -36,13 +36,13 @@ class BuildCLIServiceTest {
 
       BuildCLIService.welcome();
       String content = """
-                ,-----.          ,--.,--.   ,--. ,-----.,--.   ,--.
-                |  |) /_ ,--.,--.`--'|  | ,-|  |'  .--./|  |   |  |
-                |  .-.  \\|  ||  |,--.|  |' .-. ||  |    |  |   |  |       [3m[34mBuilt by the community, for the community[0m
-                |  '--' /'  ''  '|  ||  |\\ `-' |'  '--'\\|  '--.|  |
-                `------'  `----' `--'`--' `---'  `-----'`-----'`--'
-
-                """;
+          ,-----.          ,--.,--.   ,--. ,-----.,--.   ,--.
+          |  |) /_ ,--.,--.`--'|  | ,-|  |'  .--./|  |   |  |
+          |  .-.  \\|  ||  |,--.|  |' .-. ||  |    |  |   |  |       [3m[34mBuilt by the community, for the community[0m
+          |  '--' /'  ''  '|  ||  |\\ `-' |'  '--'\\|  '--.|  |
+          `------'  `----' `--'`--' `---'  `-----'`-----'`--'
+          
+          """;
 
       assertEquals(content, outputStream.toString());
     } finally {

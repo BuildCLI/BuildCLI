@@ -6,7 +6,8 @@ Contributions are welcome! Feel free to open **Issues** and submit **Pull Reques
 
 ### 1\. Check for an Existing Issue (Required Before Starting Work)
 
-Before you begin working on an issue, ensure that it is not already assigned or actively worked on by another contributor. This helps prevent duplicate efforts and frustration.
+Before you begin working on an issue, ensure that it is not already assigned or actively worked on by another
+contributor. This helps prevent duplicate efforts and frustration.
 
 #### Steps to Follow
 
@@ -20,7 +21,8 @@ Before you begin working on an issue, ensure that it is not already assigned or 
 
 - Wait for confirmation from maintainers or the assigned contributor before proceeding.
 
-If you're unsure about whether you should work on an issue, especially if the assignment is recent, ask a maintainer for clarification.
+If you're unsure about whether you should work on an issue, especially if the assignment is recent, ask a maintainer for
+clarification.
 
 ### 2\. Fork the Project
 
@@ -56,12 +58,14 @@ If you're unsure about whether you should work on an issue, especially if the as
 
 - Provide a clear description of the changes, referencing the issue number if applicable.
 
-- (Optional but Recommended) Use the PR template available at `.github/PULL_REQUEST_TEMPLATE/default.md` to structure your PR effectively.
+- (Optional but Recommended) Use the PR template available at `.github/PULL_REQUEST_TEMPLATE/default.md` to structure
+  your PR effectively.
 
 Close Issue on PR Merge
 -----------------------
 
-To ensure that issues are automatically closed when a related PR is merged, include one of the following keywords in your PR description:
+To ensure that issues are automatically closed when a related PR is merged, include one of the following keywords in
+your PR description:
 
 - `Closes #ISSUE_NUMBER`
 
@@ -69,7 +73,8 @@ To ensure that issues are automatically closed when a related PR is merged, incl
 
 ### Automation Workflow
 
-A GitHub Actions workflow will automatically close the linked issue upon PR merge. For more details checkout `.github\workflows\close-issue-on-pr-merge.yaml`.
+A GitHub Actions workflow will automatically close the linked issue upon PR merge. For more details checkout
+`.github\workflows\close-issue-on-pr-merge.yaml`.
 
 Project Environment
 -------------------
@@ -106,4 +111,5 @@ Maintaining Visibility of Contribution Guidelines
 
 - A checklist will be included in new issues to remind contributors to verify issue assignments.
 
-By following these guidelines, we aim to foster a more collaborative, efficient, and positive experience for all contributors.
+By following these guidelines, we aim to foster a more collaborative, efficient, and positive experience for all
+contributors.

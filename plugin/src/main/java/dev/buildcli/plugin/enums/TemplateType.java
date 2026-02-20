@@ -5,7 +5,8 @@ public enum TemplateType {
   PROJECT("Project Scaffold"),
   DOCKER("Docker/Generic Container Setup"),
   KUBERNETES("Kubernetes Resources"),
-  QUICKSTART("Quickstart"),;
+  QUICKSTART("Quickstart"),
+  ;
 
   private final String label;
 

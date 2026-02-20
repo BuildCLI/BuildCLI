@@ -17,8 +17,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @Command(name = "dockerfile", aliases = {"docker", "df"}, description = "Generates a Dockerfile for the project. "
-        + "Alias: 'docker' and 'df'. Allows customizing the base image, exposed ports, and file name.",
-        mixinStandardHelpOptions = true)
+    + "Alias: 'docker' and 'df'. Allows customizing the base image, exposed ports, and file name.",
+    mixinStandardHelpOptions = true)
 public class DockerfileCommand implements BuildCLICommand {
   private Logger logger = Logger.getLogger(DockerfileCommand.class.getName());
 
@@ -29,7 +29,7 @@ public class DockerfileCommand implements BuildCLICommand {
   @Option(names = {"--port", "-p"}, description = "Specifies the port used to run the docker application", defaultValue = "8080", split = ",")
   private List<Integer> ports;
   @Option(names = {"--env", "-e"}, description = "Environment variables for docker build and runtime usage. "
-         + "Multiple variables can be passed as key=value pairs separated by ';'", defaultValue = "")
+      + "Multiple variables can be passed as key=value pairs separated by ';'", defaultValue = "")
   private String envVariable;
   @Option(names = {"--force"}, description = "Use to overwrite existing dockerfile specified by name option.", defaultValue = "false")
   private Boolean force;
@@ -50,7 +50,7 @@ public class DockerfileCommand implements BuildCLICommand {
             builder.append("EXPOSE ").append(port).append("\n");
           });
           if (envVars != null) {
-            for (String s: envVars) {
+            for (String s : envVars) {
               if (s != null) builder.append("ENV ").append(s).append("\n");
             }
           }

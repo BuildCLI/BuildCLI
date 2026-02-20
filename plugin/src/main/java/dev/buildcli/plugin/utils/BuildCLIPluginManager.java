@@ -75,14 +75,30 @@ public final class BuildCLIPluginManager {
 
       var commandName = command.getCommandName();
       if (subcommands.containsKey(commandName)) {
-        var confirm = confirm("Do you want override the subcommand \"%s\"".formatted(blueFg(commandName)));
-        if (confirm) {
-          commandLine.getCommandSpec().removeSubcommand(commandName);
-          commandLine.addSubcommand(command);
-        }
+        mergePlugins(subcommands.get(commandName), command);
       } else {
         commandLine.addSubcommand(command);
       }
     }
+  }
+
+  private static void mergePlugins(CommandLine dest, CommandLine src) {
+    if (dest.getCommandName().equals(src.getCommandName()) && src.getSubcommands().isEmpty()) {
+      var confirm = confirm("Do you want override the subcommand \"%s\"".formatted(blueFg(src.getCommandName())));
+      if (confirm) {
+        dest.getCommandSpec().removeSubcommand(src.getCommandName());
+        dest.addSubcommand(src);
+      }
+    } else if (dest.getCommandName().equals(src.getCommandName())) {
+      for (var sub : src.getSubcommands().values()) {
+        mergePlugins(dest, sub);
+      }
+    } else {
+      dest.addSubcommand(src);
+    }
+  }
+
+  public static void removePlugins() {
+    pluginManager.unloadPlugins();
   }
 }

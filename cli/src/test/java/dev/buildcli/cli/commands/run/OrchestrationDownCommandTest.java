@@ -23,55 +23,55 @@ import static org.mockito.Mockito.*;
 @ExtendWith({MockitoExtension.class, LogbackExtension.class})
 class OrchestrationDownCommandTest {
 
-    @Mock
-    private DockerManager dockerManagerMock;
+  @Mock
+  private DockerManager dockerManagerMock;
 
-    @InjectMocks
-    private OrchestrationDownCommand command;
+  @InjectMocks
+  private OrchestrationDownCommand command;
 
-    @Test
-    @DisplayName("Test run() success - Stop all containers")
-    void testRunSuccessStopAllContainers(List<ILoggingEvent> logs) throws DockerException {
+  @Test
+  @DisplayName("Test run() success - Stop all containers")
+  void testRunSuccessStopAllContainers(List<ILoggingEvent> logs) throws DockerException {
 
-        command.run();
-        verify(dockerManagerMock).downContainer(null);
-        assertTrue(logs
-                .stream()
-                .anyMatch(
-                        event -> event.getFormattedMessage().equals("All running containers have been successfully stopped.")));
-    }
+    command.run();
+    verify(dockerManagerMock).downContainer(null);
+    assertTrue(logs
+        .stream()
+        .anyMatch(
+            event -> event.getFormattedMessage().equals("All running containers have been successfully stopped.")));
+  }
 
-    @Test
-    @DisplayName("Test run() success - Stop a single container")
-    void testRunSuccessStopSingleContainer(List<ILoggingEvent> logs) throws DockerException {
+  @Test
+  @DisplayName("Test run() success - Stop a single container")
+  void testRunSuccessStopSingleContainer(List<ILoggingEvent> logs) throws DockerException {
 
-        CommandLine cmd = new CommandLine(command);
-        int exitCode = cmd.execute("-n", "container1");
+    CommandLine cmd = new CommandLine(command);
+    int exitCode = cmd.execute("-n", "container1");
 
-        assertEquals(0, exitCode);
-        verify(dockerManagerMock).downContainer("container1");
-        assertTrue(logs
-                .stream()
-                .anyMatch(
-                        event -> event.getFormattedMessage().equals("Container 'container1' has been successfully stopped.")));
-    }
+    assertEquals(0, exitCode);
+    verify(dockerManagerMock).downContainer("container1");
+    assertTrue(logs
+        .stream()
+        .anyMatch(
+            event -> event.getFormattedMessage().equals("Container 'container1' has been successfully stopped.")));
+  }
 
-    @Test
-    @DisplayName("Test run() failure - Exception thrown with 'Failed to stop containers: ' message")
-    void testRunFailureExceptionMessage() throws Exception {
+  @Test
+  @DisplayName("Test run() failure - Exception thrown with 'Failed to stop containers: ' message")
+  void testRunFailureExceptionMessage() throws Exception {
 
-        command.setContainerName("container1");
+    command.setContainerName("container1");
 
-        DockerException exception = new DockerException("Test exception");
-        doThrow(exception).when(dockerManagerMock).downContainer(anyString());
+    DockerException exception = new DockerException("Test exception");
+    doThrow(exception).when(dockerManagerMock).downContainer(anyString());
 
-        CommandLine.ExecutionException thrown = assertThrows(CommandLine.ExecutionException.class,
-                command::run,
-                "Expected run() to throw CommandLine.ExecutionException");
+    CommandLine.ExecutionException thrown = assertThrows(CommandLine.ExecutionException.class,
+        command::run,
+        "Expected run() to throw CommandLine.ExecutionException");
 
-        assertTrue(thrown.getMessage().contains("Failed to stop containers: Test exception"),
-                "Exception message should contain 'Failed to stop containers: Test exception'");
+    assertTrue(thrown.getMessage().contains("Failed to stop containers: Test exception"),
+        "Exception message should contain 'Failed to stop containers: Test exception'");
 
-        assertEquals(exception, thrown.getCause());
-    }
+    assertEquals(exception, thrown.getCause());
+  }
 }

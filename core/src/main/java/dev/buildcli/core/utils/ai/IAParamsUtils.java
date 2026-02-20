@@ -1,6 +1,7 @@
 package dev.buildcli.core.utils.ai;
 
 import dev.buildcli.core.actions.ai.AIServiceParams;
+import dev.buildcli.core.actions.ai.params.GeminiAIServiceParams;
 import dev.buildcli.core.actions.ai.params.JlamaAIServiceParams;
 import dev.buildcli.core.actions.ai.params.OllamaAIServiceParams;
 import dev.buildcli.core.constants.ConfigDefaultConstants;
@@ -13,31 +14,17 @@ public final class IAParamsUtils {
   private IAParamsUtils() {
   }
 
-  public static AIServiceParams createAIParams(String model, String vendor) {
-    var aiVendor = vendor == null ? allConfigs.getProperty(ConfigDefaultConstants.AI_VENDOR).orElse("jlama") : vendor;
-    var aiModel = model;
+  public static AIServiceParams createAIParams() {
+    var aiVendor = allConfigs.getProperty(ConfigDefaultConstants.AI_VENDOR).orElse("jlama");
+    var aiModel = allConfigs.getProperty(ConfigDefaultConstants.AI_MODEL).orElse(null);
+    var aiToken = allConfigs.getProperty(ConfigDefaultConstants.AI_TOKEN).orElse(null);
+    var aiUrl = allConfigs.getProperty(ConfigDefaultConstants.AI_URL).orElse(null);
 
     return switch (aiVendor.toLowerCase()) {
-      case "ollama" -> {
-        var url = allConfigs.getProperty(ConfigDefaultConstants.AI_URL).orElse(null);
-        aiModel = aiModel == null ? allConfigs.getProperty(ConfigDefaultConstants.AI_MODEL).orElse(null) : aiModel;
-
-        yield new OllamaAIServiceParams(url, aiModel);
-      }
-      case "jlama" -> {
-        aiModel = aiModel == null ? allConfigs.getProperty(ConfigDefaultConstants.AI_MODEL).orElse(null) : aiModel;
-
-        yield new JlamaAIServiceParams(aiModel);
-      }
+      case "ollama" -> new OllamaAIServiceParams(aiUrl, aiModel);
+      case "jlama" -> new JlamaAIServiceParams(aiModel);
+      case "gemini" -> new GeminiAIServiceParams(aiModel, aiToken);
       default -> throw new IllegalStateException("Unexpected AI Vendor: " + aiVendor);
     };
-  }
-
-  public static AIServiceParams createAIParams(String model) {
-    return createAIParams(model, null);
-  }
-
-  public static AIServiceParams createAIParams() {
-    return createAIParams(null, null);
   }
 }

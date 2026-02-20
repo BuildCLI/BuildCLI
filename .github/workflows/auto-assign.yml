@@ -2,9 +2,9 @@ name: Auto Assign on Issue Comment
 
 on:
   issue_comment:
-    types: [created]
+    types: [ created ]
   issues:
-    types: [opened]
+    types: [ opened ]
 
 permissions:
   issues: write
@@ -91,7 +91,7 @@ jobs:
 
                   if (assignedUser === commenter) {
                     console.log(`⚠️ ${commenter} is already assigned.`);
-                    
+            
                     await github.rest.issues.createComment({
                       owner: repoOwner,
                       repo: repoName,

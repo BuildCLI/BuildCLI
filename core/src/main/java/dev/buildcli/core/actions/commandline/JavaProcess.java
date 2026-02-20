@@ -11,7 +11,7 @@ public class JavaProcess extends AbstractCommandLineProcess {
   }
 
 
-  public static JavaProcess createRunJarProcess(String jarName, String...args) {
+  public static JavaProcess createRunJarProcess(String jarName, String... args) {
     return createProcess("-jar", jarName, mergeArgs(args));
   }
 
@@ -29,11 +29,11 @@ public class JavaProcess extends AbstractCommandLineProcess {
     return process;
   }
 
-  public static JavaProcess createRunClassProcess(String absolutePath, String...args) {
+  public static JavaProcess createRunClassProcess(String absolutePath, String... args) {
     return createProcess(absolutePath, mergeArgs(args));
   }
 
-  private static String mergeArgs(String...args) {
+  private static String mergeArgs(String... args) {
     return Arrays.stream(args).reduce((a, b) -> a + " " + b).orElse("");
   }
 }

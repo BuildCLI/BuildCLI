@@ -17,33 +17,20 @@ import static dev.buildcli.core.utils.config.ConfigContextLoader.getLocalConfig;
 
 /**
  * Command to configure BuildCLI by setting key-value properties.
- *
+ * <p>
  * This command allows users to define configuration settings that
  * can be applied locally or globally within the CLI.
- *
+ * <p>
  * Usage Examples:
- *   - Set a local configuration property:
- *       {@code buildcli config set key=value}
- *   - Set a global configuration property:
- *       {@code buildcli config set key=value -g}
- *
+ * - Set a local configuration property:
+ * {@code buildcli config set key=value}
+ * - Set a global configuration property:
+ * {@code buildcli config set key=value -g}
+ * <p>
  * Key names should follow a hierarchical structure using dots (e.g., "core.timeout").
  */
 @Command(name = "set", aliases = {"s"}, description = "Set configuration properties for BuildCLI.", mixinStandardHelpOptions = true)
 public class SetCommand implements BuildCLICommand {
-
-  /**
-   * Reference to the parent command to determine if the configuration is local or global.
-   */
-  @ParentCommand
-  private ConfigCommand configCommand;
-
-  /**
-   * List of key-value configuration pairs to be set.
-   * Each entry must follow the format "key=value".
-   */
-  @Parameters(description = "Configuration properties in the format <key>=<value>.")
-  private List<String> configs;
 
   /**
    * Regex pattern to validate configuration format (key=value).
@@ -51,6 +38,17 @@ public class SetCommand implements BuildCLICommand {
    * - Values: Alphanumeric, dashes, dots, and numeric values allowed.
    */
   private static final Pattern CONFIG_PATTERN = Pattern.compile("^[A-Za-z0-9-]+(?:\\.[A-Za-z0-9-]+)*=.*$");
+  /**
+   * Reference to the parent command to determine if the configuration is local or global.
+   */
+  @ParentCommand
+  private ConfigCommand configCommand;
+  /**
+   * List of key-value configuration pairs to be set.
+   * Each entry must follow the format "key=value".
+   */
+  @Parameters(description = "Configuration properties in the format <key>=<value>.")
+  private List<String> configs;
 
   /**
    * Executes the "set" command, updating configuration settings accordingly.

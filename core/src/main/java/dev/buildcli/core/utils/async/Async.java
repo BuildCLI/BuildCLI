@@ -16,22 +16,6 @@ public class Async<T> {
     this.execsAsync = CompletableFuture.supplyAsync(supplier, ThreadPoolUtils.virtual());
   }
 
-  public boolean isDone() {
-    return execsAsync.isDone();
-  }
-
-  public T await() throws InterruptedException {
-    return execsAsync.join();
-  }
-
-  public <R> Async<R> then(Function<? super T, ? extends R> function) {
-    return new Async<>(() -> function.apply(execsAsync.join()));
-  }
-
-  public Async<Void> consumeAsync(Consumer<? super T> consumer) {
-    return new Async<>(() -> execsAsync.thenAccept(consumer).join());
-  }
-
   public static <T> Async<T> run(Supplier<T> supplier) {
     return new Async<>(supplier);
   }
@@ -55,6 +39,22 @@ public class Async<T> {
     }
 
     CompletableFuture.allOf(completableFutures).join();
+  }
+
+  public boolean isDone() {
+    return execsAsync.isDone();
+  }
+
+  public T await() throws InterruptedException {
+    return execsAsync.join();
+  }
+
+  public <R> Async<R> then(Function<? super T, ? extends R> function) {
+    return new Async<>(() -> function.apply(execsAsync.join()));
+  }
+
+  public Async<Void> consumeAsync(Consumer<? super T> consumer) {
+    return new Async<>(() -> execsAsync.thenAccept(consumer).join());
   }
 
   public Async<T> catchAny(Function<Throwable, T> throwableVoidFunction) {

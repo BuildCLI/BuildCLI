@@ -11,7 +11,6 @@ import java.util.Comparator;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class JavaProcessTest {
   private Path tempDir;
@@ -68,7 +67,7 @@ public class JavaProcessTest {
 
   @Test
   void testCreateRunClassProcess() {
-    javaProcess = JavaProcess.createRunClassProcess(tempDir.toAbsolutePath().toString(), "-Xmx1024m","-Xms512m");
+    javaProcess = JavaProcess.createRunClassProcess(tempDir.toAbsolutePath().toString(), "-Xmx1024m", "-Xms512m");
 
     assertFalse(javaProcess.commands.isEmpty());
     assertEquals("java", javaProcess.commands.get(0));

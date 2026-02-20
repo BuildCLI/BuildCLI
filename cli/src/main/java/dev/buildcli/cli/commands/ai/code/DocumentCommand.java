@@ -11,9 +11,14 @@ import dev.buildcli.core.utils.config.ConfigContextLoader;
 import dev.buildcli.core.utils.filesystem.FindFilesUtils;
 import dev.buildcli.core.utils.ai.CodeUtils;
 import dev.buildcli.core.utils.ai.IAParamsUtils;
+import dev.buildcli.core.utils.async.Async;
+import dev.buildcli.core.utils.filesystem.FindFilesUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import picocli.CommandLine.*;
+import picocli.CommandLine.Command;
+import picocli.CommandLine.Option;
+import picocli.CommandLine.Parameters;
+import picocli.CommandLine.ParentCommand;
 
 import java.io.File;
 import java.io.IOException;
@@ -41,8 +46,6 @@ public class DocumentCommand implements BuildCLICommand {
   @Option(names = {"--context"}, description = "Overwrite the default AI command")
   private String context;
 
-  private final BuildCLIConfig allConfigs = ConfigContextLoader.getAllConfigs();
-
 
   @Override
   public void run() {
@@ -61,7 +64,7 @@ public class DocumentCommand implements BuildCLICommand {
 
     logger.info("Found {} files with extensions: {}.", targetFiles.size(), Arrays.toString(getExtensions()));
 
-    var execsAsync = Async.group(targetFiles.size());;
+    var execsAsync = Async.group(targetFiles.size());
 
     logger.info("Documenting files {}...", targetFiles.size());
     for (int i = 0; i < targetFiles.size(); i++) {
@@ -81,7 +84,7 @@ public class DocumentCommand implements BuildCLICommand {
       var sourceCode = Files.readString(source.toPath());
       logger.info("Source file read: {}", source.getAbsolutePath());
 
-      var aiParams = IAParamsUtils.createAIParams(parent.getModel(), parent.getVendor());;
+      var aiParams = IAParamsUtils.createAIParams();
       var iaService = new GeneralAIServiceFactory().create(aiParams);
 
       logger.info("Commenting with IA...");

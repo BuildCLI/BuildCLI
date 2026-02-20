@@ -16,7 +16,8 @@ import java.time.Duration;
 public final class FileDownloader {
   private static final Logger log = LoggerFactory.getLogger(FileDownloader.class);
 
-  private FileDownloader(){ }
+  private FileDownloader() {
+  }
 
   public static File download(String url) throws DownloadFailedException {
     try (var client = HttpClient.newHttpClient()) {
@@ -42,7 +43,7 @@ public final class FileDownloader {
         throw new IOException("Failed to download file: " + response.statusCode());
       }
 
-      var filename = contentDisposition.map(s -> s.split("=")[1].replace("\"", "")).orElse("");
+      var filename = contentDisposition.map(s -> s.split("=")[1].replaceAll("\"", "")).orElse("");
 
       if (filename.isEmpty()) {
         throw new IOException("Failed to download file: " + response.statusCode());
@@ -65,18 +66,16 @@ public final class FileDownloader {
             int filledLength = (int) ((progress / 100.0) * progressBarLength);
 
             String progressBar = "=".repeat(filledLength) + " ".repeat(progressBarLength - filledLength);
-            log.info("Download progress: [{}] {}%", progressBar, progress);
+
+            System.out.printf("\r[%s] %d%%", progressBar, progress);
           }
+          System.out.println();
         }
       }
-      log.info("Download completed successfully. File saved as: {}", filename);
+
       return file;
-    } catch (IOException e) {
+    } catch (IOException | InterruptedException e) {
       throw new DownloadFailedException(e.getMessage());
-    } catch (InterruptedException e) {
-      log.error("Thread was interrupted. Cleanup performed. {}", e.getMessage());
-      Thread.currentThread().interrupt();
     }
-    return null;
   }
 }

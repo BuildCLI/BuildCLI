@@ -1,9 +1,9 @@
 package dev.buildcli.core.utils.compress;
 
+import dev.buildcli.core.log.SystemOutLogger;
 import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
 import org.apache.commons.compress.archivers.tar.TarArchiveInputStream;
 import org.apache.commons.compress.compressors.gzip.GzipCompressorInputStream;
-import dev.buildcli.core.log.SystemOutLogger;
 
 import java.io.FileInputStream;
 import java.io.IOException;

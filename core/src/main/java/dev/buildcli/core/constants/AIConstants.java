@@ -2,9 +2,6 @@ package dev.buildcli.core.constants;
 
 public abstract class AIConstants {
 
-  private AIConstants() {
-  }
-
   public static final String DOCUMENT_CODE_PROMPT = """
       ### Strict Code Commenting Prompt
       
@@ -64,7 +61,6 @@ public abstract class AIConstants {
       
       ### Now, add comments to the following code WITHOUT MODIFYING ANYTHING: 
       """;
-
   public static final String COMMENT_CODE_PROMPT = """
       *"Review the following code for readability, performance, maintainability, and best practices. Identify potential bugs, security vulnerabilities, and areas for optimization. Suggest improvements while keeping the code’s intended functionality intact. Provide clear explanations for each suggestion."* \s
       
@@ -84,5 +80,7 @@ public abstract class AIConstants {
       The tests should be well-structured, readable, and follow best practices for the chosen language and testing framework. \
       Ensure clear descriptions for each test case and include boundary conditions, edge cases, and error handling scenarios.
       """;
+  private AIConstants() {
+  }
 
 }

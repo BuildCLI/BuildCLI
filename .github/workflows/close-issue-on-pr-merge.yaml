@@ -2,16 +2,12 @@ name: Close Issue on PR Merge
 
 on:
   pull_request:
-    types: [closed]
-
-permissions: {}
+    types: [ closed ]
 
 jobs:
   close-issue:
     runs-on: ubuntu-latest
     if: github.event.pull_request.merged == true
-    permissions:
-        issues: write
 
     steps:
       - name: Extract Issue Number and Close Issue
@@ -32,7 +28,7 @@ jobs:
               -H "Accept: application/vnd.github+json" \
               https://api.github.com/repos/$REPO/issues/$ISSUE_NUMBER \
               -d '{"state":"closed"}'
-            
+          
             echo "Adding comment to issue #$ISSUE_NUMBER"
             COMMENT_BODY="The issue has been successfully closed as the related PR has been merged."
             curl -X POST \

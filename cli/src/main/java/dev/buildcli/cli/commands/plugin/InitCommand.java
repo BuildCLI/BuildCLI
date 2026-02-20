@@ -2,10 +2,8 @@ package dev.buildcli.cli.commands.plugin;
 
 import dev.buildcli.cli.utils.CommandUtils;
 import dev.buildcli.core.domain.BuildCLICommand;
-import dev.buildcli.core.domain.configs.BuildCLIConfig;
-import dev.buildcli.core.utils.config.ConfigContextLoader;
-import dev.buildcli.plugin.enums.PluginType;
 import dev.buildcli.plugin.builders.PluginBuilderFactory;
+import dev.buildcli.plugin.enums.PluginType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import picocli.CommandLine.Command;

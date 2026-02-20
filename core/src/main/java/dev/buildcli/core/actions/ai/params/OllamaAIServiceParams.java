@@ -2,6 +2,7 @@ package dev.buildcli.core.actions.ai.params;
 
 import dev.buildcli.core.actions.ai.AIServiceParams;
 
+import java.util.Objects;
 import java.util.Optional;
 
 public class OllamaAIServiceParams implements AIServiceParams {
@@ -9,13 +10,13 @@ public class OllamaAIServiceParams implements AIServiceParams {
   private final String modelName;
 
   public OllamaAIServiceParams(String url, String modelName) {
-    this.url = url;
-    this.modelName = modelName;
+    this.url = Objects.requireNonNull(url);
+    this.modelName = Objects.requireNonNull(modelName);
   }
 
   @Override
   public Optional<String> model() {
-    return Optional.ofNullable(modelName);
+    return Optional.of(modelName);
   }
 
   @Override

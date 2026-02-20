@@ -1,10 +1,17 @@
 package dev.buildcli.core.domain.configs;
+
 import dev.buildcli.core.exceptions.ConfigException;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.*;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Properties;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static dev.buildcli.core.constants.ConfigDefaultConstants.BUILD_CLI_CONFIG_GLOBAL_FILE;
@@ -14,13 +21,6 @@ public class BuildCLIConfig {
   private boolean local = true;
 
   private BuildCLIConfig() {
-  }
-
-  public static BuildCLIConfig from(File file) {
-    if (!file.exists()) {
-      return new BuildCLIConfig();
-    }
-    return new BuildCLIConfig(file);
   }
 
   private BuildCLIConfig(File file) {
@@ -44,8 +44,31 @@ public class BuildCLIConfig {
     }
   }
 
+  public static BuildCLIConfig from(File file) {
+    if (!file.exists()) {
+      return new BuildCLIConfig();
+    }
+    return new BuildCLIConfig(file);
+  }
+
   public static BuildCLIConfig empty() {
     return new BuildCLIConfig();
+  }
+
+  private static boolean isPresentFileProperties() {
+    Path pathFile = BUILD_CLI_CONFIG_GLOBAL_FILE.toAbsolutePath();
+    return Files.exists(pathFile)
+        && Files.isRegularFile(pathFile)
+        && pathFile.getFileName().toString().equals("buildcli.properties");
+  }
+
+  public static BuildCLIConfig initialize() {
+    BuildCLIConfig config = new BuildCLIConfig();
+    if (!isPresentFileProperties()) {
+      config.generatePropertiesFile();
+      return config;
+    }
+    return config;
   }
 
   public Optional<Integer> getPropertyAsInt(String property) {
@@ -122,19 +145,6 @@ public class BuildCLIConfig {
         .collect(Collectors.joining("\n"));
   }
 
-  public record ImmutableProperty(String name, String value) {
-    public static ImmutableProperty from(Map.Entry<Object, Object> entry) {
-      return new ImmutableProperty(entry.getKey().toString(), entry.getValue().toString());
-    }
-  }
-
-  private static boolean isPresentFileProperties(){
-    Path pathFile = BUILD_CLI_CONFIG_GLOBAL_FILE.toAbsolutePath();
-    return Files.exists(pathFile)
-        && Files.isRegularFile(pathFile)
-        && pathFile.getFileName().toString().equals("buildcli.properties");
-  }
-
   private void generatePropertiesFile() {
     File pathFile = BUILD_CLI_CONFIG_GLOBAL_FILE.toFile();
 
@@ -166,12 +176,9 @@ public class BuildCLIConfig {
     }
   }
 
-  public static BuildCLIConfig initialize() {
-    BuildCLIConfig config = new BuildCLIConfig();
-    if (!isPresentFileProperties()){
-      config.generatePropertiesFile();
-      return config;
+  public record ImmutableProperty(String name, String value) {
+    public static ImmutableProperty from(Map.Entry<Object, Object> entry) {
+      return new ImmutableProperty(entry.getKey().toString(), entry.getValue().toString());
     }
-   return config;
   }
 }

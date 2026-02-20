@@ -8,77 +8,78 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Dependency {
 
-	public static final String XML_WRAPPER_ELEMENT = "dependencies";
-	
-    private String groupId;
-    private String artifactId;
-    private String version;
-    private String type;
-    private String scope;
-    private String optional;
+  public static final String XML_WRAPPER_ELEMENT = "dependencies";
 
-    public Dependency() { }
-    
-    public Dependency(String groupId, String artifactId, String version) {
-        this.groupId = groupId;
-        this.artifactId = artifactId;
-        this.version = version;
-    }
+  private String groupId;
+  private String artifactId;
+  private String version;
+  private String type;
+  private String scope;
+  private String optional;
 
-    public Dependency(String groupId, String artifactId, String version, String type, String scope, String optional) {
-        this.groupId = groupId;
-        this.artifactId = artifactId;
-        this.version = version;
-        this.type = type;
-        this.scope = scope;
-        this.optional = optional;
-    }
+  public Dependency() {
+  }
 
-    public String getGroupId() {
-        return groupId;
-    }
+  public Dependency(String groupId, String artifactId, String version) {
+    this.groupId = groupId;
+    this.artifactId = artifactId;
+    this.version = version;
+  }
 
-    public void setGroupId(String groupId) {
-        this.groupId = groupId;
-    }
+  public Dependency(String groupId, String artifactId, String version, String type, String scope, String optional) {
+    this.groupId = groupId;
+    this.artifactId = artifactId;
+    this.version = version;
+    this.type = type;
+    this.scope = scope;
+    this.optional = optional;
+  }
 
-    public String getArtifactId() {
-        return artifactId;
-    }
+  public String getGroupId() {
+    return groupId;
+  }
 
-    public void setArtifactId(String artifactId) {
-        this.artifactId = artifactId;
-    }
+  public void setGroupId(String groupId) {
+    this.groupId = groupId;
+  }
 
-    public String getVersion() {
-        return version;
-    }
+  public String getArtifactId() {
+    return artifactId;
+  }
 
-    public void setVersion(String version) {
-        this.version = version;
-    }
+  public void setArtifactId(String artifactId) {
+    this.artifactId = artifactId;
+  }
 
-    public String getType() {
-        return type;
-    }
+  public String getVersion() {
+    return version;
+  }
 
-    public void setType(String type) {
-        this.type = type;
-    }
+  public void setVersion(String version) {
+    this.version = version;
+  }
 
-    public String getScope() {
-        return scope;
-    }
+  public String getType() {
+    return type;
+  }
 
-    public void setScope(String scope) {
-        this.scope = scope;
-    }
+  public void setType(String type) {
+    this.type = type;
+  }
 
-    public String getOptional() {
-        return optional;
-    }
+  public String getScope() {
+    return scope;
+  }
 
-    public void setOptional(String optional) {
-        this.optional = optional;
-    }
+  public void setScope(String scope) {
+    this.scope = scope;
+  }
+
+  public String getOptional() {
+    return optional;
+  }
+
+  public void setOptional(String optional) {
+    this.optional = optional;
+  }
 }
