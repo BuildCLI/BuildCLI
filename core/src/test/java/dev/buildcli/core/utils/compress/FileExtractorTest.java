@@ -8,18 +8,18 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-
-import java.io.*;
+import java.io.BufferedOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.attribute.PosixFilePermission;
 import java.util.Comparator;
 import java.util.Set;
-import java.util.zip.*;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
+
 import static org.junit.jupiter.api.Assertions.*;
-
-
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 class FileExtractorTest {
@@ -139,8 +139,6 @@ class FileExtractorTest {
   }
 
 
-
-
   @Test
   void testExtractFileWithoutReadPermission() throws IOException {
 
@@ -149,7 +147,7 @@ class FileExtractorTest {
     });
 
     assertTrue(ex.getMessage().contains("Permission denied") ||
-            ex.getMessage().contains("access denied"));
+        ex.getMessage().contains("access denied"));
 
   }
 }

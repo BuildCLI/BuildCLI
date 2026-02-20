@@ -6,12 +6,12 @@ public interface PipelineFileGenerator {
   void generate() throws IOException;
 
   interface PipelineFileGeneratorFactory {
-    static PipelineFileGenerator factory(String platform) {
-      return switch (platform) {
+    static PipelineFileGenerator factory(String plaftorm) {
+      return switch (plaftorm) {
         case "github" -> new GithubActionsPipelineGenerator();
         case "jenkins" -> new JenkinsPipelineGenerator();
         case "gitlab" -> new GitlabPipelineGenerator();
-        default -> throw new IllegalStateException("Unexpected value: " + platform);
+        default -> throw new IllegalStateException("Unexpected value: " + plaftorm);
       };
     }
   }

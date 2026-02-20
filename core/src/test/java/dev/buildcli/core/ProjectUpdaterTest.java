@@ -6,8 +6,8 @@ import dev.buildcli.core.utils.PomUtils;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.io.TempDir;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -29,8 +29,10 @@ class ProjectUpdaterTest {
 	private String backupPomOriginalContent;
 	private ProjectUpdater updater;
 
+	private ProjectUpdater updater;
+	
 	@BeforeEach
-	void setUp() throws IOException {
+	public void setUp() {
 		this.updater = new ProjectUpdater();
 
 		// backup POM files

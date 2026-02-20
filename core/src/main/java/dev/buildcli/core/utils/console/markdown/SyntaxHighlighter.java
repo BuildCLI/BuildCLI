@@ -1,10 +1,11 @@
 package dev.buildcli.core.utils.console.markdown;
 
+
 import dev.buildcli.core.utils.BeautifyShell;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Function;
+import java.util.function.UnaryOperator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -12,7 +13,7 @@ import java.util.regex.Pattern;
  * SyntaxHighlighter - A utility class for syntax highlighting of various programming languages
  * to be used with the MarkdownInterpreter and BeautifyShell.
  */
-public class SyntaxHighlighter {
+public final class SyntaxHighlighter {
 
   // Singleton instance map for language highlighters
   private static final Map<String, LanguageHighlighter> HIGHLIGHTERS = new HashMap<>();
@@ -21,7 +22,6 @@ public class SyntaxHighlighter {
     // Register default language highlighters
     registerHighlighter("java", new JavaHighlighter());
     registerHighlighter("kotlin", new KotlinHighlighter());
-    /*
     registerHighlighter("python", new PythonHighlighter());
     registerHighlighter("json", new JsonHighlighter());
     registerHighlighter("xml", new XmlHighlighter());
@@ -45,7 +45,9 @@ public class SyntaxHighlighter {
     registerHighlighter("html", new HtmlHighlighter());
     registerHighlighter("css", new CssHighlighter());
     registerHighlighter("swift", new SwiftHighlighter());
-    */
+  }
+
+  private SyntaxHighlighter() {
   }
 
   /**
@@ -93,20 +95,6 @@ public class SyntaxHighlighter {
     // Highlight numbers
     code = highlightPattern(code, "\\b[0-9]+\\b", BeautifyShell::cyanFg);
 
-    // Highlight common keywords across many languages
-    String[] commonKeywords = {
-        "if", "else", "for", "while", "do", "switch", "case", "break", "continue",
-        "return", "true", "false", "null", "void", "this", "new", "try", "catch",
-        "finally", "throw", "throws", "class", "interface", "extends", "implements",
-        "import", "package", "public", "private", "protected", "static", "final",
-        "abstract", "default", "const", "let", "var", "function", "def", "async", "await",
-        "fun", "data"
-    };
-
-    for (String keyword : commonKeywords) {
-      code = highlightPattern(code, "\\b" + keyword + "\\b", BeautifyShell::magentaFg);
-    }
-
     // Highlight comments
     code = highlightPattern(code, "//.*$", BeautifyShell::brightBlackFg, true);
     code = highlightPattern(code, "/\\*[\\s\\S]*?\\*/", BeautifyShell::brightBlackFg);
@@ -123,7 +111,7 @@ public class SyntaxHighlighter {
    * @param styler Function to apply styling
    * @return Text with highlighted matches
    */
-  static String highlightPattern(String text, String regex, Function<String, String> styler) {
+  static String highlightPattern(String text, String regex, UnaryOperator<String> styler) {
     return highlightPattern(text, regex, styler, false);
   }
 
@@ -136,12 +124,12 @@ public class SyntaxHighlighter {
    * @param multiline Whether to apply multiline matching
    * @return Text with highlighted matches
    */
-  static String highlightPattern(String text, String regex, Function<String, String> styler, boolean multiline) {
+  static String highlightPattern(String text, String regex, UnaryOperator<String> styler, boolean multiline) {
     Pattern pattern = multiline
         ? Pattern.compile(regex, Pattern.MULTILINE)
         : Pattern.compile(regex);
     Matcher matcher = pattern.matcher(text);
-    StringBuffer result = new StringBuffer();
+    StringBuilder result = new StringBuilder();
 
     while (matcher.find()) {
       String match = matcher.group();

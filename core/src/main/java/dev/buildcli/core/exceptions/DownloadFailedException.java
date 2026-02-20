@@ -1,8 +1,6 @@
 package dev.buildcli.core.exceptions;
 
-import java.io.IOException;
-
-public class DownloadFailedException extends RuntimeException {
+public class DownloadFailedException extends Exception {
   public DownloadFailedException(String message) {
     super(message);
   }

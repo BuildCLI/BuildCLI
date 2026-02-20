@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+  <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>dev.buildcli</groupId>
-        <artifactId>buildcli-parent</artifactId>
-        <version>0.14.0</version>
-        <relativePath>../pom.xml</relativePath>
-    </parent>
+  <parent>
+    <groupId>dev.buildcli</groupId>
+    <artifactId>buildcli-parent</artifactId>
+    <version>0.14.0</version>
+    <relativePath>../pom.xml</relativePath>
+  </parent>
 
-    <artifactId>buildcli-core</artifactId>
+  <artifactId>buildcli-core</artifactId>
 
-    <properties>
-        <maven.compiler.source>21</maven.compiler.source>
-        <maven.compiler.target>21</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
+  <properties>
+    <maven.compiler.source>21</maven.compiler.source>
+    <maven.compiler.target>21</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
 
     <dependencies>
         <dependency>
@@ -43,7 +43,7 @@
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-compress</artifactId>
-            <version>1.27.1</version>
+            <version>1.28.0</version>
         </dependency>
         <dependency>
             <groupId>org.eclipse.jgit</groupId>
@@ -60,7 +60,7 @@
         <dependency>
             <groupId>dev.langchain4j</groupId>
             <artifactId>langchain4j-ollama</artifactId>
-            <version>0.36.2</version>
+            <version>1.4.0</version>
         </dependency>
         <dependency>
             <groupId>dev.langchain4j</groupId>
@@ -70,19 +70,9 @@
         <dependency>
             <groupId>info.picocli</groupId>
             <artifactId>picocli-shell-jline3</artifactId>
-            <version>4.7.7</version>
+            <version>4.7.6</version>
         </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-params</artifactId>
-            <version>5.12.2</version>
-            <scope>test</scope>
-        </dependency>
+    </dependencies>
 
         <dependency>
             <groupId>org.mockito</groupId>
@@ -97,33 +87,33 @@
             <scope>test</scope>
         </dependency>
 
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-core</artifactId>
-            <version>1.5.16</version>
-        </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <version>1.5.18</version>
-        </dependency>
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-core</artifactId>
+      <version>1.5.18</version>
+    </dependency>
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <version>1.5.18</version>
+    </dependency>
 
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>2.0.16</version>
-        </dependency>
-    </dependencies>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>2.0.17</version>
+    </dependency>
+  </dependencies>
 
-    <build>
-        <finalName>core</finalName>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.13.0</version>
-            </plugin>
-        </plugins>
-    </build>
+  <build>
+    <finalName>core</finalName>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.13.0</version>
+      </plugin>
+    </plugins>
+  </build>
 
 </project>

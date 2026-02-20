@@ -6,10 +6,6 @@ import java.io.IOException;
 import java.util.Arrays;
 
 final class KeyDetector {
-  public enum KeyType {
-    UP, DOWN, ENTER, CTRL_C, SPACE, OTHER
-  }
-
   // Read a potential escape sequence from the reader
   private static int[] readEscapeSequence(NonBlockingReader reader) throws IOException {
     int[] sequence = new int[8]; // Should be enough for any escape sequence
@@ -116,5 +112,9 @@ final class KeyDetector {
     }
 
     return false;
+  }
+
+  public enum KeyType {
+    UP, DOWN, ENTER, CTRL_C, SPACE, OTHER, A, D
   }
 }

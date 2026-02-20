@@ -75,7 +75,7 @@ public class InitCommand implements BuildCLICommand {
       try (FileWriter writer = new FileWriter(javaClass)) {
         writer.write("""
                 package %s;
-
+            
                 public class Main {
                     public static void main(String[] args) {
                         System.out.println("Hello, World!");
@@ -96,17 +96,17 @@ public class InitCommand implements BuildCLICommand {
                          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://www.apache.org/xsd/maven-4.0.0.xsd">
                     <modelVersion>4.0.0</modelVersion>
-
+            
                     <groupId>%s</groupId>
                     <artifactId>%s</artifactId>
                     <version>1.0-SNAPSHOT</version>
-
+            
                     <properties>
                         <maven.compiler.source>%s</maven.compiler.source>
                         <maven.compiler.target>${maven.compiler.source}</maven.compiler.target>
                         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
                     </properties>
-
+            
                     <dependencies>
                         <dependency>
                             <groupId>org.junit.jupiter</groupId>
@@ -115,7 +115,7 @@ public class InitCommand implements BuildCLICommand {
                             <scope>test</scope>
                         </dependency>
                     </dependencies>
-
+            
                     <build>
                         <plugins>
                             <plugin>
@@ -142,7 +142,7 @@ public class InitCommand implements BuildCLICommand {
                         </plugins>
                     </build>
                 </project>
-            """.formatted(basePackage, projectName, jdkVersion, basePackage));
+            """.formatted(projectName.toLowerCase(), projectName, jdkVersion, basePackage));
       }
       SystemOutLogger.log("pom.xml file created with default configuration.");
     }
@@ -167,6 +167,9 @@ public class InitCommand implements BuildCLICommand {
       projectName = projectName == null || projectName.isEmpty() ? question("Enter project name") : projectName;
       jdkVersion = jdkVersion == null || jdkVersion.isEmpty() ? question("Enter jdk version") : jdkVersion;
       var basePackage = question("Enter base-package");
+      if (basePackage == null || basePackage.trim().isEmpty()) {
+        basePackage = "org." + projectName.toLowerCase();
+      }
 
       String[] dirs = {
           "src/main/java/" + basePackage.replace('.', '/'),

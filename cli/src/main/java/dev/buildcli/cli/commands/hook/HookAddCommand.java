@@ -1,6 +1,6 @@
 package dev.buildcli.cli.commands.hook;
 
-import dev.buildcli.cli.BuildCLI;
+import dev.buildcli.cli.CommandLineRunner;
 import dev.buildcli.core.domain.BuildCLICommand;
 import dev.buildcli.hooks.Hook;
 import dev.buildcli.hooks.HookManager;
@@ -12,32 +12,32 @@ import picocli.CommandLine.Parameters;
 
 
 @Command(
-        name = "add",
-        description ="""
-                    Add a hook to a command.
-                    Usage: hook add [before/after] "[command]" "[hookCommand]"
-                    Example: add b "project build" "project clean"
-                    This will execute 'project clean' before 'project build'.
-                    """
+    name = "add",
+    description = """
+        Add a hook to a command.
+        Usage: hook add [before/after] "[command]" "[hookCommand]"
+        Example: add b "project build" "project clean"
+        This will execute 'project clean' before 'project build'.
+        """
 )
 public class HookAddCommand implements BuildCLICommand {
 
-    @Parameters(index="0", description =  "Defines whether the hook should be executed before or after the command.\n" +
-            "Accepted values: 'before', 'after' (or shorthand 'b' and 'a').", converter = HookPhaseConverter.class)
-    public HookPhase phase;
+  @Parameters(index = "0", description = "Defines whether the hook should be executed before or after the command.\n" +
+      "Accepted values: 'before', 'after' (or shorthand 'b' and 'a').", converter = HookPhaseConverter.class)
+  public HookPhase phase;
 
-    @Parameters(index = "1", description = "Main command for attach the hook")
-    private String command;
+  @Parameters(index = "1", description = "Main command for attach the hook")
+  private String command;
 
-    @Parameters(index = "2", description = "HookCommand to be executed")
-    private String hookCommand;
+  @Parameters(index = "2", description = "HookCommand to be executed")
+  private String hookCommand;
 
-    @Override
-    public void run() {
-        HookManager hookManager = new HookManager(new CommandLine(new BuildCLI()));
+  @Override
+  public void run() {
+    HookManager hookManager = new HookManager(new CommandLine(new CommandLineRunner()));
 
-        Hook hook = new Hook(command, phase, hookCommand);
+    Hook hook = new Hook(command, phase, hookCommand);
 
-        hookManager.registerHook(hook);
-    }
+    hookManager.registerHook(hook);
+  }
 }

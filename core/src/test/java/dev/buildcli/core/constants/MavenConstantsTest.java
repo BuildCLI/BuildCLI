@@ -7,28 +7,28 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class MavenConstantsTest {
 
-    @Test
-    void testMavenCmdConstants() {
-        if (OS.isWindows()) {
-            assertEquals("mvn.cmd", MavenConstants.MAVEN_CMD);
-        } else {
-            assertEquals("mvn", MavenConstants.MAVEN_CMD);
-        }
+  @Test
+  void testMavenCmdConstants() {
+    if (OS.isWindows()) {
+      assertEquals("mvn.cmd", MavenConstants.MAVEN_CMD);
+    } else {
+      assertEquals("mvn", MavenConstants.MAVEN_CMD);
     }
+  }
 
-    @Test
-    void testPomFileConstant() {
-        assertEquals("pom.xml", MavenConstants.FILE);
-    }
+  @Test
+  void testPomFileConstant() {
+    assertEquals("pom.xml", MavenConstants.FILE);
+  }
 
-    @Test
-    void testDependenciesPatternConstant() {
-        assertEquals("##dependencies##", MavenConstants.DEPENDENCIES_PATTERN);
-    }
+  @Test
+  void testDependenciesPatternConstant() {
+    assertEquals("##dependencies##", MavenConstants.DEPENDENCIES_PATTERN);
+  }
 
-    @Test
-    void testTargetDirectoryConstant() {
-        assertEquals("target", MavenConstants.TARGET);
-    }
+  @Test
+  void testTargetDirectoryConstant() {
+    assertEquals("target", MavenConstants.TARGET);
+  }
 }
 

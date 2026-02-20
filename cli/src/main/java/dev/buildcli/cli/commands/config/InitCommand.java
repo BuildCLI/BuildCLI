@@ -9,14 +9,14 @@ import picocli.CommandLine.ParentCommand;
 
 /**
  * Command to initialize a new configuration setup for BuildCLI.
- *
+ * <p>
  * This command creates an empty configuration, setting it as local or global based on user preferences.
- *
+ * <p>
  * Usage Examples:
- *   - Initialize a local configuration:
- *       {@code buildcli config init}
- *   - Initialize a global configuration:
- *       {@code buildcli config -g init}
+ * - Initialize a local configuration:
+ * {@code buildcli config init}
+ * - Initialize a global configuration:
+ * {@code buildcli config -g init}
  */
 @Command(name = "init", aliases = {"i", "create"}, description = "Initializes a new configuration context for BuildCLI.", mixinStandardHelpOptions = true)
 public class InitCommand implements BuildCLICommand {

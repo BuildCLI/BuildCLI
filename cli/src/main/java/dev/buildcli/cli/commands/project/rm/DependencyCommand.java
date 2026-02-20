@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 import java.util.stream.Stream;
 
 @Command(name = "dependency", aliases = {"d"}, description = "Removes one or more dependencies from the project's "
-        + "pom.xml file.", mixinStandardHelpOptions = true)
+    + "pom.xml file.", mixinStandardHelpOptions = true)
 public class DependencyCommand implements BuildCLICommand {
   private final Logger logger = Logger.getLogger(DependencyCommand.class.getName());
   @Parameters

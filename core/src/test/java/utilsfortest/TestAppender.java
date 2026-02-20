@@ -5,17 +5,17 @@ import ch.qos.logback.core.read.ListAppender;
 
 public class TestAppender extends ListAppender<ILoggingEvent> {
 
-    public TestAppender() {
-        super();
-    }
+  public TestAppender() {
+    super();
+  }
 
-    @Override
-    public void start() {
-        super.start();
-    }
+  @Override
+  public void start() {
+    super.start();
+  }
 
-    @Override
-    public void stop() {
-        super.stop();
-    }
+  @Override
+  public void stop() {
+    super.stop();
+  }
 }

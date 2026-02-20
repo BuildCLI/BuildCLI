@@ -17,14 +17,14 @@ import static dev.buildcli.core.utils.config.ConfigContextLoader.getLocalConfig;
 
 /**
  * Command to remove configuration properties from BuildCLI.
- *
+ * <p>
  * Allows users to delete specific configuration keys from local or global configuration files.
- *
+ * <p>
  * Usage Examples:
- *   - Remove a local configuration key:
- *       {@code buildcli config remove key}
- *   - Remove a global configuration key:
- *       {@code buildcli config remove -g key}
+ * - Remove a local configuration key:
+ * {@code buildcli config remove key}
+ * - Remove a global configuration key:
+ * {@code buildcli config remove -g key}
  */
 @Command(name = "remove", aliases = {"rm", "r"}, description = "Removes specified configuration properties from BuildCLI.", mixinStandardHelpOptions = true)
 public class RmCommand implements BuildCLICommand {

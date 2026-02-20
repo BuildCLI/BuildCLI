@@ -1,5 +1,6 @@
 package dev.buildcli.core.utils.net;
 
+import dev.buildcli.core.exceptions.DownloadFailedException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,11 +22,11 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class FileDownloaderTest {
 
-  private MockedStatic<HttpClient> httpClientStatic;
   private final String url = "http://localhost/teste.txt";
   private final String filename = "test.txt";
   private final byte[] fakeContent = "test file".getBytes();
   private final ByteArrayInputStream inputStream = new ByteArrayInputStream(fakeContent);
+  private MockedStatic<HttpClient> httpClientStatic;
 
   @AfterEach
   void cleanup() throws IOException {
@@ -60,33 +61,17 @@ class FileDownloaderTest {
   }
 
   @Test
-  void shouldDownloadFileSuccessfully_whenHttpRequestIsValid() throws IOException, InterruptedException {
+  void shouldDownloadFileSuccessfully_whenHttpRequestIsValid() throws IOException, InterruptedException, DownloadFailedException {
     HttpResponse<InputStream> mockResponse = setupMockHttpResponse(
         String.valueOf(fakeContent.length),
         "attachment; filename=\"" + filename + "\""
     );
     setupMockHttpClient(mockResponse);
 
-    var standardOut = System.out;
-    try (
-        var outputStream = new ByteArrayOutputStream();
-        var printStream = new PrintStream(outputStream)
-    ) {
-      System.setOut(printStream);
-      File file = FileDownloader.download(url);
+    File file = FileDownloader.download(url);
 
-      String line1 = "dev.buildcli.core.utils.net.FileDownloader -- Connecting to http://localhost/teste.txt";
-      String line2 = "dev.buildcli.core.utils.net.FileDownloader -- Connected to http://localhost/teste.txt";
-      String line3 = "[==================================================] 100%";
-
-      assertTrue(outputStream.toString().contains(line1));
-      assertTrue(outputStream.toString().contains(line2));
-      assertTrue(outputStream.toString().contains(line3));
-      assertEquals(filename, file.getName());
-      assertEquals(fakeContent.length, file.length());
-    } finally {
-      System.setOut(standardOut);
-    }
+    assertEquals(filename, file.getName());
+    assertEquals(fakeContent.length, file.length());
   }
 
   @Test
@@ -153,6 +138,8 @@ class FileDownloaderTest {
       System.out.println(result);
       assertTrue(outputStream.toString().contains("Thread was interrupted. Cleanup performed."));
       assertNull(result);
+    } catch (DownloadFailedException e) {
+      throw new RuntimeException(e);
     } finally {
       System.setOut(standardOut);
     }

@@ -23,7 +23,7 @@ import picocli.CommandLine.Option;
     subcommands = {
         AvailableCommand.class, SetCommand.class, ClearCommand.class,
         InitCommand.class, ListCommand.class, RmCommand.class
-})
+    })
 public class ConfigCommand {
 
   /**

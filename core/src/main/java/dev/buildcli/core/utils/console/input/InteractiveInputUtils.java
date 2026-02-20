@@ -20,8 +20,6 @@ public abstract class InteractiveInputUtils {
   private static final Terminal terminal;
   private static final LineReader reader;
 
-  private InteractiveInputUtils() {}
-
   static {
     try {
       terminal = TerminalBuilder.builder()
@@ -41,6 +39,9 @@ public abstract class InteractiveInputUtils {
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
+  }
+
+  private InteractiveInputUtils() {
   }
 
   public static boolean confirm(String message, List<String> yesOptions, List<String> noOptions, Boolean defaultValue) {
@@ -101,7 +102,7 @@ public abstract class InteractiveInputUtils {
   }
 
   public static boolean confirm(String message) {
-    return confirm(message, of("yes","y"), of("no", "n"), null);
+    return confirm(message, of("yes", "y"), of("no", "n"), null);
   }
 
   /**
@@ -119,36 +120,49 @@ public abstract class InteractiveInputUtils {
       throw new IllegalArgumentException("Options list cannot be empty");
     }
 
-    // Define the display function, using the provided formatter or defaulting to Object::toString
     Function<T, String> display = formatter != null ? formatter : Object::toString;
     int selectedIndex = 0;
     int startIndex = 0;
     int maxVisibleOptions = Math.min(options.size(), 10);
+    int visibleLines = 0;
 
-    boolean first = true;
+    // Initial display
+    println(prompt);
+    println("(Use arrow keys ↑↓ to navigate, Enter to select, Ctrl+C to cancel)");
 
     while (true) {
-      if (!first) {
-        // Clear the previous display area
-        clearLines(maxVisibleOptions + 4);
+      // Clear only the options area
+      if (visibleLines > 0) {
+        clearLines(visibleLines);
       }
 
-      // Display the prompt and initial instructions
-      println(prompt);
-      println("(Use arrow keys ↑↓ to navigate, Enter to select, Ctrl+C to cancel)");
+      // Track number of lines we're displaying
+      visibleLines = 0;
 
-      first = false;
+      // Render visible options
+      for (int i = startIndex; i < Math.min(startIndex + maxVisibleOptions, options.size()); i++) {
+        T option = options.get(i);
+        String prefix = (i == selectedIndex) ? "› " : "  ";
+        var item = BeautifyShell.content(prefix + display.apply(option));
 
-      // Render the currently visible options
-      renderOptions(options, display, selectedIndex, startIndex, maxVisibleOptions);
+        if (i == selectedIndex) {
+          item.blueFg().underline();
+        }
 
-      // Display scroll indicators if needed
+        println(item);
+        visibleLines++;
+      }
+
+      // Show scroll indicators if needed
       if (startIndex > 0) {
-        print("↑ more options above\r");
+        print("↑ more options above");
+        println();
+        visibleLines++;
       }
       if (startIndex + maxVisibleOptions < options.size()) {
+        print("↓ more options below");
         println();
-        print("↓ more options below\r");
+        visibleLines++;
       }
 
       try {
@@ -171,19 +185,20 @@ public abstract class InteractiveInputUtils {
             }
             break;
           case ENTER:
-            clearLines(maxVisibleOptions + 4);
+            // Clear only the options area before returning
+            clearLines(visibleLines + 2);
             return options.get(selectedIndex);
           case CTRL_C:
-            clearLines(maxVisibleOptions + 4);
+            // Clear only the options area before canceling
+            clearLines(visibleLines);
             println("Operation canceled");
             return null;
           default:
-            System.out.println(key);
             // Ignore other keys
             break;
         }
       } catch (UserInterruptException | IOException e) {
-        clearLines(maxVisibleOptions + 4);
+        clearLines(visibleLines);
         println("Operation canceled");
         return null;
       }
@@ -315,7 +330,7 @@ public abstract class InteractiveInputUtils {
 
       // Display the prompt and instructions
       println(prompt);
-      println("(Use arrow keys ↑↓ to navigate, Space to select/deselect, Enter to confirm, Ctrl+C to cancel)");
+      println("(Use arrow keys ↑↓ to navigate, Space to select/deselect, 'a' to select all, 'd' to deselect all, Enter to confirm, Ctrl+C to cancel)");
 
       first = false;
 
@@ -415,9 +430,9 @@ public abstract class InteractiveInputUtils {
   /**
    * Displays an interactive terminal checklist for selecting multiple options.
    *
-   * @param prompt    The prompt to display to the user.
-   * @param options   The list of available options.
-   * @param <T>       The type of the options.
+   * @param prompt  The prompt to display to the user.
+   * @param options The list of available options.
+   * @param <T>     The type of the options.
    * @return The list of selected options or empty list if none selected/canceled.
    */
   public static <T> List<T> checklist(String prompt, List<T> options) {

@@ -7,7 +7,8 @@ public final class ThreadPoolUtils {
   private static ExecutorService fixedInstance;
   private static ExecutorService virtualInstance;
 
-  private ThreadPoolUtils() {}
+  private ThreadPoolUtils() {
+  }
 
   public static ExecutorService fixed(int numThreads) {
     if (numThreads <= 0 && fixedInstance == null) {

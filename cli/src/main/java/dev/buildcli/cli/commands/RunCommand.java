@@ -1,12 +1,12 @@
 package dev.buildcli.cli.commands;
 
+import dev.buildcli.cli.commands.run.DockerfileCommand;
 import dev.buildcli.cli.commands.run.OrchestrationCommand;
 import dev.buildcli.cli.commands.run.OrchestrationDownCommand;
 import dev.buildcli.cli.commands.run.OrchestrationUpCommand;
 import dev.buildcli.core.actions.commandline.CommandLineProcess;
 import dev.buildcli.core.actions.commandline.JavaProcess;
 import dev.buildcli.core.actions.commandline.MavenProcess;
-import dev.buildcli.cli.commands.run.DockerfileCommand;
 import dev.buildcli.core.domain.BuildCLICommand;
 import dev.buildcli.core.utils.ProfileManager;
 import picocli.CommandLine.Command;
@@ -23,10 +23,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @Command(name = "run",
-        description = "Executes the project with the active properties file.",
-        subcommands = {DockerfileCommand.class, OrchestrationCommand.class, OrchestrationDownCommand.class,
-                       OrchestrationUpCommand.class},
-        mixinStandardHelpOptions = true)
+    description = "Executes the project with the active properties file.",
+    subcommands = {DockerfileCommand.class, OrchestrationCommand.class, OrchestrationDownCommand.class,
+        OrchestrationUpCommand.class},
+    mixinStandardHelpOptions = true)
 public class RunCommand implements BuildCLICommand {
   private final Logger logger = Logger.getLogger(RunCommand.class.getName());
   private final ProfileManager profileManager = new ProfileManager();

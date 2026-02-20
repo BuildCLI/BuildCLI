@@ -14,6 +14,11 @@ import picocli.CommandLine.Command;
 )
 public class FixCommand implements BuildCLICommand {
   private final Logger logger = LoggerFactory.getLogger("DoctorFixCommand");
+
+  private static boolean isNotInstalled(ToolChecker checker) {
+    return !checker.isInstalled();
+  }
+
   @Override
   public void run() {
     logger.warn("Fix command requires admin privileges.");
@@ -30,9 +35,5 @@ public class FixCommand implements BuildCLICommand {
       logger.info("Fixing {}...", checker.name());
       checker.fixIssue();
     });
-  }
-
-  private static boolean isNotInstalled(ToolChecker checker) {
-    return !checker.isInstalled();
   }
 }

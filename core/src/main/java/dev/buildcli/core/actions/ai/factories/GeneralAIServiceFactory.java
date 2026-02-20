@@ -12,6 +12,7 @@ public class GeneralAIServiceFactory implements AIServiceFactory {
 
     AIServiceFactory factory = switch (params.vendor().toLowerCase()) {
       case "ollama" -> new OllamaAIServiceFactory();
+      case "gemini" -> new GeminiAIServiceFactory();
       default -> new JLamaAIServiceFactory();
     };
 

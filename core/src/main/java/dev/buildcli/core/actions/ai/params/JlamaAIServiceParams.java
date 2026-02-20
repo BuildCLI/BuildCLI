@@ -2,18 +2,19 @@ package dev.buildcli.core.actions.ai.params;
 
 import dev.buildcli.core.actions.ai.AIServiceParams;
 
+import java.util.Objects;
 import java.util.Optional;
 
 public class JlamaAIServiceParams implements AIServiceParams {
   private final String model;
 
   public JlamaAIServiceParams(String model) {
-    this.model = model;
+    this.model = Objects.requireNonNull(model);
   }
 
   @Override
   public Optional<String> model() {
-    return Optional.ofNullable(model);
+    return Optional.of(model);
   }
 
   @Override

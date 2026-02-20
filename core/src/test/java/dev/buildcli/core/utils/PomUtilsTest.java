@@ -1,10 +1,17 @@
 package dev.buildcli.core.utils;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class PomUtilsTest {
 
@@ -12,7 +19,7 @@ class PomUtilsTest {
 	void shouldRemoveExistingDependency() {
 		var groupId = "info.picocli";
 		var artifactId = "picocli";
-		var changedPom = PomUtils.rmDependencyToPom("src/test/resources/pom-utils-test/pom.xml",
+		var changedPom = PomUtils.rmDependencyToPom("src/test/resources/pom-utils-test/pom.xml", 
 				new String[]{ groupId.concat(":").concat(artifactId) });
 		assertFalse(changedPom.hasDependency(groupId, artifactId));
 		assertFalse(changedPom.hasDependency("org.junit", "junit-bom"));

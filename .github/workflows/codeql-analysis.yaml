@@ -2,9 +2,9 @@ name: CI Workflow
 
 on:
   push:
-    branches: [main, develop]
+    branches: [ main, develop ]
   pull_request:
-    branches: [main, develop]
+    branches: [ main, develop ]
 
 jobs:
   maven-build:
@@ -18,8 +18,8 @@ jobs:
       - name: Set up JDK 21
         uses: actions/setup-java@c5195efecf7bdfc987ee8bae7a71cb8b11521c00 # v4.7.1
         with:
-           distribution: 'temurin'
-           java-version: 21
+          distribution: 'temurin'
+          java-version: 21
 
       - name: Cache Maven dependencies
         uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
@@ -42,7 +42,7 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@28deaeda66b76a05916b6923827895f2b14ab387 # v3.28.16
+        uses: github/codeql-action/init@ce28f5bb42b7a9f2c824e633a3f6ee835bab6858 # v3.29.0
         with:
           languages: java
 
@@ -50,4 +50,4 @@ jobs:
         run: mvn clean compile --no-transfer-progress
 
       - name: Analyze Code
-        uses: github/codeql-action/analyze@28deaeda66b76a05916b6923827895f2b14ab387 # v3.28.16
+        uses: github/codeql-action/analyze@ce28f5bb42b7a9f2c824e633a3f6ee835bab6858 # v3.29.0
