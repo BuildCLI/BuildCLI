@@ -9,7 +9,8 @@ import java.util.logging.Logger;
 public class EnvironmentConfigManager {
 
   private static final Logger logger = Logger.getLogger(EnvironmentConfigManager.class.getName());
-  private static final Path configPath = Path.of("environment.config");
+  private static final Path DEFAULT_CONFIG_PATH = Path.of("environment.config");
+  private static Path configPath = DEFAULT_CONFIG_PATH;
 
   /**
    * Gets the current environment configuration.
@@ -46,5 +47,9 @@ public class EnvironmentConfigManager {
       logger.severe("Failed to set environment: " + e.getMessage());
       System.err.println("Error: Could not set environment.");
     }
+  }
+
+  static void setConfigPathForTest(Path path) {
+    configPath = path;
   }
 }
