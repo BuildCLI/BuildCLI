@@ -19,6 +19,7 @@ public class DependencyTest {
 
   }
 
+  @Test
   void testConstructorWith3Args() {
     String groupId = "com.example";
     String artifactId = "my-lib";
@@ -73,5 +74,10 @@ public class DependencyTest {
     Assertions.assertEquals("war", dependency.getType());
     Assertions.assertEquals("test", dependency.getScope());
     Assertions.assertEquals("false", dependency.getOptional());
+  }
+
+  @Test
+  void testXmlWrapperElement() {
+    Assertions.assertEquals("dependencies", Dependency.XML_WRAPPER_ELEMENT);
   }
 }
