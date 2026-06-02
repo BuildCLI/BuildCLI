@@ -9,9 +9,16 @@ import java.io.StringWriter;
 
 public class TestUtils {
 
+  /**
+   * Executes a picocli command and captures its output streams.
+   *
+   * @param cliClass the command class
+   * @param args the command arguments
+   * @return the command result
+   */
   public static CommandResult executeCommand(
-      Class<?> cliClass,
-      String... args
+      final Class<?> cliClass,
+      final String... args
   ) {
     var cmd = new CommandLine(cliClass);
     var outSw = new StringWriter();
@@ -39,7 +46,18 @@ public class TestUtils {
     public final String output;
     public final String error;
 
-    public CommandResult(int exitCode, String output, String error) {
+    /**
+     * Creates a command result.
+     *
+     * @param exitCode the command exit code
+     * @param output the captured standard output
+     * @param error the captured error output
+     */
+    public CommandResult(
+        final int exitCode,
+        final String output,
+        final String error
+    ) {
       this.exitCode = exitCode;
       this.output = output;
       this.error = error;
