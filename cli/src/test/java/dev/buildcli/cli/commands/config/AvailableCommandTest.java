@@ -1,10 +1,15 @@
 package dev.buildcli.cli.commands.config;
 
 import dev.buildcli.cli.CommandLineRunner;
+import dev.buildcli.cli.BuildCLI;
 import dev.buildcli.cli.utils.CommandUtils;
+import dev.buildcli.cli.utilsfortest.ConfigKeys;
+import dev.buildcli.cli.utilsfortest.TestUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import picocli.CommandLine;
 
 import java.io.PrintWriter;
@@ -32,19 +37,7 @@ class AvailableCommandTest {
   void shouldFail_whenRunInvalidCommands(String command) {
     var result = TestUtils.executeCommand(CommandLineRunner.class, "config", command);
 
-    var sw = new StringWriter();
-    cmd.setOut(new PrintWriter(sw));
-
-    int exitCode = cmd.execute("config", "a");
-
-    Assertions.assertEquals(0, exitCode);
-    /*Assertions.assertTrue(sw.toString().contains("buildcli.logging.banner.enabled"));
-    Assertions.assertTrue(sw.toString().contains("buildcli.logging.banner.path"));
-    Assertions.assertTrue(sw.toString().contains("buildcli.ai.vendor"));
-    Assertions.assertTrue(sw.toString().contains("buildcli.ai.model"));
-    Assertions.assertTrue(sw.toString().contains("buildcli.ai.url"));
-    Assertions.assertTrue(sw.toString().contains("buildcli.ai.token"));
-    Assertions.assertTrue(sw.toString().contains("buildcli.plugins.paths"));*/
+    Assertions.assertEquals(2, result.exitCode);
   }
 
   @Test

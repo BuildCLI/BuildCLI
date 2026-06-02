@@ -4,6 +4,7 @@ import dev.buildcli.cli.utils.CommandUtils;
 import dev.buildcli.core.domain.BuildCLICommand;
 import dev.buildcli.core.domain.configs.BuildCLIConfig;
 import dev.buildcli.core.domain.jar.Jar;
+import dev.buildcli.core.exceptions.DownloadFailedException;
 import dev.buildcli.core.utils.ProjectUtils;
 import dev.buildcli.core.utils.config.ConfigContextLoader;
 import dev.buildcli.core.utils.filesystem.FindFilesUtils;
@@ -83,7 +84,12 @@ public class AddCommand implements BuildCLICommand {
   }
 
   private void processRemoteJar(String jarUrl) throws IOException {
-    File downloadedFile = FileDownloader.download(jarUrl);
+    File downloadedFile;
+    try {
+      downloadedFile = FileDownloader.download(jarUrl);
+    } catch (DownloadFailedException e) {
+      throw new IOException("Failed to download plugin jar: " + jarUrl, e);
+    }
 
     if (isValidJarFile(downloadedFile)) {
       Jar jar = new Jar(downloadedFile);

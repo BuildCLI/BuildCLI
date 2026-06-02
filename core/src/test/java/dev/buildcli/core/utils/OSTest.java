@@ -12,6 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -20,7 +21,7 @@ import static org.mockito.Mockito.*;
 
 class OSTest {
 
-  private static final String OS_NAME = System.getProperty("os.name").toLowerCase();
+  private static final String OS_NAME = System.getProperty("os.name");
   private Path tempDir;
   private Path secondTempDir;
   private RuntimeCommandExecutor mockRuntimeCommandExecutor;
@@ -35,6 +36,7 @@ class OSTest {
 
   @AfterEach
   void cleanup() throws IOException {
+    System.setProperty("os.name", OS_NAME);
     Files.walk(tempDir)
         .sorted(Comparator.reverseOrder())
         .forEach(p -> {
@@ -50,7 +52,7 @@ class OSTest {
 
   @Test
   void shouldDetectKnownOperatingSystem_whenGetOSNameIsCalled() {
-    String osName = OS.getOSName();
+    String osName = OS.getOSName().toLowerCase(Locale.ROOT);
     List<String> expectedOS = List.of("linux", "nix", "nux", "aix", "win", "mac");
     boolean matchesOS = expectedOS.stream()
         .anyMatch(osName::contains);

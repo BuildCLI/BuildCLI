@@ -1,27 +1,31 @@
 package dev.buildcli.core.utils;
 
+import java.util.Locale;
 import java.util.logging.Logger;
 
 public abstract class OS {
   private static final Logger logger = Logger.getLogger(OS.class.getName());
   private OS() {}
 
-  private static final String OS = System.getProperty("os.name").toLowerCase();
-
   public static boolean isWindows() {
-    return OS.contains("win");
+    return normalizedOSName().contains("win");
   }
 
   public static boolean isMac() {
-    return OS.contains("mac");
+    return normalizedOSName().contains("mac");
   }
 
   public static boolean isLinux() {
-    return OS.contains("linux") || OS.contains("nix") || OS.contains("nux") || OS.contains("aix");
+    String os = normalizedOSName();
+    return os.contains("linux") || os.contains("nix") || os.contains("nux") || os.contains("aix");
   }
 
   public static String getOSName() {
     return System.getProperty("os.name");
+  }
+
+  private static String normalizedOSName() {
+    return System.getProperty("os.name").toLowerCase(Locale.ROOT);
   }
 
   public static String getArchitecture() {

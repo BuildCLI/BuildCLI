@@ -80,7 +80,7 @@ class FileDownloaderTest {
     when(mockResponse.statusCode()).thenReturn(404);
     setupMockHttpClient(mockResponse);
 
-    Exception ex = assertThrows(RuntimeException.class, () -> FileDownloader.download(url));
+    DownloadFailedException ex = assertThrows(DownloadFailedException.class, () -> FileDownloader.download(url));
     assertTrue(ex.getMessage().contains("Failed to download file: 404"));
   }
 
@@ -90,7 +90,7 @@ class FileDownloaderTest {
     HttpResponse<InputStream> mockResponse = setupMockHttpResponse("0", "attachment; filename=\"" + filename + "\"");
     setupMockHttpClient(mockResponse);
 
-    Exception ex = assertThrows(RuntimeException.class, () -> FileDownloader.download(url));
+    DownloadFailedException ex = assertThrows(DownloadFailedException.class, () -> FileDownloader.download(url));
     assertTrue(ex.getMessage().contains("Failed to download maven artifact: 200"));
   }
 
@@ -103,8 +103,8 @@ class FileDownloaderTest {
     );
     setupMockHttpClient(mockResponse);
 
-    Exception ex = assertThrows(RuntimeException.class, () -> FileDownloader.download(url));
-    assertTrue(ex.toString().contains("Failed to download file: 200"));
+    DownloadFailedException ex = assertThrows(DownloadFailedException.class, () -> FileDownloader.download(url));
+    assertTrue(ex.getMessage().contains("Failed to download file: 200"));
   }
 
   @MockitoSettings(strictness = Strictness.LENIENT)
@@ -116,32 +116,22 @@ class FileDownloaderTest {
     );
     setupMockHttpClient(mockResponse);
 
-    Exception ex = assertThrows(RuntimeException.class, () -> FileDownloader.download(url));
-    assertTrue(ex.toString().contains("Failed to download file: 200"));
+    DownloadFailedException ex = assertThrows(DownloadFailedException.class, () -> FileDownloader.download(url));
+    assertTrue(ex.getMessage().contains("Failed to download file: 200"));
   }
 
   @Test
-  void shouldThrowException_whenHttpRequestTimesOut() throws IOException, InterruptedException {
+  void shouldThrowException_whenHttpRequestIsInterrupted() throws IOException, InterruptedException {
     HttpClient mockClient = mock(HttpClient.class);
     when(mockClient.send(any(HttpRequest.class), any(HttpResponse.BodyHandler.class)))
-        .thenThrow(new InterruptedException());
+        .thenThrow(new InterruptedException("request interrupted"));
 
-    var standardOut = System.out;
-    try (
-        MockedStatic<HttpClient> httpClient = mockStatic(HttpClient.class);
-        var outputStream = new ByteArrayOutputStream();
-        var printStream = new PrintStream(outputStream);
-    ) {
-      System.setOut(printStream);
+    try (MockedStatic<HttpClient> httpClient = mockStatic(HttpClient.class)) {
       httpClient.when(HttpClient::newHttpClient).thenReturn(mockClient);
-      File result = FileDownloader.download(url);
-      System.out.println(result);
-      assertTrue(outputStream.toString().contains("Thread was interrupted. Cleanup performed."));
-      assertNull(result);
-    } catch (DownloadFailedException e) {
-      throw new RuntimeException(e);
-    } finally {
-      System.setOut(standardOut);
+
+      DownloadFailedException ex = assertThrows(DownloadFailedException.class, () -> FileDownloader.download(url));
+
+      assertEquals("request interrupted", ex.getMessage());
     }
   }
 }

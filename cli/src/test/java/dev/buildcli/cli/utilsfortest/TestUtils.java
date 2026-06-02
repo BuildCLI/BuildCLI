@@ -2,7 +2,9 @@ package dev.buildcli.cli.utilsfortest;
 
 import picocli.CommandLine;
 
+import java.io.ByteArrayOutputStream;
 import java.io.PrintWriter;
+import java.io.PrintStream;
 import java.io.StringWriter;
 
 public class TestUtils {
@@ -11,11 +13,18 @@ public class TestUtils {
     var cmd = new CommandLine(cliClass);
     var outSw = new StringWriter();
     var errSw = new StringWriter();
+    var systemOut = new ByteArrayOutputStream();
+    PrintStream originalOut = System.out;
 
     cmd.setOut(new PrintWriter(outSw));
     cmd.setErr(new PrintWriter(errSw));
-    int exitCode = cmd.execute(args);
-    return new CommandResult(exitCode, outSw.toString(), errSw.toString());
+    try {
+      System.setOut(new PrintStream(systemOut));
+      int exitCode = cmd.execute(args);
+      return new CommandResult(exitCode, outSw.toString() + systemOut.toString(), errSw.toString());
+    } finally {
+      System.setOut(originalOut);
+    }
   }
 
   public static class CommandResult {
