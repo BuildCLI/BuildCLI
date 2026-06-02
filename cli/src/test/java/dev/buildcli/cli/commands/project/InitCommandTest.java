@@ -25,31 +25,49 @@ class InitCommandTest {
     @Test
     void executeCreatesCorrectly(@TempDir Path tempDir) throws IOException {
         
-        // Create mocks
-        MockedStatic<Paths> mockPaths = mockStatic(Paths.class);
-        MockedStatic<InteractiveInputUtils> mockInputUtils = mockStatic(InteractiveInputUtils.class);
-        mockPaths.when(() -> Paths.get("")).thenReturn(tempDir);
-        mockInputUtils.when(() -> InteractiveInputUtils.question("Enter base-package")).thenReturn("TestBasePackage");
-        
+        try (
+            MockedStatic<Paths> mockPaths = mockStatic(Paths.class);
+            MockedStatic<InteractiveInputUtils> mockInputUtils =
+                mockStatic(InteractiveInputUtils.class)
+        ) {
+            mockPaths.when(() -> Paths.get("")).thenReturn(tempDir);
+            mockInputUtils
+                .when(() -> InteractiveInputUtils.question(
+                    "Enter base-package"
+                ))
+                .thenReturn("TestBasePackage");
 
-        // Setup
-        File expectedDir = tempDir.resolve("TestRootDir").toFile();
-        String[] expectedFiles = { "pom.xml", "README.md" };
-        String[] expectedDirs = { "src/main/java/TestBasePackage", "src/main/resources", "src/test/java/TestBasePackage" };
-       
-        // Run init
-        InitCommand initCommand = new InitCommand();
-        new CommandLine(initCommand).execute("-n", "TestRootDir", "-j", "17");
-        
-        // Assertions
-        assertTrue(expectedDir.exists() && expectedDir.isDirectory());
-        for (String FileName : expectedFiles) {
-            File file = new File(expectedDir, FileName);
-            assertTrue(file.exists() && file.isFile(), "File " + FileName + " was not created.");
-        }
-        for (String DirName : expectedDirs) {
-            File file = new File(DirName);
-            assertTrue(file.exists() && file.isDirectory(), "Directory " + DirName + " was not created");
+            File expectedDir = tempDir.resolve("TestRootDir").toFile();
+            String[] expectedFiles = {"pom.xml", "README.md"};
+            String[] expectedDirs = {
+                "src/main/java/TestBasePackage",
+                "src/main/resources",
+                "src/test/java/TestBasePackage"
+            };
+
+            InitCommand initCommand = new InitCommand();
+            new CommandLine(initCommand).execute(
+                "-n",
+                "TestRootDir",
+                "-j",
+                "17"
+            );
+
+            assertTrue(expectedDir.exists() && expectedDir.isDirectory());
+            for (String fileName : expectedFiles) {
+                File file = new File(expectedDir, fileName);
+                assertTrue(
+                    file.exists() && file.isFile(),
+                    "File " + fileName + " was not created."
+                );
+            }
+            for (String dirName : expectedDirs) {
+                File file = new File(expectedDir, dirName);
+                assertTrue(
+                    file.exists() && file.isDirectory(),
+                    "Directory " + dirName + " was not created"
+                );
+            }
         }
     }
 }
