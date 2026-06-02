@@ -6,15 +6,18 @@ import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.logging.Logger;
 
-public class EnvironmentConfigManager {
+public final class EnvironmentConfigManager {
 
   /** Logger for environment configuration operations. */
-  private static final Logger logger =
+  private static final Logger LOGGER =
       Logger.getLogger(EnvironmentConfigManager.class.getName());
   /** Default environment configuration file path. */
   private static final Path DEFAULT_CONFIG_PATH = Path.of("environment.config");
   /** Active environment configuration file path. */
   private static Path configPath = DEFAULT_CONFIG_PATH;
+
+  private EnvironmentConfigManager() {
+  }
 
   /**
    * Gets the current environment configuration.
@@ -27,11 +30,11 @@ public class EnvironmentConfigManager {
       if (content.startsWith("active.profile=")) {
         return content.split("=")[1]; // Extrai o valor do perfil ativo
       } else {
-        logger.warning("Environment configuration is in an unexpected format.");
+        LOGGER.warning("Environment configuration is in an unexpected format.");
         return null;
       }
     } catch (IOException e) {
-      logger.warning("No environment configuration found.");
+      LOGGER.warning("No environment configuration found.");
       return null;
     }
   }
@@ -41,14 +44,19 @@ public class EnvironmentConfigManager {
    *
    * @param environment the environment to set (e.g., dev, test, prod)
    */
-  public static void setEnvironment(String environment) {
+  public static void setEnvironment(final String environment) {
     try {
-      String content = "active.profile=" + environment; // Formata a string no formato chave-valor
-      Files.writeString(configPath, content, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
-      logger.info("Environment set to: " + environment);
+      String content = "active.profile=" + environment;
+      Files.writeString(
+          configPath,
+          content,
+          StandardOpenOption.CREATE,
+          StandardOpenOption.TRUNCATE_EXISTING
+      );
+      LOGGER.info("Environment set to: " + environment);
       System.out.println("Environment set to: " + environment);
     } catch (IOException e) {
-      logger.severe("Failed to set environment: " + e.getMessage());
+      LOGGER.severe("Failed to set environment: " + e.getMessage());
       System.err.println("Error: Could not set environment.");
     }
   }

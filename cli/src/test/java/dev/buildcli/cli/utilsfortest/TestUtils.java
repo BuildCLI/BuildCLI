@@ -9,7 +9,10 @@ import java.io.StringWriter;
 
 public class TestUtils {
 
-  public static CommandResult executeCommand(Class<?> cliClass, String... args) {
+  public static CommandResult executeCommand(
+      Class<?> cliClass,
+      String... args
+  ) {
     var cmd = new CommandLine(cliClass);
     var outSw = new StringWriter();
     var errSw = new StringWriter();
@@ -21,7 +24,11 @@ public class TestUtils {
     try {
       System.setOut(new PrintStream(systemOut));
       int exitCode = cmd.execute(args);
-      return new CommandResult(exitCode, outSw.toString() + systemOut.toString(), errSw.toString());
+      return new CommandResult(
+          exitCode,
+          outSw.toString() + systemOut.toString(),
+          errSw.toString()
+      );
     } finally {
       System.setOut(originalOut);
     }
