@@ -17,7 +17,10 @@ public abstract class OS {
 
   public static boolean isLinux() {
     String os = normalizedOSName();
-    return os.contains("linux") || os.contains("nix") || os.contains("nux") || os.contains("aix");
+    return os.contains("linux")
+        || os.contains("nix")
+        || os.contains("nux")
+        || os.contains("aix");
   }
 
   public static String getOSName() {

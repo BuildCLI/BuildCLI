@@ -8,8 +8,12 @@ import java.util.logging.Logger;
 
 public class EnvironmentConfigManager {
 
-  private static final Logger logger = Logger.getLogger(EnvironmentConfigManager.class.getName());
+  /** Logger for environment configuration operations. */
+  private static final Logger logger =
+      Logger.getLogger(EnvironmentConfigManager.class.getName());
+  /** Default environment configuration file path. */
   private static final Path DEFAULT_CONFIG_PATH = Path.of("environment.config");
+  /** Active environment configuration file path. */
   private static Path configPath = DEFAULT_CONFIG_PATH;
 
   /**
@@ -49,7 +53,7 @@ public class EnvironmentConfigManager {
     }
   }
 
-  static void setConfigPathForTest(Path path) {
+  static void setConfigPathForTest(final Path path) {
     configPath = path;
   }
 }

@@ -21,6 +21,7 @@ import static org.mockito.Mockito.*;
 
 class OSTest {
 
+  /** Original operating system name. */
   private static final String OS_NAME = System.getProperty("os.name");
   private Path tempDir;
   private Path secondTempDir;
