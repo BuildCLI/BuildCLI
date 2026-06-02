@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public final class EnvironmentConfigManager {
@@ -53,10 +54,13 @@ public final class EnvironmentConfigManager {
           StandardOpenOption.CREATE,
           StandardOpenOption.TRUNCATE_EXISTING
       );
-      LOGGER.info("Environment set to: " + environment);
+      LOGGER.log(Level.INFO, "Environment set to: {0}", environment);
       System.out.println("Environment set to: " + environment);
     } catch (IOException e) {
-      LOGGER.severe("Failed to set environment: " + e.getMessage());
+      LOGGER.log(
+          Level.SEVERE,
+          "Failed to set environment: {0}",
+          e.getMessage());
       System.err.println("Error: Could not set environment.");
     }
   }
