@@ -48,7 +48,7 @@ class InitCommandTest {
             assertTrue(file.exists() && file.isFile(), "File " + FileName + " was not created.");
         }
         for (String DirName : expectedDirs) {
-            File file = new File(DirName);
+            File file = new File(expectedDir, DirName);
             assertTrue(file.exists() && file.isDirectory(), "Directory " + DirName + " was not created");
         }
     }

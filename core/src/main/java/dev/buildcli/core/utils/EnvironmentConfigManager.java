@@ -9,7 +9,11 @@ import java.util.logging.Logger;
 public class EnvironmentConfigManager {
 
   private static final Logger logger = Logger.getLogger(EnvironmentConfigManager.class.getName());
-  private static final Path configPath = Path.of("environment.config");
+  private static Path configPath = Path.of("environment.config");
+
+  static void setConfigPathForTest(Path path) {
+    configPath = path;
+  }
 
   /**
    * Gets the current environment configuration.

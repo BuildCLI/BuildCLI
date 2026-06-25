@@ -29,8 +29,8 @@ public abstract class AbstractLangchain4jAIService implements AIService {
     memory.add(systemMessage);
     memory.add(userMessage);
 
-    var aiMessageResponse = model.chat(memory.messages());
-    var response = aiMessageResponse.aiMessage();
+    var aiMessageResponse = model.generate(memory.messages());
+    var response = aiMessageResponse.content();
 
     memory.add(response);
 

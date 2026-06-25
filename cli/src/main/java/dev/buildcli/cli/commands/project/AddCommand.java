@@ -1,8 +1,8 @@
 package dev.buildcli.cli.commands.project;
 
 
-import dev.buildcli.cli.commands.ops.add.PipelineCommand;
 import dev.buildcli.cli.commands.project.add.DependencyCommand;
+import dev.buildcli.cli.commands.project.add.PipelineCommand;
 import dev.buildcli.cli.commands.project.add.ProfileCommand;
 import picocli.CommandLine.Command;
 
