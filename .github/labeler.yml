@@ -1,88 +1,59 @@
-# Apply the "bug" label if the issue contains the word "bug" or comes from a bug report template.
-# Also applies if the PR affects bug-related files or paths.
+# actions/labeler v5 configuration. The action labels pull requests from
+# changed files and branch names; issue title/body matching is intentionally
+# omitted because it is not supported by actions/labeler v5.
+
 bug:
-  - title: '/(?i)\bbug\b|fix|hotfix/'
-  - body: '/(?i)\bbug\b|fix|hotfix/'
+  - head-branch: ['bug', 'fix', 'hotfix']
   - changed-files:
-      any-glob-to-any-file:
-        - 'fix/**'
-        - '**/*.bug'
-        - 'hotfix/**'
+      - any-glob-to-any-file: ['fix/**', 'hotfix/**', '**/*.bug']
 
-# Apply the "feature" label if the issue mentions "feature" or is a feature request.
-# Also applies if the PR affects feature-related files.
 feature:
-  - title: '/(?i)\bfeature\b|feature request|feat/'
-  - body: '/(?i)\bfeature\b|feature request|feat/'
+  - head-branch: ['^feature', 'feature', 'feat']
   - changed-files:
-      any-glob-to-any-file:
-        - 'feat/**'
-        - '**/*.feature'
+      - any-glob-to-any-file: ['feat/**', '**/*.feature']
 
-# Apply the "documentation" label if the issue mentions "documentation"
-# or if the PR modifies markdown documentation files.
 documentation:
-  - title: '/(?i)\bdocumentation\b|docs?/'
-  - body: '/(?i)\bdocumentation\b|docs?/'
   - changed-files:
-      any-glob-to-any-file:
-        - 'docs/**'
-        - '**/*.md'
-        - 'README.md'
-        - 'CONTRIBUTING.md'
+      - any-glob-to-any-file: ['docs/**', '**/*.md', 'README.md', 'CONTRIBUTING.md']
 
-# Apply the "security" label if the issue contains "security" or "vulnerability."
-# Also applies if the issue references a CVE or exploit.
 security:
-  - title: '/(?i)\bsecurity\b|vulnerability|exploit|CVE-\d{4}-\d+/'
-  - body: '/(?i)\bsecurity\b|vulnerability|exploit|CVE-\d{4}-\d+/'
+  - head-branch: ['security', 'vulnerability', 'CVE-[0-9]{4}-[0-9]+']
 
-# Apply the "good first issue" label if the issue is marked as a beginner-friendly task.
-"good first issue":
-  - title: '/(?i)good first issue|beginner|starter|easy/'
-  - body: '/(?i)good first issue|beginner|starter|easy/'
-
-# Apply the "high priority" label if the issue is urgent or critical.
-"high priority":
-  - title: '/(?i)high priority|urgent|critical|blocker|must[- ]fix/'
-  - body: '/(?i)high priority|urgent|critical|blocker|must[- ]fix/'
-
-# Apply the "low priority" label if the issue is minor or not urgent.
-"low priority":
-  - title: '/(?i)low priority|minor|non-urgent|nice to have/'
-  - body: '/(?i)low priority|minor|non-urgent|nice to have/'
-
-# Apply the "dependencies" label if the PR modifies dependency files.
 dependencies:
   - changed-files:
-      any-glob-to-any-file:
-        - 'package.json'
-        - 'package-lock.json'
-        - 'requirements.txt'
+      - any-glob-to-any-file:
+          - 'pom.xml'
+          - '**/pom.xml'
+          - 'package.json'
+          - 'package-lock.json'
+          - 'requirements.txt'
 
-# Apply the "tests" label if the PR modifies test-related files or mentions testing.
 tests:
-  - title: '/(?i)\btests?\b|unit test|integration test/'
-  - body: '/(?i)\btests?\b|unit test|integration test/'
+  - head-branch: ['test', 'tests']
   - changed-files:
-      any-glob-to-any-file:
-        - 'tests/**'
-        - '**/*.test.*'
+      - any-glob-to-any-file:
+          - 'tests/**'
+          - '**/src/test/**'
+          - '**/*Test.java'
+          - '**/*.test.*'
 
-# Apply the "ci/cd" label if the PR modifies GitHub Actions, CI/CD, or related workflows.
-"ci/cd":
+ci/cd:
   - changed-files:
-      any-glob-to-any-file:
-        - '.github/workflows/**'
-        - '.gitlab-ci.yml'
-        - 'Jenkinsfile'
+      - any-glob-to-any-file:
+          - '.github/workflows/**'
+          - '.gitlab-ci.yml'
+          - 'Jenkinsfile'
 
-# Apply the "refactor" label if the PR is focused on code improvements without functional changes.
 refactor:
-  - title: '/(?i)\brefactor\b|code improvement|cleanup/'
-  - body: '/(?i)\brefactor\b|code improvement|cleanup/'
+  - head-branch: ['refactor', 'cleanup']
 
-# Apply the "ui/ux" label if the PR involves UI, frontend, or design changes.
-"ui/ux":
-  - title: '/(?i)\bui\b|\bux\b|frontend|design|css|user experience/'
-  - body: '/(?i)\bui\b|\bux\b|frontend|design|css|user experience/'
+ui/ux:
+  - head-branch: ['ui', 'ux', 'frontend', 'design']
+  - changed-files:
+      - any-glob-to-any-file:
+          - '**/*.css'
+          - '**/*.scss'
+          - '**/*.js'
+          - '**/*.ts'
+          - '**/*.jsx'
+          - '**/*.tsx'
