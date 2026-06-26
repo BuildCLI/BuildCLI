@@ -5,6 +5,8 @@ on:
     branches: [main, develop]
   pull_request:
     branches: [main, develop]
+    paths-ignore:
+      - '.github/**'
 
 permissions:
   contents: read
