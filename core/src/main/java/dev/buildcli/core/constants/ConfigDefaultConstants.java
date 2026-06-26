@@ -2,6 +2,7 @@ package dev.buildcli.core.constants;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import java.io.PrintWriter;
 
 import java.nio.file.Path;
 import java.util.Map;
@@ -62,11 +63,12 @@ public abstract class ConfigDefaultConstants {
     return builder.toString();
   }
 
-  public static void listAll() {
-    System.out.println("List of all configs:");
+  public static void listAll(PrintWriter out) {
+    log.info("List of all configs:");
     for (var entry : configs.entrySet()) {
       var line = content(entry.getKey()).blueFg().bold() + " - " + italic(entry.getValue());
-      System.out.println("  " + line);
+      out.println("  " + line);
+      log.info("  {}", line);
     }
   }
 }
