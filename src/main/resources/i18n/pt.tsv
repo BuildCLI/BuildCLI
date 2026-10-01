@@ -1,0 +1,588 @@
+# English<TAB>Portuguese. \n is a line break; {0}, {1}... are filled in.
+built in · creates and manages your agents	integrado · cria e gere os teus agentes
+only you can read this · no agent sees it	só tu lês isto · nenhum agente vê
+private chat between agents · you can read it, not write in it	chat privado entre agentes · podes ler, não escrever
+You (notes)	Tu (notas)
+{0} is typing…	{0} está a escrever…
+typing…	a escrever…
+{0} is {1}…	{0} está {1}…
+busy in the {0} chat	ocupado no chat {0}
+{0} agents and you	{0} agentes e tu
+Draft:	Rascunho:
+more	mais
+{0} queued	{0} em espera
+{0} tokens	{0} tokens
+{0} is in no chat	{0} não está em nenhum chat
+{0} are in no chat	{0} não estão em nenhum chat
+loaded and idle · click to add	carregado e parado · clica para adicionar
+Start a chat with {0}	Iniciar um chat com {0}
+Search chats	Procurar chats
+creates and manages agents	cria e gere agentes
+Photo	Foto
+Audio	Áudio
+Yesterday	Ontem
+thinking	a pensar
+working	a trabalhar
+waiting for you	à tua espera
+idle	parado
+typing	a escrever
+needs you	precisa de ti
+reading	a ler
+waiting for {0}	à espera de {0}
+waiting for the workspace	à espera do espaço de trabalho
+None of your agents has a model yet. Connect one to start chatting; it takes a minute.	Nenhum dos teus agentes tem modelo ainda. Liga um para começares a conversar; leva um minuto.
+Could not copy: no clipboard tool found (install xclip, xsel or wl-copy)	Não consegui copiar: não encontrei ferramenta de área de transferência (instala xclip, xsel ou wl-copy)
+Copied 1 line	Copiada 1 linha
+Copied {0} lines	Copiadas {0} linhas
+no model: type /connect	sem modelo: escreve /connect
+Welcome	Bem-vindo
+working…	a trabalhar…
+{0} is {1}	{0} está {1}
+busy in the {0} chat · will read your messages after	ocupado no chat {0} · lê as tuas mensagens depois
+you	tu
+click for group info	clica para ver o grupo
+create an agent to start	cria um agente para começar
+online	online
+Help	Ajuda
+Tasks	Tarefas
+Changes	Alterações
+Stop	Parar
+manual	manual
+edits	edições
+auto	automático
+no matches	sem resultados
+{0} of {1}	{0} de {1}
+↑ older  ↓ newer  Esc close ✕	↑ antigas  ↓ novas  Esc fecha ✕
+Find in this chat:	Procurar neste chat:
+type to search	escreve para procurar
+Nothing to copy yet	Ainda não há nada para copiar
+These changes were not kept, so they cannot be shown.	Estas alterações não foram guardadas, por isso não se podem mostrar.
+Undo {0}'s changes?	Desfazer as alterações de {0}?
+{0}'s changes	Alterações de {0}
+No changes to undo in this chat.	Não há alterações para desfazer neste chat.
+Undo is not available here.	Desfazer não está disponível aqui.
+Added {0}. Say something in the group to start.	Adicionei {0}. Diz algo no grupo para começar.
+Could not add them: {0}	Não consegui adicioná-los: {0}
+Ask AgentFather: /newagent, /agents, /editagent, /help	Pergunta ao AgentFather: /newagent, /agents, /editagent, /help
+Read only: ask one of them, in their own chat, to write to the other	Só de leitura: pede a um deles, no chat dele, para escrever ao outro
+A note to yourself: no agent reads it	Uma nota para ti: nenhum agente a lê
+Type a message (it waits its turn)	Escreve uma mensagem (espera pela vez)
+Type a message	Escreve uma mensagem
+General	Geral
+Appearance	Aparência
+Models	Modelos
+Providers	Fornecedores
+Agents	Agentes
+About you	Sobre ti
+Project settings win over the ones for all projects. Press S or click the switch above to change.	As definições do projeto sobrepõem-se às de todos os projetos. Prime S ou clica no seletor acima para mudar.
+default	predefinido
+not set	não definido
+Set {0}.	Definido {0}.
+Enter to choose a model · Del to go back to the default	Enter escolhe um modelo · Del volta ao predefinido
+Model for {0}	Modelo de {0}
+no key needed	não precisa de chave
+no key yet	ainda sem chave
+key saved	chave guardada
+key from {0}	chave de {0}
+Enter to add your key	Enter para pôr a tua chave
+Enter to test	Enter para testar
+Del to remove	Del remove
+Remove provider {0}?	Remover o fornecedor {0}?
+Removed {0}	Removido {0}
+Enter to view · Del to delete	Enter abre · Del apaga
+Delete agent {0}? This deletes {1}	Apagar o agente {0}? Isto apaga {1}
+Deleted {0}; it left every group.	{0} apagado; saiu de todos os grupos.
+this project	este projeto
+all projects	todos os projetos
+Del to reset	Del repõe
+A whole number, please	Um número inteiro, por favor
+for this project	para este projeto
+for all projects	para todos os projetos
+Changes are now saved {0}	As alterações são agora guardadas {0}
+Reset {0}	Reposto {0}
+Saved {0}	Guardado {0}
+Failed	Falhou
+New provider: name (1/3)	Novo fornecedor: nome (1/3)
+lowercase, used as name:model	minúsculas, usado como nome:modelo
+URL of {0} (2/3)	URL de {0} (2/3)
+e.g. http://gpu-box:8000/v1	ex.: http://gpu-box:8000/v1
+Environment variable with the key (3/3)	Variável de ambiente com a chave (3/3)
+leave empty if it needs none; you can also type the key in /connect	deixa vazio se não precisar; também podes escrever a chave em /connect
+Added {0}	Adicionado {0}
+Added {0}. Set {1} or type the key in /connect.	Adicionado {0}. Define {1} ou escreve a chave em /connect.
+New agent: name (1/4)	Novo agente: nome (1/4)
+lowercase letters, digits, - and _	letras minúsculas, dígitos, - e _
+Role of {0} (2/4)	Papel de {0} (2/4)
+e.g. writer, researcher, reviewer	ex.: redator, investigador, revisor
+What {0} may do (3/4)	O que {0} pode fazer (3/4)
+How {0} should work (4/4)	Como {0} deve trabalhar (4/4)
+one sentence; edit the file later for more	uma frase; edita o ficheiro depois para mais
+Created {0}. You can chat with {1} now.	Criado {0}. Já podes falar com {1}.
+Added {0} and a group for them.	Adicionei {0} e um grupo para eles.
+Test {0}	Testar {0}
+provider:model to send a one-word request to	fornecedor:modelo a quem enviar um pedido de uma palavra
+Testing {0}…	A testar {0}…
+This project	Este projeto
+All projects	Todos os projetos
+{0}–{1} of {2}	{0}–{1} de {2}
+↑↓ choose · Enter change · ←→ switch · Del reset · Tab section · S scope · Esc close	↑↓ escolhe · Enter altera · ←→ muda · Del repõe · Tab secção · S âmbito · Esc fecha
+Theme	Tema
+Colours of the chat	Cores do chat
+Show agent activity	Mostrar a atividade dos agentes
+Small lines like 'bruno wrote out/a.txt'	Linhas pequenas como 'bruno escreveu out/a.txt'
+Compact messages	Mensagens compactas
+Less space between messages	Menos espaço entre mensagens
+Enter sends	Enter envia
+Off: Enter adds a new line and Ctrl+Enter or Alt+Enter sends	Desligado: Enter muda de linha e Ctrl+Enter ou Alt+Enter envia
+Mouse	Rato
+Click and scroll with the mouse (takes effect on the next start)	Clicar e fazer scroll com o rato (aplica-se no próximo arranque)
+Sound when an agent needs you	Som quando um agente precisa de ti
+Rings the terminal bell (many terminals flash the taskbar) when an agent asks for approval, and when a job of 15 seconds or more ends	Toca a campainha do terminal (muitos piscam a barra de tarefas) quando um agente pede aprovação e quando um trabalho de 15 segundos ou mais acaba
+Agent-to-agent messages	Mensagens entre agentes
+How many messages agents may send each other before they pause and wait for you	Quantas mensagens os agentes podem trocar entre si antes de pararem à tua espera
+State database	Base de dados de estado
+Language	Idioma
+What BuildCLI's screens are written in: auto (your computer's language), en or pt. The agents answer in the language you write in	A língua dos ecrãs do BuildCLI: auto (a do teu computador), en ou pt. Os agentes respondem na língua em que escreves
+Approval mode	Modo de aprovação
+manual: ask before every write, command and commit. edits: write files without asking (you can undo), still ask for commands. auto: ask for nothing; use it where nothing can be lost. Applies at once; you can also change it while chatting with Shift+Tab or /mode	manual: pergunta antes de cada escrita, comando e commit. edits: escreve ficheiros sem perguntar (podes desfazer), continua a perguntar pelos comandos. auto: não pergunta nada; usa onde nada se possa perder. Aplica-se logo; também podes mudar durante a conversa com Shift+Tab ou /mode
+Your name	O teu nome
+What the agents call you. Empty: they just say 'you'	Como os agentes te chamam. Vazio: dizem só 'tu'
+What the agents should know about you and your work: who you are, what you do, what you care about. Kept on this computer; agents see it in every conversation	O que os agentes devem saber sobre ti e o teu trabalho: quem és, o que fazes, o que te importa. Fica neste computador; os agentes veem em todas as conversas
+How to deal with you	Como lidar contigo
+How you like to be talked to and helped: short or detailed, formal or casual, your language, whether to ask before acting	Como gostas de ser tratado e ajudado: curto ou detalhado, formal ou informal, a tua língua, se perguntam antes de agir
+Default model	Modelo predefinido
+Used by agents that have no model of their own, e.g. openrouter:openrouter/free	Usado pelos agentes que não têm modelo próprio, ex.: openrouter:openrouter/free
+TODAY	HOJE
+YESTERDAY	ONTEM
+Review	Rever
+undone	desfeito
+Undo	Desfazer
+No agents yet	Ainda sem agentes
+Agents are the people you chat with: each has a role and a model, and does only what you allow.	Os agentes são as pessoas com quem falas: cada um tem um papel e um modelo, e só faz o que permites.
+Add a ready-made team: software, writing or office	Adicionar uma equipa pronta: software, escrita ou escritório
+Create your own agent	Criar o teu próprio agente
+Talk to AgentFather: it creates agents for you	Falar com o AgentFather: cria agentes por ti
+Connect a model and provider	Ligar um modelo e um fornecedor
+The sample teams are only a start: you can change them, or make your own. Every write asks you first, and you can undo it.	As equipas de exemplo são só um começo: podes mudá-las ou criar as tuas. Cada escrita pergunta-te primeiro, e podes desfazê-la.
+Notes to yourself	Notas para ti
+Nothing here yet	Ainda nada aqui
+Write anything you want to keep. Only you can read this chat: no agent sees it.	Escreve o que quiseres guardar. Só tu lês este chat: nenhum agente o vê.
+Agents write here when you ask one of them to write to the other. You can read it, but not write in it.	Os agentes escrevem aqui quando pedes a um deles para escrever ao outro. Podes ler, mas não escrever.
+Start a conversation with {0}	Começa uma conversa com {0}
+No admin yet. Type @ to talk to someone, or mention two people to ask both.	Ainda sem administrador. Escreve @ para falar com alguém, ou menciona duas pessoas para perguntar a ambas.
+{0} (admin) answers messages that mention nobody. Type @ to talk to someone, or mention two people to ask both.	{0} (admin) responde às mensagens que não mencionam ninguém. Escreve @ para falar com alguém, ou menciona duas pessoas para perguntar a ambas.
+{0}. Messages here go straight to {1}.	{0}. As mensagens aqui vão direitas a {1}.
+Review my uncommitted changes	Rever as minhas alterações por commitar
+Review my uncommitted changes and point out risks.	Revê as minhas alterações por commitar e aponta os riscos.
+Explain this project	Explicar este projeto
+Explain how this project is organised and where to start.	Explica como este projeto está organizado e por onde começar.
+Add missing tests	Acrescentar testes em falta
+Find important code without tests and add unit tests for it.	Encontra código importante sem testes e acrescenta testes unitários.
+Show my changes	Mostrar as minhas alterações
+What can you do?	O que sabes fazer?
+What can you do for me here, with your tools and permissions?	O que podes fazer por mim aqui, com as tuas ferramentas e permissões?
+Look at my changes	Ver as minhas alterações
+Look at my uncommitted changes and tell me what you think.	Vê as minhas alterações por commitar e diz-me o que achas.
+Summarize what is in this folder	Resumir o que está nesta pasta
+Look at the files in this folder and summarize what each one is about.	Vê os ficheiros desta pasta e resume do que trata cada um.
+Draft a document from my notes	Escrever um documento a partir das minhas notas
+Read my notes in this folder and draft a clear document from them.	Lê as minhas notas nesta pasta e escreve um documento claro com elas.
+Find mistakes and unclear parts	Encontrar erros e partes confusas
+Read the documents in this folder and point out mistakes and unclear parts.	Lê os documentos desta pasta e aponta erros e partes confusas.
+Plan next steps	Planear os próximos passos
+Read what is in this folder and propose a short list of next steps.	Lê o que está nesta pasta e propõe uma lista curta de próximos passos.
+Summarize this folder	Resumir esta pasta
+{0} asks for approval	{0} pede aprovação
+… {0} more lines	… mais {0} linhas
+Approve	Aprovar
+Always here	Sempre aqui
+A: {0}. Until you close BuildCLI; /revoke takes it back.	A: {0}. Até fechares o BuildCLI; /revoke retira.
+Deny	Recusar
+{0} asks you	{0} pergunta-te
+Something else…	Outra coisa…
+↑↓ or a number to choose · Enter confirms · Esc skips	↑↓ ou um número escolhe · Enter confirma · Esc salta
+Type your answer below · Enter sends · Esc goes back	Escreve a resposta abaixo · Enter envia · Esc volta
+Type your answer below · Enter sends · Esc skips	Escreve a resposta abaixo · Enter envia · Esc salta
+{0} is stuck (task #{1})	{0} está encravado (tarefa #{1})
+It failed after the automatic retries: {0}	Falhou depois das tentativas automáticas: {0}
+Retry	Repetir
+Skip task	Saltar tarefa
+Stop everything	Parar tudo
+{0} chat	chat {0}
+1 of {0}	1 de {0}
+Commands	Comandos
+Mention an agent	Mencionar um agente
+↑↓ choose · Tab fills · Enter runs	↑↓ escolhe · Tab preenche · Enter executa
+↑↓ choose · Tab or Enter completes	↑↓ escolhe · Tab ou Enter completa
+{0} matches	{0} resultados
+not in this group	não está neste grupo
+admin	admin
+You	Tu
+{0} could not be deleted: a message still being answered, or a card of changed files.	{0} não puderam ser apagadas: uma mensagem ainda a ser respondida, ou um cartão de ficheiros alterados.
+Forwarded from {0}:	Reencaminhado de {0}:
+Forward to… click a chat in the list · Esc cancels	Reencaminhar para… clica num chat da lista · Esc cancela
+Delete 1 message? The agents forget it too.	Apagar 1 mensagem? Os agentes esquecem-na também.
+Delete {0} messages? The agents forget them too.	Apagar {0} mensagens? Os agentes esquecem-nas também.
+{0} selected	{0} selecionadas
+Delete	Apagar
+Cancel	Cancelar
+Copy	Copiar
+Forward	Reencaminhar
+What your agents know about you (on this computer only):	O que os teus agentes sabem sobre ti (só neste computador):
+name: {0}	nome: {0}
+about you: {0}	sobre ti: {0}
+how to deal with you: {0}	como lidar contigo: {0}
+(not set)	(não definido)
+/me name <your name> · /me about <text> · /me style <text>; leave the text empty to clear one.	/me name <o teu nome> · /me about <texto> · /me style <texto>; deixa o texto vazio para apagar um.
+Cleared.	Apagado.
+Saved. Your agents will use it from their next message.	Guardado. Os teus agentes usam-no a partir da próxima mensagem.
+Open a group first: context belongs to a group.	Abre primeiro um grupo: o contexto pertence a um grupo.
+No context for {0} yet. /context <text> sets it; /context attach <file> adds a file. The agents of the group read it before they answer.	{0} ainda não tem contexto. /context <texto> define-o; /context attach <ficheiro> junta um ficheiro. Os agentes do grupo leem-no antes de responder.
+Context of {0}: {1}	Contexto de {0}: {1}
+(no text)	(sem texto)
+Files: {0}	Ficheiros: {0}
+Context of {0} cleared.	Contexto de {0} apagado.
+There is no file {0}.	Não existe o ficheiro {0}.
+{0} added to the context of {1}. Only text files are read, up to {2} KB of text and 20 KB per file.	{0} adicionado ao contexto de {1}. Só se leem ficheiros de texto, até {2} KB de texto e 20 KB por ficheiro.
+{0} removed from the context of {1}.	{0} removido do contexto de {1}.
+No attached file called {0}. /context lists them.	Não há ficheiro anexado chamado {0}. /context lista-os.
+Context of {0} set. Its agents read it before they answer.	Contexto de {0} definido. Os agentes leem-no antes de responder.
+Mode: {0}, {1}.	Modo: {0}, {1}.
+Mode: {0}, {1}. /mode manual, /mode edits or /mode auto changes it.	Modo: {0}, {1}. /mode manual, /mode edits ou /mode auto muda-o.
+No staged changes.	Sem alterações em stage.
+No changes.	Sem alterações.
+No files changed by agents in this chat yet.	Os agentes ainda não alteraram ficheiros neste chat.
+There is no mode '{0}'. Use manual, edits or auto.	Não existe o modo '{0}'. Usa manual, edits ou auto.
+Nothing is approved automatically in this chat.	Nada é aprovado automaticamente neste chat.
+Asking again from now on. Was allowed: {0}.	A perguntar de novo a partir de agora. Estava permitido: {0}.
+Nothing to retry.	Nada para repetir.
+No messages are waiting.	Não há mensagens à espera.
+{0} message(s) waiting their turn.	{0} mensagem(ns) à espera da vez.
+Open a group first: this is a direct chat.	Abre primeiro um grupo: isto é um chat direto.
+This deletes the {0} message(s) of {1}, also from the saved history. Type /clear again to confirm.	Isto apaga as {0} mensagem(ns) de {1}, também do histórico guardado. Escreve /clear outra vez para confirmar.
+{0} can contact {1}.	{0} pode contactar {1}.
+{0} can no longer contact {1}.	{0} já não pode contactar {1}.
+Every agent can contact every other.	Todos os agentes podem contactar-se.
+Cannot contact: {0}.	Não podem contactar: {0}.
+Change it with /reach @bruno @ana off (or on).	Muda com /reach @bruno @ana off (ou on).
+No tasks yet. Each message becomes a task; a handoff becomes a child task.	Ainda sem tarefas. Cada mensagem vira uma tarefa; um handoff vira uma tarefa filha.
+attempt {0}	tentativa {0}
+Talk to your agents like in a chat. Press Enter to send; you can keep typing while they work,	Fala com os teus agentes como num chat. Enter envia; podes continuar a escrever enquanto trabalham,
+messages wait their turn. @name sends a message straight to one agent.	as mensagens esperam a vez. @nome envia direto a um agente.
+Commands (type / to see the menu)	Comandos (escreve / para ver o menu)
+Keys	Teclas
+Enter send · Shift+Enter, Alt+Enter, Ctrl+J or a trailing \ new line · ↑ previous message	Enter envia · Shift+Enter, Alt+Enter, Ctrl+J ou \ no fim, nova linha · ↑ mensagem anterior
+PgUp/PgDn or the mouse wheel scroll · Esc jump to the latest · Ctrl+W delete word · Ctrl+U clear	PgUp/PgDn ou roda do rato fazem scroll · Esc vai à última · Ctrl+W apaga palavra · Ctrl+U limpa
+Ctrl+F find in this chat (↑ older, ↓ newer, Esc close) · Ctrl+K search your chats and agents · /copy copies the last code block	Ctrl+F procura neste chat (↑ antigas, ↓ novas, Esc fecha) · Ctrl+K procura chats e agentes · /copy copia o último bloco de código
+Shift+Tab changes the mode (manual, edits, auto) · Alt+M marks the newest message, then C copy, F forward, D delete	Shift+Tab muda o modo (manual, edits, auto) · Alt+M marca a última mensagem, depois C copia, F reencaminha, D apaga
+Mouse	Rato
+Click agents to mention them, menu items, buttons, ⧉ copy on a code block and the ✕ on attachments.	Clica nos agentes para os mencionar, nos itens do menu, botões, ⧉ para copiar um bloco de código e no ✕ dos anexos.
+Right-click a message to mark it. Drag the scrollbar. To select text for copying, hold Shift (Option on macOS) while dragging.	Clica com o botão direito numa mensagem para a marcar. Arrasta a barra de scroll. Para selecionar texto e copiar, mantém Shift (Option no macOS) ao arrastar.
+Attachments	Anexos
+Drop or paste the path of an image (png, jpg, gif, webp) or audio file (wav, mp3, m4a, ogg, flac),	Larga ou cola o caminho de uma imagem (png, jpg, gif, webp) ou áudio (wav, mp3, m4a, ogg, flac),
+or use /attach <file>. The model must support images or audio for it to be understood.	ou usa /attach <ficheiro>. O modelo tem de suportar imagens ou áudio para o perceber.
+asks before every write, command and commit	pergunta antes de cada escrita, comando e commit
+writes files without asking (undo is one click away); commands and commits still ask	escreve ficheiros sem perguntar (desfazer é um clique); comandos e commits continuam a perguntar
+writes, runs commands and commits without asking: use it where nothing can be lost	escreve, corre comandos e faz commits sem perguntar: usa onde nada se possa perder
+Show uncommitted changes (git diff)	Mostra alterações por commitar (git diff)
+Show git status	Mostra o estado do git
+Show recent commits	Mostra os commits recentes
+Open a file in the viewer	Abre um ficheiro no visualizador
+Attach an image or audio file (or paste its path)	Anexa uma imagem ou áudio (ou cola o caminho)
+Show what the agents are doing: tasks and handoffs	Mostra o que os agentes estão a fazer: tarefas e handoffs
+Stop the work in this chat	Para o trabalho deste chat
+Send the last failed message again	Envia outra vez a última mensagem falhada
+Copy the last code block (or the whole last answer)	Copia o último bloco de código (ou a última resposta toda)
+Search this chat	Procura neste chat
+Search your chats and agents by name, role or what was said	Procura chats e agentes por nome, papel ou o que foi dito
+See the files agents changed in this chat	Vê os ficheiros que os agentes alteraram neste chat
+Put back the files an agent changed last (shows them first)	Repõe os ficheiros que um agente alterou por último (mostra-os primeiro)
+Background for this group's agents: a text and files (optional)	Contexto para os agentes deste grupo: um texto e ficheiros (opcional)
+Tell the agents who you are and how to deal with you (stays on this computer)	Diz aos agentes quem és e como lidar contigo (fica neste computador)
+How much agents may do before asking you (Shift+Tab cycles it)	O quanto os agentes podem fazer antes de perguntar (Shift+Tab alterna)
+Stop approving automatically in this chat (shows what was allowed)	Deixa de aprovar automaticamente neste chat (mostra o que estava permitido)
+Show or drop messages waiting their turn	Mostra ou descarta mensagens à espera da vez
+Providers, models, agents, theme and more	Fornecedores, modelos, agentes, tema e mais
+Connect a provider and choose the default model	Liga um fornecedor e escolhe o modelo predefinido
+Show the models, or change the default (or one agent's) model	Mostra os modelos, ou muda o modelo predefinido (ou o de um agente)
+Show or set which agents may contact each other	Mostra ou define que agentes podem contactar-se
+Open a direct chat with an agent	Abre um chat direto com um agente
+Create a group with some agents	Cria um grupo com alguns agentes
+Add an agent to this group	Adiciona um agente a este grupo
+Remove an agent from this group	Remove um agente deste grupo
+Make an agent admin of this group	Faz de um agente admin deste grupo
+Dismiss an admin of this group	Retira o admin a alguém deste grupo
+Rename this group	Muda o nome deste grupo
+Group or contact info	Informação do grupo ou do contacto
+Show or hide the chat list	Mostra ou esconde a lista de chats
+Delete this chat's messages (asks you to confirm)	Apaga as mensagens deste chat (pede confirmação)
+Keys, commands and tips	Teclas, comandos e dicas
+Leave BuildCLI	Sair do BuildCLI
+read the files in this folder	ler os ficheiros desta pasta
+create and change files (you approve each write)	criar e alterar ficheiros (aprovas cada escrita)
+search the files	procurar nos ficheiros
+read git status, log and diffs	ler o estado, o histórico e as diferenças do git
+commit to git (you approve)	fazer commits no git (aprovas)
+run commands, such as tests (you approve)	correr comandos, como testes (aprovas)
+ask other agents for help	pedir ajuda a outros agentes
+write in a group or to an agent when you ask	escrever num grupo ou a um agente quando pedes
+Hi, I'm AgentFather. I create and manage your agents. I am not a model, so I work even before you have connected one.\n/newagent creates an agent, step by step\n/agents lists them\n/editagent <name> changes one\n/deleteagent <name> deletes one\n/samples adds a ready-made team (software, writing or office)\n/connect picks a provider and a model\n/help shows everything.	Olá, sou o AgentFather. Crio e giro os teus agentes. Não sou um modelo, por isso funciono mesmo antes de ligares um.\n/newagent cria um agente, passo a passo\n/agents lista-os\n/editagent <nome> muda um\n/deleteagent <nome> apaga um\n/samples junta uma equipa pronta (software, escrita ou escritório)\n/connect escolhe um fornecedor e um modelo\n/help mostra tudo.
+Okay, nothing was changed.	Está bem, nada foi alterado.
+I only follow commands: /newagent, /agents, /editagent, /deleteagent, /samples, /help. Type / to see them.	Só sigo comandos: /newagent, /agents, /editagent, /deleteagent, /samples, /help. Escreve / para os veres.
+Which agent? For example /deleteagent rita	Qual agente? Por exemplo /deleteagent rita
+There is no agent called {0}. /agents lists them.	Não existe nenhum agente chamado {0}. /agents lista-os.
+Delete {0}? This removes its file, and it leaves its groups; what it already said stays in the chats.\nReply yes or no.	Apagar {0}? Isto remove o ficheiro dele e ele sai dos grupos; o que já disse fica nos chats.\nResponde sim ou não.
+/newagent [name]: create an agent, step by step\n/agents: list your agents\n/editagent <name>: change an agent\n/deleteagent <name>: delete one\n/samples [team]: add a ready-made team (software, writing or office)\n/cancel: stop what we were doing · /back: go back one question\nOther commands work here too: /connect, /model, /newgroup, /add, /settings.	/newagent [nome]: criar um agente, passo a passo\n/agents: listar os teus agentes\n/editagent <nome>: mudar um agente\n/deleteagent <nome>: apagar um\n/samples [equipa]: juntar uma equipa pronta (software, escrita ou escritório)\n/cancel: parar o que estávamos a fazer · /back: voltar uma pergunta\nOutros comandos também funcionam aqui: /connect, /model, /newgroup, /add, /settings.
+I don't know /{0}. Type / to see what I understand.	Não conheço /{0}. Escreve / para ver o que entendo.
+You have no agents yet. /newagent creates one, /samples adds a ready-made team to start with.	Ainda não tens agentes. /newagent cria um, /samples junta uma equipa pronta para começar.
+1 agent:	1 agente:
+{0} agents:	{0} agentes:
+no model yet (/connect)	ainda sem modelo (/connect)
+may: {0}	pode: {0}
+Which team do you want? Reply with its name:	Que equipa queres? Responde com o nome:
+They are only starting points: you can change them with /editagent, or make your own with /newagent.	São só pontos de partida: podes mudá-las com /editagent, ou criar as tuas com /newagent.
+Added {0} and a group for them. Open the group and say something to start.	Adicionei {0} e um grupo para eles. Abre o grupo e diz algo para começar.
+I could not add them: {0}	Não consegui adicioná-los: {0}
+What should the new agent be called? Lowercase letters, digits, - and _ (for example rita).	Como se deve chamar o novo agente? Letras minúsculas, dígitos, - e _ (por exemplo rita).
+A name is lowercase letters, digits, - and _, starting with a letter. Try another.	Um nome é feito de letras minúsculas, dígitos, - e _, e começa por uma letra. Tenta outro.
+There is already an agent called {0}. Pick another name.	Já existe um agente chamado {0}. Escolhe outro nome.
+What is {0}'s role? For example writer, researcher, reviewer, analyst. Say skip for assistant.	Qual é o papel de {0}? Por exemplo redator, investigador, revisor, analista. Diz saltar para assistente.
+What may {0} do? Reply with numbers, like 1,3, or default (read files and search).	O que pode {0} fazer? Responde com números, como 1,3, ou predefinido (ler ficheiros e procurar).
+In one sentence, how should {0} work? Or say skip.	Numa frase, como deve {0} trabalhar? Ou diz saltar.
+I will create {0} ({1}) for this project. It may: {2}.	Vou criar {0} ({1}) para este projeto. Pode: {2}.
+It will work like this: {0}	Vai trabalhar assim: {0}
+It starts able to read the whole project, and with no folder to write in and no command allowed; to give it more, use /editagent afterwards. Every write still shows you a diff and asks first.	Começa com acesso de leitura a todo o projeto, sem pasta onde escrever e sem comandos permitidos; para lhe dar mais, usa /editagent depois. Cada escrita continua a mostrar-te as diferenças e a perguntar primeiro.
+Reply yes to create it, back to change something, or cancel.	Responde sim para criar, voltar para mudar algo, ou cancelar.
+I did not understand that. Reply with numbers from the list, like 1,3, or default.	Não percebi. Responde com números da lista, como 1,3, ou predefinido.
+Okay, {0} is unchanged.	Está bem, {0} fica como estava.
+Reply yes to make the change, or no.	Responde sim para fazer a alteração, ou não.
+Okay, {0} stays.	Está bem, {0} fica.
+There is nothing to go back to.	Não há para onde voltar.
+Which agent? For example /editagent rita	Qual agente? Por exemplo /editagent rita
+{0} is not defined by a Markdown file in your project or folder, so I cannot edit it. Change its file by hand.	{0} não é definido por um ficheiro Markdown no teu projeto ou pasta, por isso não o posso editar. Muda o ficheiro dele à mão.
+That agent is gone.	Esse agente já não existe.
+{0} now:	{0} agora:
+role: {0}	papel: {0}
+writes in: {0}	escreve em: {0}
+nowhere	em lado nenhum
+runs without asking: {0}	corre sem perguntar: {0}
+nothing	nada
+What do you want to change?\n 1. role\n 2. what it may do\n 3. how it works\n 4. folders it may write in\n 5. commands it may run without asking\nReply with a number, or done.	O que queres mudar?\n 1. papel\n 2. o que pode fazer\n 3. como trabalha\n 4. pastas onde pode escrever\n 5. comandos que pode correr sem perguntar\nResponde com um número, ou feito.
+Okay, {0} is as you left it.	Está bem, {0} fica como o deixaste.
+Reply with a number from 1 to 5, or done.	Responde com um número de 1 a 5, ou feito.
+The new role for {0}? For example writer, researcher, reviewer.	O novo papel de {0}? Por exemplo redator, investigador, revisor.
+In one sentence or a short paragraph, how should {0} work? This replaces what its file says now.	Numa frase ou num parágrafo curto, como deve {0} trabalhar? Isto substitui o que o ficheiro diz agora.
+Which folders may {0} write in? Patterns inside the project, separated by commas, like `src/**`, `docs/**`. Say none to take writing away. Every write is still shown to you as a diff and needs your yes, and it needs the capability filesystem.write (option 2).	Em que pastas pode {0} escrever? Padrões dentro do projeto, separados por vírgulas, como `src/**`, `docs/**`. Diz nenhum para tirar a escrita. Cada escrita continua a ser-te mostrada como diferenças e precisa do teu sim, e precisa da capacidade filesystem.write (opção 2).
+Which commands may {0} run WITHOUT asking you first? One per command, separated by ;, like mvn -q test; mvn -q verify. Anything else still asks. Say none to take this away. It needs the capability command.execute (option 2).	Que comandos pode {0} correr SEM te perguntar primeiro? Um por comando, separados por ;, como mvn -q test; mvn -q verify. Tudo o resto continua a perguntar. Diz nenhum para tirar isto. Precisa da capacidade command.execute (opção 2).
+Try again, or /back.	Tenta outra vez, ou /back.
+I will change {0}: {1}	Vou mudar {0}: {1}
+Reply yes to do it, or no.	Responde sim para fazer, ou não.
+role -> {0}.	papel -> {0}.
+it may {0}.	pode {0}.
+how it works -> {0}	como trabalha -> {0}
+(the text in its file is replaced; comments in its header are lost.)	(o texto do ficheiro é substituído; os comentários do cabeçalho perdem-se.)
+it may write nowhere.	não pode escrever em lado nenhum.
+it may write in {0}. Each write still needs your yes.	pode escrever em {0}. Cada escrita continua a precisar do teu sim.
+it runs nothing without asking.	não corre nada sem perguntar.
+it runs these WITHOUT asking you: {0}.	corre estes SEM te perguntar: {0}.
+Done.	Feito.
+I could not change it: {0}	Não consegui mudá-lo: {0}
+Created {0}. Its file is {1}.\nSay hello in its chat, or put it in a group with /newgroup <name> @{0}.	Criei {0}. O ficheiro dele é {1}.\nDiz olá no chat dele, ou mete-o num grupo com /newgroup <nome> @{0}.
+I could not create it: {0}	Não consegui criá-lo: {0}
+Deleted {0}.	{0} apagado.
+I could not delete it: {0}	Não consegui apagá-lo: {0}
+Where runs, events and chat history are kept. sqlite: a file, readable from several terminals. h2: a file, several times faster, one BuildCLI at a time. memory: fastest, forgotten when BuildCLI closes. Each keeps its own history (takes effect on the next start; BUILDCLI_STORAGE overrides it)	Onde se guardam execuções, eventos e histórico dos chats. sqlite: um ficheiro, legível a partir de vários terminais. h2: um ficheiro, várias vezes mais rápido, um BuildCLI de cada vez. memory: o mais rápido, esquecido quando o BuildCLI fecha. Cada um guarda o seu histórico (aplica-se no próximo arranque; BUILDCLI_STORAGE sobrepõe-se)
+Create an agent, step by step	Cria um agente, passo a passo
+List your agents with their model and what they may do	Lista os teus agentes com o modelo e o que podem fazer
+Change an agent: role, what it may do, how it works, where it writes	Muda um agente: papel, o que pode fazer, como trabalha, onde escreve
+Delete an agent (asks to confirm)	Apaga um agente (pede confirmação)
+Add a ready-made team: software, writing desk or office assistants	Junta uma equipa pronta: software, escrita ou escritório
+Stop what we were doing	Para o que estávamos a fazer
+Go back one question	Volta uma pergunta
+Enter next · Esc cancel	Enter avança · Esc cancela
+Enter next · Esc back	Enter avança · Esc volta
+↑↓ move · Space tick · Enter next · Esc back	↑↓ move · Espaço marca · Enter avança · Esc volta
+Are you sure?	Tens a certeza?
+Yes	Sim
+No	Não
+Search models, or type provider:model and press Enter	Procura modelos, ou escreve fornecedor:modelo e prime Enter
+Loading models from {0} provider(s)…	A carregar modelos de {0} fornecedor(es)…
+{0} models	{0} modelos
+↑↓ Enter pick · Esc cancel	↑↓ Enter escolhe · Esc cancela
+Type provider:model, e.g. openrouter:openrouter/free	Escreve fornecedor:modelo, ex.: openrouter:openrouter/free
+empty	vazio
+↑↓ PgUp PgDn scroll	↑↓ PgUp PgDn deslizam
+[ ] previous/next file	[ ] ficheiro anterior/seguinte
+Esc close	Esc fecha
+Files you or another agent changed since are left alone.	Os ficheiros que tu ou outro agente alteraram desde então ficam como estão.
+Undo these changes	Desfazer estas alterações
+Paste the key first.	Cola primeiro a chave.
+That does not look like a key: it has spaces or line breaks.	Isso não parece uma chave: tem espaços ou quebras de linha.
+Checking the key with {0}…	A verificar a chave com {0}…
+no answer	sem resposta
+{0} did not accept that key ({1}). Check it and paste it again.	{0} não aceitou essa chave ({1}). Verifica-a e cola outra vez.
+Could not check it: {0}. Press Enter again to save it anyway, or paste a different one.	Não consegui verificá-la: {0}. Prime Enter outra vez para a guardar mesmo assim, ou cola outra.
+Could not save it: {0}	Não consegui guardá-la: {0}
+Your {0} key	A tua chave de {0}
+Create one at {0}	Cria uma em {0}
+Get one from {0}	Obtém uma em {0}
+Paste the key here	Cola a chave aqui
+on this computer	neste computador
+in {0}	em {0}
+It is saved only on this computer, {0}, readable by your account only. It is never put in a project, and it is sent nowhere except to {1} ({2}).	É guardada só neste computador, {0}, legível apenas pela tua conta. Nunca é posta num projeto, e não é enviada para lado nenhum exceto para {1} ({2}).
+You can also set {0} in your environment instead; that always wins over a saved key.	Também podes definir {0} no teu ambiente; isso sobrepõe-se sempre a uma chave guardada.
+needs a key	precisa de chave
+checking…	a verificar…
+Checking {0} …	A verificar {0} …
+not running	não está a correr
+key rejected	chave recusada
+The key comes from the environment variable {0}. Fix it there, or press K to save a different key here (a variable that is set wins, so unset it first).	A chave vem da variável de ambiente {0}. Corrige-a lá, ou prime K para guardar outra chave aqui (uma variável definida tem prioridade, por isso remove-a primeiro).
+Press K to enter a new key.	Prime K para pôr uma chave nova.
+not reachable	inacessível
+key or endpoint failed	a chave ou o endereço falharam
+Check the URL {0}, then press R to check again.	Verifica o endereço {0}, depois prime R para verificar de novo.
+Check the URL {0} and the key (press K to enter a new one), then press R to check again.	Verifica o endereço {0} e a chave (prime K para pôr uma nova), depois prime R para verificar de novo.
+no models yet	ainda sem modelos
+Ollama is running but has no models. Download one in a terminal:	O Ollama está a correr mas não tem modelos. Descarrega um num terminal:
+then press R. Models of 7B or more work much better with tools.	depois prime R. Modelos de 7B ou mais funcionam muito melhor com ferramentas.
+{0} answered but lists no models. Press Enter to type a model name yourself.	{0} respondeu mas não lista modelos. Prime Enter para escreveres o nome de um modelo.
+1 model	1 modelo
+{0} free	{0} grátis
+ready	pronto
+Press Enter to choose a model.	Prime Enter para escolher um modelo.
+Create a key at {0}	Cria uma chave em {0}
+Get a key from the provider	Obtém uma chave no fornecedor
+Press Enter here and paste it. It is saved only on this computer, readable by your account only.	Prime Enter aqui e cola-a. É guardada só neste computador, legível apenas pela tua conta.
+Prefer an environment variable? Set {0} before starting BuildCLI; it always wins over a saved key.	Preferes uma variável de ambiente? Define {0} antes de iniciar o BuildCLI; sobrepõe-se sempre a uma chave guardada.
+Ollama runs models on this machine, free and private.	O Ollama corre modelos neste computador, grátis e em privado.
+Install it from {0}	Instala-o a partir de {0}
+Start it:	Arranca-o:
+Download a model:	Descarrega um modelo:
+Press R to check again.	Prime R para verificar de novo.
+LM Studio runs models on this machine, free and private.	O LM Studio corre modelos neste computador, grátis e em privado.
+Install it from {0} and download a model	Instala-o a partir de {0} e descarrega um modelo
+Start its server: Developer tab › Start server	Arranca o servidor: separador Developer › Start server
+Nothing answers at {0}. Start the server, then press R to check again.	Nada responde em {0}. Arranca o servidor e depois prime R para verificar de novo.
+Key saved. Looking for {0}'s models…	Chave guardada. A procurar os modelos de {0}…
+Forgot the saved key for {0}.	Esqueci a chave guardada de {0}.
+There was no saved key to forget.	Não havia chave guardada para esquecer.
+Could not forget it: {0}	Não consegui esquecê-la: {0}
+Default model: {0}	Modelo predefinido: {0}
+(this project).	(este projeto).
+(all projects).	(todos os projetos).
+{0} keeps its own model (Settings › Models).	{0} mantém o seu próprio modelo (Definições › Modelos).
+{0} keep their own model (Settings › Models).	{0} mantêm o seu próprio modelo (Definições › Modelos).
+Now create an agent: F2 › Agents.	Agora cria um agente: F2 › Agentes.
+Connect a model	Ligar um modelo
+Provider	Fornecedor
+Model	Modelo
+Test	Teste
+Enter save · Ctrl+U clear · Esc back	Enter guarda · Ctrl+U limpa · Esc volta
+↑↓ choose · Enter next · K key · D forget key · R check again · Esc close	↑↓ escolhe · Enter avança · K chave · D esquece chave · R verifica de novo · Esc fecha
+type to search · ↑↓ choose · Enter test it · Esc back	escreve para procurar · ↑↓ escolhe · Enter testa · Esc volta
+P this project · G all projects · B another model · Esc back	P este projeto · G todos os projetos · B outro modelo · Esc volta
+R try again · B another model · Esc back	R tenta de novo · B outro modelo · Esc volta
+Esc back	Esc volta
+Where should your agents' model come from?	De onde deve vir o modelo dos teus agentes?
+on this machine	neste computador
+cloud	na nuvem
+checking	a verificar
+Key: saved by you (K replace · D forget)	Chave: guardada por ti (K substitui · D esquece)
+Key: from the environment variable {0} (K saves a different one)	Chave: da variável de ambiente {0} (K guarda outra)
+Add your key	Pôr a tua chave
+Choose a model	Escolher um modelo
+Check again	Verificar de novo
+Which {0} model?	Que modelo de {0}?
+Search, or type a model name and press Enter	Procura, ou escreve o nome de um modelo e prime Enter
+no tools	sem ferramentas
+No models listed.	Sem modelos listados.
+No match: Enter tests {0}:{1}	Sem resultados: Enter testa {0}:{1}
+{0} models · models marked "no tools" can chat but cannot read or edit files	{0} modelos · os marcados "sem ferramentas" conversam mas não leem nem editam ficheiros
+Testing {0}	A testar {0}
+Sending a one-word message… {0} s	A enviar uma mensagem de uma palavra… {0} s
+Free and local models can take a while the first time (loading the model).	Modelos grátis e locais podem demorar a primeira vez (a carregar o modelo).
+Use it for agents that have no model of their own:	Usa-o nos agentes que não têm modelo próprio:
+Another model	Outro modelo
+This looks like a key problem: press Esc until the provider list, select it and press K for a new key.	Parece um problema de chave: prime Esc até à lista de fornecedores, seleciona-o e prime K para uma chave nova.
+Try again	Tentar de novo
+It answered.	Respondeu.
+It answered "{0}" in {1}	Respondeu "{0}" em {1}
+{0} needs no key.	{0} não precisa de chave.
+That key comes from the environment variable {0}; BuildCLI cannot remove it.	Essa chave vem da variável de ambiente {0}; o BuildCLI não a pode remover.
+No saved key for {0}.	Sem chave guardada para {0}.
+Press D again to forget the saved key for {0}.	Prime D outra vez para esquecer a chave guardada de {0}.
+New chat	Novo chat
+Add to {0}	Adicionar a {0}
+group	grupo
+New group: {0} · choose members	Novo grupo: {0} · escolhe os membros
+Group info · {0}	Grupo · {0}
+Contact info · {0}	Contacto · {0}
+Name of the new group	Nome do novo grupo
+New group	Novo grupo
+{0} joined {1}	{0} entrou em {1}
+pick at least one member	escolhe pelo menos um membro
+{0} member(s); the first is admin	{0} membro(s); o primeiro é admin
+{0} is no longer admin	{0} já não é admin
+{0} is now admin	{0} é agora admin
+{0} was removed	{0} foi removido
+optional: background the agents read before answering	opcional: contexto que os agentes leem antes de responder
+Context for {0}	Contexto de {0}
+Context saved	Contexto guardado
+File to add to the context	Ficheiro a juntar ao contexto
+path to a text file	caminho de um ficheiro de texto
+there is no file {0}	não existe o ficheiro {0}
+File added	Ficheiro adicionado
+File removed	Ficheiro removido
+New name	Novo nome
+Renamed	Renomeado
+the messages stay in memory until you quit	as mensagens ficam em memória até saíres
+none	nenhum
+{0} in {1}	{0} em {1}
+{0} in a direct chat	{0} num chat direto
+↑↓ choose · letters or click run the buttons · Esc back	↑↓ escolhe · as letras ou o clique usam os botões · Esc volta
+↑↓ choose · Enter · Esc back	↑↓ escolhe · Enter · Esc volta
++ New group	+ Novo grupo
+choose a name and the members	escolhe um nome e os membros
+Everyone is already in this group	Já estão todos neste grupo
+Create the group	Criar o grupo
++ Add member	+ Adicionar membro
+Context	Contexto
+Rename group	Mudar o nome do grupo
+Delete group	Apagar o grupo
+Role	Papel
+Status	Estado
+May	Pode
+Groups	Grupos
+Create	Criar
+Message	Mensagem
+Add	Adicionar
+Remove	Remover
+Dismiss admin	Retirar admin
+Make admin	Fazer admin
+Edit	Editar
+Add file	Juntar ficheiro
+Rename	Mudar nome
+Changed 1 file: {0}	Alterado 1 ficheiro: {0}
+Changed {0} files: {1}	Alterados {0} ficheiros: {1}
+Nothing to undo.	Nada para desfazer.
+Already undone.	Já desfeito.
+These changes were not kept, so they cannot be undone.	Estas alterações não foram guardadas, por isso não se podem desfazer.
+Undid {0}'s changes: {1}.	Desfiz as alterações de {0}: {1}.
+Undo failed: {0}	Não consegui desfazer: {0}
+This chat is between {0}. You can read it, not write in it: ask one of them in their own chat to write to the other.	Este chat é entre {0}. Podes lê-lo, não escrever nele: pede a um deles, no chat dele, para escrever ao outro.
+and	e
+There is nobody to talk to yet. Create an agent in Settings (F2) > Agents, or run 'buildcli init'.	Ainda não há ninguém com quem falar. Cria um agente em Definições (F2) > Agentes, ou corre 'buildcli init'.
+{0} is not in this group. Add them from the group info to talk to them here.	{0} não está neste grupo. Adiciona-o a partir da informação do grupo para falares com ele aqui.
+{0} are not in this group. Add them from the group info to talk to them here.	{0} não estão neste grupo. Adiciona-os a partir da informação do grupo para falares com eles aqui.
+This group has no members. Add someone from the group info.	Este grupo não tem membros. Adiciona alguém a partir da informação do grupo.
+Dropped {0} waiting message(s).	Descartei {0} mensagem(ns) em espera.
+Could not delete the saved messages: {0}	Não consegui apagar as mensagens guardadas: {0}
+This request could not be finished: {0}	Este pedido não pôde ser concluído: {0}
+no result	sem resultado
+Stopped: {0}	Parado: {0}
+Check the provider with 'buildcli provider test <provider:model>' or 'buildcli doctor'.	Verifica o fornecedor com 'buildcli provider test <fornecedor:modelo>' ou 'buildcli doctor'.
+Your message is kept: press Retry or type /retry to send it again.	A tua mensagem ficou guardada: prime Repetir ou escreve /retry para a enviar de novo.
+The agents paused after {0} messages among themselves. Write to them to keep going.	Os agentes pararam depois de {0} mensagens entre eles. Escreve-lhes para continuarem.
+{0} wrote to you in your private chat.	{0} escreveu-te no teu chat privado.
+Could not save who can contact whom: {0}	Não consegui guardar quem pode contactar quem: {0}
+Could not save the groups: {0}	Não consegui guardar os grupos: {0}
