@@ -40,7 +40,8 @@ dependency-reduced-pom.xml
 app.jar
 buildcli.jar
 Dockefile
-changelog.md
-**/changelog.md
 *.zip
 /cli/logs/build-cli-logs.log
+
+
+.openrouter/key

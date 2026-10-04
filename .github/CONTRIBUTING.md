@@ -107,3 +107,22 @@ Maintaining Visibility of Contribution Guidelines
 - A checklist will be included in new issues to remind contributors to verify issue assignments.
 
 By following these guidelines, we aim to foster a more collaborative, efficient, and positive experience for all contributors.
+Development
+-----------
+
+BuildCLI 1.0 is a rebuild; the previous CLI lives on the `legacy` branch (tag `v0.14.0`). Read the design in
+[`docs/rfc/0001-buildcli-1.0.md`](../docs/rfc/0001-buildcli-1.0.md) before starting on a larger change.
+
+```bash
+mvn verify                     # compile, unit tests, architecture tests, Checkstyle, shaded jar
+java -jar target/buildcli.jar --help
+java -jar target/buildcli.jar               # open the chat (AgentFather works without a model)
+```
+
+- **Architecture is enforced by tests** (`ArchitectureTest`, ArchUnit): `domain` knows nothing internal, `ports`
+  only the domain, `application` only domain and ports; LangChain4j, TamboUI, JDBC and Jackson stay in
+  `infrastructure`. If a rule blocks you, the design probably needs a port.
+- **The runtime is deterministic, the LLM is not.** Test runtime behaviour with `ScriptedGateway` and `HeadlessUi`
+  (no model, no terminal). Changes to policies, approvals or limits need a test that proves the rule.
+- **Style** is checked by Checkstyle (`checkstyle.xml`) as part of `mvn verify`.
+- Do not run `mvn` with `-DskipTests` in a PR; CI runs on Linux, macOS and Windows.
