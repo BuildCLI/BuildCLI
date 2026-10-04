@@ -38,7 +38,7 @@ jobs:
         working-directory: target
 
       - name: Upload to the release
-        run: gh release upload "$TAG" target/buildcli.jar target/buildcli.jar.sha256 --clobber
+        run: gh release upload "$TAG" target/buildcli.jar target/buildcli.jar.sha256 scripts/install.sh scripts/install.ps1 --clobber
         env:
           GH_TOKEN: ${{ github.token }}
           TAG: ${{ github.event.release.tag_name }}
