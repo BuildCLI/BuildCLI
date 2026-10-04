@@ -1,0 +1,2466 @@
+{
+  "reflection": [
+    {
+      "type": "boolean[]",
+      "jniAccessible": true
+    },
+    {
+      "type": "com.fasterxml.jackson.databind.ext.Java7SupportImpl",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "com.sun.crypto.provider.AESCipher$General",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "com.sun.crypto.provider.ARCFOURCipher",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "com.sun.crypto.provider.ChaCha20Cipher$ChaCha20Poly1305",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "com.sun.crypto.provider.DESCipher",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "com.sun.crypto.provider.DESedeCipher",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "com.sun.crypto.provider.DHParameters",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "com.sun.crypto.provider.GaloisCounterMode$AESGCM",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "com.sun.crypto.provider.HKDFKeyDerivation$HKDFSHA384",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "javax.crypto.KDFParameters"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "com.sun.crypto.provider.HmacCore$HmacSHA384",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "com.sun.crypto.provider.TlsMasterSecretGenerator",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "dev.buildcli.cli.AgentCommand",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "dev.buildcli.cli.CliContext"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "dev.buildcli.cli.AgentCommand$CreateCmd",
+      "fields": [
+        {
+          "name": "capabilities"
+        },
+        {
+          "name": "global"
+        },
+        {
+          "name": "name"
+        },
+        {
+          "name": "role"
+        }
+      ],
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "dev.buildcli.cli.CliContext"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "dev.buildcli.cli.AgentCommand$ListCmd",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "dev.buildcli.cli.CliContext"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "dev.buildcli.cli.AgentCommand$ShowCmd",
+      "fields": [
+        {
+          "name": "name"
+        }
+      ],
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "dev.buildcli.cli.CliContext"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "dev.buildcli.cli.BuildCli",
+      "fields": [
+        {
+          "name": "spec"
+        }
+      ]
+    },
+    {
+      "type": "dev.buildcli.cli.BuildCli$Version",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "dev.buildcli.cli.ConfigCommand",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "dev.buildcli.cli.CliContext"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "dev.buildcli.cli.DevCommands$BenchCmd",
+      "fields": [
+        {
+          "name": "m"
+        }
+      ],
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "dev.buildcli.cli.CliContext"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "dev.buildcli.cli.DevCommands$DemoCmd",
+      "fields": [
+        {
+          "name": "ask"
+        },
+        {
+          "name": "escalate"
+        },
+        {
+          "name": "fake"
+        },
+        {
+          "name": "m"
+        }
+      ],
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "dev.buildcli.cli.CliContext"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "dev.buildcli.cli.DevCommands$ModelOptions",
+      "fields": [
+        {
+          "name": "model"
+        },
+        {
+          "name": "noStream"
+        },
+        {
+          "name": "provider"
+        },
+        {
+          "name": "temperature"
+        },
+        {
+          "name": "threads"
+        },
+        {
+          "name": "url"
+        }
+      ],
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "dev.buildcli.cli.DoctorCommand",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "dev.buildcli.cli.CliContext"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "dev.buildcli.cli.InitCommand",
+      "fields": [
+        {
+          "name": "model"
+        }
+      ],
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "dev.buildcli.cli.CliContext"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "dev.buildcli.cli.ProviderCommand",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "dev.buildcli.cli.CliContext"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "dev.buildcli.cli.ProviderCommand$AddCmd",
+      "fields": [
+        {
+          "name": "keyEnv"
+        },
+        {
+          "name": "kind"
+        },
+        {
+          "name": "name"
+        },
+        {
+          "name": "url"
+        }
+      ],
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "dev.buildcli.cli.CliContext"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "dev.buildcli.cli.ProviderCommand$ListCmd",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "dev.buildcli.cli.CliContext"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "dev.buildcli.cli.ProviderCommand$LoginCmd",
+      "fields": [
+        {
+          "name": "provider"
+        },
+        {
+          "name": "stdin"
+        }
+      ],
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "dev.buildcli.cli.CliContext"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "dev.buildcli.cli.ProviderCommand$LogoutCmd",
+      "fields": [
+        {
+          "name": "provider"
+        }
+      ],
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "dev.buildcli.cli.CliContext"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "dev.buildcli.cli.ProviderCommand$TestCmd",
+      "fields": [
+        {
+          "name": "model"
+        }
+      ],
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "dev.buildcli.cli.CliContext"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "dev.buildcli.cli.RunCommand",
+      "fields": [
+        {
+          "name": "agentName"
+        },
+        {
+          "name": "approve"
+        },
+        {
+          "name": "groupName"
+        },
+        {
+          "name": "headless"
+        },
+        {
+          "name": "model"
+        },
+        {
+          "name": "noStream"
+        },
+        {
+          "name": "request"
+        },
+        {
+          "name": "teamName"
+        },
+        {
+          "name": "temperature"
+        },
+        {
+          "name": "threads"
+        }
+      ],
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "dev.buildcli.cli.CliContext"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "dev.buildcli.cli.RunsCommand",
+      "fields": [
+        {
+          "name": "limit"
+        }
+      ],
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "dev.buildcli.cli.CliContext"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "dev.buildcli.cli.TaskCommand",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "dev.buildcli.cli.CliContext"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "dev.buildcli.cli.TaskCommand$ListCmd",
+      "fields": [
+        {
+          "name": "run"
+        }
+      ],
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "dev.buildcli.cli.CliContext"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "dev.buildcli.cli.TaskCommand$ShowCmd"
+    },
+    {
+      "type": "dev.buildcli.cli.TeamCommand",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "dev.buildcli.cli.CliContext"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "dev.buildcli.cli.TeamCommand$CreateCmd"
+    },
+    {
+      "type": "dev.buildcli.cli.TeamCommand$ListCmd",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "dev.buildcli.cli.CliContext"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "dev.buildcli.cli.TeamCommand$ShowCmd"
+    },
+    {
+      "type": "dev.buildcli.cli.UsageCommand",
+      "fields": [
+        {
+          "name": "json"
+        },
+        {
+          "name": "run"
+        }
+      ],
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "dev.buildcli.cli.CliContext"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "dev.langchain4j.http.client.jdk.JdkHttpClientBuilderFactory"
+    },
+    {
+      "type": "dev.langchain4j.model.ollama.Function",
+      "methods": [
+        {
+          "name": "getDescription",
+          "parameterTypes": []
+        },
+        {
+          "name": "getName",
+          "parameterTypes": []
+        },
+        {
+          "name": "getParameters",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "dev.langchain4j.model.ollama.FunctionCall",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        },
+        {
+          "name": "getArguments",
+          "parameterTypes": []
+        },
+        {
+          "name": "getIndex",
+          "parameterTypes": []
+        },
+        {
+          "name": "getName",
+          "parameterTypes": []
+        },
+        {
+          "name": "setArguments",
+          "parameterTypes": [
+            "java.util.Map"
+          ]
+        },
+        {
+          "name": "setIndex",
+          "parameterTypes": [
+            "java.lang.Integer"
+          ]
+        },
+        {
+          "name": "setName",
+          "parameterTypes": [
+            "java.lang.String"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "dev.langchain4j.model.ollama.Message",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        },
+        {
+          "name": "getAdditionalFields",
+          "parameterTypes": []
+        },
+        {
+          "name": "getContent",
+          "parameterTypes": []
+        },
+        {
+          "name": "getImages",
+          "parameterTypes": []
+        },
+        {
+          "name": "getRole",
+          "parameterTypes": []
+        },
+        {
+          "name": "getThinking",
+          "parameterTypes": []
+        },
+        {
+          "name": "getToolCalls",
+          "parameterTypes": []
+        },
+        {
+          "name": "setContent",
+          "parameterTypes": [
+            "java.lang.String"
+          ]
+        },
+        {
+          "name": "setRole",
+          "parameterTypes": [
+            "dev.langchain4j.model.ollama.Role"
+          ]
+        },
+        {
+          "name": "setToolCalls",
+          "parameterTypes": [
+            "java.util.List"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "dev.langchain4j.model.ollama.OllamaChatRequest",
+      "methods": [
+        {
+          "name": "getFormat",
+          "parameterTypes": []
+        },
+        {
+          "name": "getKeepAlive",
+          "parameterTypes": []
+        },
+        {
+          "name": "getMessages",
+          "parameterTypes": []
+        },
+        {
+          "name": "getModel",
+          "parameterTypes": []
+        },
+        {
+          "name": "getOptions",
+          "parameterTypes": []
+        },
+        {
+          "name": "getStream",
+          "parameterTypes": []
+        },
+        {
+          "name": "getThink",
+          "parameterTypes": []
+        },
+        {
+          "name": "getTools",
+          "parameterTypes": []
+        },
+        {
+          "name": "getTruncate",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "dev.langchain4j.model.ollama.OllamaChatResponse",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        },
+        {
+          "name": "setCreatedAt",
+          "parameterTypes": [
+            "java.lang.String"
+          ]
+        },
+        {
+          "name": "setDone",
+          "parameterTypes": [
+            "java.lang.Boolean"
+          ]
+        },
+        {
+          "name": "setDoneReason",
+          "parameterTypes": [
+            "java.lang.String"
+          ]
+        },
+        {
+          "name": "setEvalCount",
+          "parameterTypes": [
+            "java.lang.Integer"
+          ]
+        },
+        {
+          "name": "setMessage",
+          "parameterTypes": [
+            "dev.langchain4j.model.ollama.Message"
+          ]
+        },
+        {
+          "name": "setModel",
+          "parameterTypes": [
+            "java.lang.String"
+          ]
+        },
+        {
+          "name": "setPromptEvalCount",
+          "parameterTypes": [
+            "java.lang.Integer"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "dev.langchain4j.model.ollama.Options",
+      "methods": [
+        {
+          "name": "getMainGPU",
+          "parameterTypes": []
+        },
+        {
+          "name": "getMinP",
+          "parameterTypes": []
+        },
+        {
+          "name": "getMirostat",
+          "parameterTypes": []
+        },
+        {
+          "name": "getMirostatEta",
+          "parameterTypes": []
+        },
+        {
+          "name": "getMirostatTau",
+          "parameterTypes": []
+        },
+        {
+          "name": "getNumBatch",
+          "parameterTypes": []
+        },
+        {
+          "name": "getNumCtx",
+          "parameterTypes": []
+        },
+        {
+          "name": "getNumGPU",
+          "parameterTypes": []
+        },
+        {
+          "name": "getNumKeep",
+          "parameterTypes": []
+        },
+        {
+          "name": "getNumPredict",
+          "parameterTypes": []
+        },
+        {
+          "name": "getNumThread",
+          "parameterTypes": []
+        },
+        {
+          "name": "getRepeatLastN",
+          "parameterTypes": []
+        },
+        {
+          "name": "getRepeatPenalty",
+          "parameterTypes": []
+        },
+        {
+          "name": "getSeed",
+          "parameterTypes": []
+        },
+        {
+          "name": "getStop",
+          "parameterTypes": []
+        },
+        {
+          "name": "getTemperature",
+          "parameterTypes": []
+        },
+        {
+          "name": "getTopK",
+          "parameterTypes": []
+        },
+        {
+          "name": "getTopP",
+          "parameterTypes": []
+        },
+        {
+          "name": "getTypicalP",
+          "parameterTypes": []
+        },
+        {
+          "name": "getUseMmap",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "dev.langchain4j.model.ollama.Parameters",
+      "methods": [
+        {
+          "name": "getProperties",
+          "parameterTypes": []
+        },
+        {
+          "name": "getRequired",
+          "parameterTypes": []
+        },
+        {
+          "name": "getType",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "dev.langchain4j.model.ollama.Role",
+      "methods": [
+        {
+          "name": "serialize",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "dev.langchain4j.model.ollama.Tool",
+      "methods": [
+        {
+          "name": "getFunction",
+          "parameterTypes": []
+        },
+        {
+          "name": "getType",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "dev.langchain4j.model.ollama.ToolCall",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        },
+        {
+          "name": "getFunction",
+          "parameterTypes": []
+        },
+        {
+          "name": "getId",
+          "parameterTypes": []
+        },
+        {
+          "name": "setFunction",
+          "parameterTypes": [
+            "dev.langchain4j.model.ollama.FunctionCall"
+          ]
+        },
+        {
+          "name": "setId",
+          "parameterTypes": [
+            "java.lang.String"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "dev.langchain4j.model.openai.internal.chat.AssistantMessage",
+      "fields": [
+        {
+          "name": "content"
+        },
+        {
+          "name": "functionCall"
+        },
+        {
+          "name": "name"
+        },
+        {
+          "name": "reasoningContent"
+        },
+        {
+          "name": "refusal"
+        },
+        {
+          "name": "role"
+        },
+        {
+          "name": "toolCalls"
+        }
+      ],
+      "methods": [
+        {
+          "name": "customParameters",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "dev.langchain4j.model.openai.internal.chat.AssistantMessage$Builder",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        },
+        {
+          "name": "build",
+          "parameterTypes": []
+        },
+        {
+          "name": "content",
+          "parameterTypes": [
+            "java.lang.String"
+          ]
+        },
+        {
+          "name": "reasoningContent",
+          "parameterTypes": [
+            "java.lang.String"
+          ]
+        },
+        {
+          "name": "refusal",
+          "parameterTypes": [
+            "java.lang.String"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "dev.langchain4j.model.openai.internal.chat.ChatCompletionChoice$Builder",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        },
+        {
+          "name": "build",
+          "parameterTypes": []
+        },
+        {
+          "name": "delta",
+          "parameterTypes": [
+            "dev.langchain4j.model.openai.internal.chat.Delta"
+          ]
+        },
+        {
+          "name": "finishReason",
+          "parameterTypes": [
+            "java.lang.String"
+          ]
+        },
+        {
+          "name": "index",
+          "parameterTypes": [
+            "java.lang.Integer"
+          ]
+        },
+        {
+          "name": "logprobs",
+          "parameterTypes": [
+            "dev.langchain4j.model.openai.internal.chat.LogProbs"
+          ]
+        },
+        {
+          "name": "message",
+          "parameterTypes": [
+            "dev.langchain4j.model.openai.internal.chat.AssistantMessage"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "dev.langchain4j.model.openai.internal.chat.ChatCompletionRequest",
+      "fields": [
+        {
+          "name": "frequencyPenalty"
+        },
+        {
+          "name": "functionCall"
+        },
+        {
+          "name": "functions"
+        },
+        {
+          "name": "logitBias"
+        },
+        {
+          "name": "logprobs"
+        },
+        {
+          "name": "maxCompletionTokens"
+        },
+        {
+          "name": "maxTokens"
+        },
+        {
+          "name": "messages"
+        },
+        {
+          "name": "metadata"
+        },
+        {
+          "name": "model"
+        },
+        {
+          "name": "n"
+        },
+        {
+          "name": "parallelToolCalls"
+        },
+        {
+          "name": "presencePenalty"
+        },
+        {
+          "name": "reasoningEffort"
+        },
+        {
+          "name": "responseFormat"
+        },
+        {
+          "name": "seed"
+        },
+        {
+          "name": "serviceTier"
+        },
+        {
+          "name": "stop"
+        },
+        {
+          "name": "store"
+        },
+        {
+          "name": "stream"
+        },
+        {
+          "name": "streamOptions"
+        },
+        {
+          "name": "temperature"
+        },
+        {
+          "name": "toolChoice"
+        },
+        {
+          "name": "tools"
+        },
+        {
+          "name": "topLogprobs"
+        },
+        {
+          "name": "topP"
+        },
+        {
+          "name": "user"
+        }
+      ],
+      "methods": [
+        {
+          "name": "customParameters",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "dev.langchain4j.model.openai.internal.chat.ChatCompletionResponse$Builder",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        },
+        {
+          "name": "build",
+          "parameterTypes": []
+        },
+        {
+          "name": "choices",
+          "parameterTypes": [
+            "java.util.List"
+          ]
+        },
+        {
+          "name": "created",
+          "parameterTypes": [
+            "java.lang.Long"
+          ]
+        },
+        {
+          "name": "id",
+          "parameterTypes": [
+            "java.lang.String"
+          ]
+        },
+        {
+          "name": "model",
+          "parameterTypes": [
+            "java.lang.String"
+          ]
+        },
+        {
+          "name": "serviceTier",
+          "parameterTypes": [
+            "java.lang.String"
+          ]
+        },
+        {
+          "name": "systemFingerprint",
+          "parameterTypes": [
+            "java.lang.String"
+          ]
+        },
+        {
+          "name": "usage",
+          "parameterTypes": [
+            "dev.langchain4j.model.openai.internal.shared.Usage"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "dev.langchain4j.model.openai.internal.chat.Delta$Builder",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        },
+        {
+          "name": "build",
+          "parameterTypes": []
+        },
+        {
+          "name": "content",
+          "parameterTypes": [
+            "java.lang.String"
+          ]
+        },
+        {
+          "name": "reasoningContent",
+          "parameterTypes": [
+            "java.lang.String"
+          ]
+        },
+        {
+          "name": "role",
+          "parameterTypes": [
+            "java.lang.String"
+          ]
+        },
+        {
+          "name": "toolCalls",
+          "parameterTypes": [
+            "java.util.List"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "dev.langchain4j.model.openai.internal.chat.Function",
+      "fields": [
+        {
+          "name": "description"
+        },
+        {
+          "name": "name"
+        },
+        {
+          "name": "parameters"
+        },
+        {
+          "name": "strict"
+        }
+      ]
+    },
+    {
+      "type": "dev.langchain4j.model.openai.internal.chat.FunctionCall",
+      "fields": [
+        {
+          "name": "arguments"
+        },
+        {
+          "name": "name"
+        }
+      ]
+    },
+    {
+      "type": "dev.langchain4j.model.openai.internal.chat.FunctionCall$Builder",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        },
+        {
+          "name": "arguments",
+          "parameterTypes": [
+            "java.lang.String"
+          ]
+        },
+        {
+          "name": "build",
+          "parameterTypes": []
+        },
+        {
+          "name": "name",
+          "parameterTypes": [
+            "java.lang.String"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "dev.langchain4j.model.openai.internal.chat.LogProb$Builder"
+    },
+    {
+      "type": "dev.langchain4j.model.openai.internal.chat.LogProbs$Builder"
+    },
+    {
+      "type": "dev.langchain4j.model.openai.internal.chat.Message"
+    },
+    {
+      "type": "dev.langchain4j.model.openai.internal.chat.Role"
+    },
+    {
+      "type": "dev.langchain4j.model.openai.internal.chat.SystemMessage",
+      "fields": [
+        {
+          "name": "content"
+        },
+        {
+          "name": "name"
+        },
+        {
+          "name": "role"
+        }
+      ]
+    },
+    {
+      "type": "dev.langchain4j.model.openai.internal.chat.Tool",
+      "fields": [
+        {
+          "name": "function"
+        },
+        {
+          "name": "type"
+        }
+      ]
+    },
+    {
+      "type": "dev.langchain4j.model.openai.internal.chat.ToolCall",
+      "fields": [
+        {
+          "name": "function"
+        },
+        {
+          "name": "id"
+        },
+        {
+          "name": "index"
+        },
+        {
+          "name": "type"
+        }
+      ]
+    },
+    {
+      "type": "dev.langchain4j.model.openai.internal.chat.ToolCall$Builder",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        },
+        {
+          "name": "build",
+          "parameterTypes": []
+        },
+        {
+          "name": "function",
+          "parameterTypes": [
+            "dev.langchain4j.model.openai.internal.chat.FunctionCall"
+          ]
+        },
+        {
+          "name": "id",
+          "parameterTypes": [
+            "java.lang.String"
+          ]
+        },
+        {
+          "name": "index",
+          "parameterTypes": [
+            "java.lang.Integer"
+          ]
+        },
+        {
+          "name": "type",
+          "parameterTypes": [
+            "java.lang.String"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "dev.langchain4j.model.openai.internal.chat.ToolMessage",
+      "fields": [
+        {
+          "name": "content"
+        },
+        {
+          "name": "role"
+        },
+        {
+          "name": "toolCallId"
+        }
+      ]
+    },
+    {
+      "type": "dev.langchain4j.model.openai.internal.chat.ToolType"
+    },
+    {
+      "type": "dev.langchain4j.model.openai.internal.chat.UserMessage",
+      "fields": [
+        {
+          "name": "content"
+        },
+        {
+          "name": "name"
+        },
+        {
+          "name": "role"
+        }
+      ]
+    },
+    {
+      "type": "dev.langchain4j.model.openai.internal.shared.CompletionTokensDetails$Builder",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        },
+        {
+          "name": "build",
+          "parameterTypes": []
+        },
+        {
+          "name": "reasoningTokens",
+          "parameterTypes": [
+            "java.lang.Integer"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "dev.langchain4j.model.openai.internal.shared.PromptTokensDetails$Builder",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        },
+        {
+          "name": "build",
+          "parameterTypes": []
+        },
+        {
+          "name": "cachedTokens",
+          "parameterTypes": [
+            "java.lang.Integer"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "dev.langchain4j.model.openai.internal.shared.StreamOptions",
+      "fields": [
+        {
+          "name": "includeUsage"
+        }
+      ]
+    },
+    {
+      "type": "dev.langchain4j.model.openai.internal.shared.Usage$Builder",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        },
+        {
+          "name": "build",
+          "parameterTypes": []
+        },
+        {
+          "name": "completionTokens",
+          "parameterTypes": [
+            "java.lang.Integer"
+          ]
+        },
+        {
+          "name": "completionTokensDetails",
+          "parameterTypes": [
+            "dev.langchain4j.model.openai.internal.shared.CompletionTokensDetails"
+          ]
+        },
+        {
+          "name": "promptTokens",
+          "parameterTypes": [
+            "java.lang.Integer"
+          ]
+        },
+        {
+          "name": "promptTokensDetails",
+          "parameterTypes": [
+            "dev.langchain4j.model.openai.internal.shared.PromptTokensDetails"
+          ]
+        },
+        {
+          "name": "totalTokens",
+          "parameterTypes": [
+            "java.lang.Integer"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "dev.tamboui.backend.jline3.JLineBackendProvider"
+    },
+    {
+      "type": "groovy.lang.Closure"
+    },
+    {
+      "type": "java.io.Console",
+      "methods": [
+        {
+          "name": "isTerminal",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "java.io.ProxyingConsole"
+    },
+    {
+      "type": "java.io.Serializable"
+    },
+    {
+      "type": "java.lang.Boolean",
+      "jniAccessible": true,
+      "methods": [
+        {
+          "name": "getBoolean",
+          "parameterTypes": [
+            "java.lang.String"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "java.lang.Class",
+      "methods": [
+        {
+          "name": "isRecord",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "java.lang.Comparable"
+    },
+    {
+      "type": "java.lang.Double"
+    },
+    {
+      "type": "java.lang.Iterable"
+    },
+    {
+      "type": "java.lang.Number"
+    },
+    {
+      "type": "java.lang.Object"
+    },
+    {
+      "type": "java.lang.Object[]"
+    },
+    {
+      "type": "java.lang.ProcessBuilder$RedirectPipeImpl",
+      "jniAccessible": true,
+      "fields": [
+        {
+          "name": "fd"
+        }
+      ],
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "java.lang.String[]"
+    },
+    {
+      "type": "java.lang.System",
+      "methods": [
+        {
+          "name": "console",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "java.lang.Throwable",
+      "jniAccessible": true,
+      "methods": [
+        {
+          "name": "toString",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "java.lang.constant.Constable"
+    },
+    {
+      "type": "java.lang.constant.ConstantDesc"
+    },
+    {
+      "type": "java.nio.file.Path"
+    },
+    {
+      "type": "java.nio.file.Paths"
+    },
+    {
+      "type": "java.security.AlgorithmParametersSpi"
+    },
+    {
+      "type": "java.security.KeyStoreSpi"
+    },
+    {
+      "type": "java.security.interfaces.ECPrivateKey"
+    },
+    {
+      "type": "java.security.interfaces.ECPublicKey"
+    },
+    {
+      "type": "java.sql.Connection"
+    },
+    {
+      "type": "java.sql.Date"
+    },
+    {
+      "type": "java.sql.Driver"
+    },
+    {
+      "type": "java.sql.DriverManager"
+    },
+    {
+      "type": "java.sql.Time"
+    },
+    {
+      "type": "java.sql.Timestamp"
+    },
+    {
+      "type": "java.time.Duration"
+    },
+    {
+      "type": "java.time.Instant"
+    },
+    {
+      "type": "java.time.LocalDate"
+    },
+    {
+      "type": "java.time.LocalDateTime"
+    },
+    {
+      "type": "java.time.LocalTime"
+    },
+    {
+      "type": "java.time.MonthDay"
+    },
+    {
+      "type": "java.time.OffsetDateTime"
+    },
+    {
+      "type": "java.time.OffsetTime"
+    },
+    {
+      "type": "java.time.Period"
+    },
+    {
+      "type": "java.time.Year"
+    },
+    {
+      "type": "java.time.YearMonth"
+    },
+    {
+      "type": "java.time.ZoneId"
+    },
+    {
+      "type": "java.time.ZoneOffset"
+    },
+    {
+      "type": "java.time.ZonedDateTime"
+    },
+    {
+      "type": "java.util.AbstractCollection"
+    },
+    {
+      "type": "java.util.AbstractMap"
+    },
+    {
+      "type": "java.util.Collection"
+    },
+    {
+      "type": "java.util.Collections$UnmodifiableCollection"
+    },
+    {
+      "type": "java.util.Collections$UnmodifiableList"
+    },
+    {
+      "type": "java.util.Collections$UnmodifiableMap"
+    },
+    {
+      "type": "java.util.Collections$UnmodifiableRandomAccessList"
+    },
+    {
+      "type": "java.util.ImmutableCollections$AbstractImmutableCollection"
+    },
+    {
+      "type": "java.util.ImmutableCollections$AbstractImmutableList"
+    },
+    {
+      "type": "java.util.ImmutableCollections$AbstractImmutableMap"
+    },
+    {
+      "type": "java.util.ImmutableCollections$List12"
+    },
+    {
+      "type": "java.util.ImmutableCollections$ListN"
+    },
+    {
+      "type": "java.util.ImmutableCollections$MapN"
+    },
+    {
+      "type": "java.util.List"
+    },
+    {
+      "type": "java.util.Map"
+    },
+    {
+      "type": "java.util.RandomAccess"
+    },
+    {
+      "type": "org.h2.Driver"
+    },
+    {
+      "type": "org.jline.nativ.CLibrary",
+      "jniAccessible": true,
+      "fields": [
+        {
+          "name": "TCSADRAIN"
+        },
+        {
+          "name": "TCSAFLUSH"
+        },
+        {
+          "name": "TCSANOW"
+        },
+        {
+          "name": "TIOCGWINSZ"
+        },
+        {
+          "name": "TIOCSWINSZ"
+        }
+      ]
+    },
+    {
+      "type": "org.jline.nativ.CLibrary$Termios",
+      "jniAccessible": true,
+      "fields": [
+        {
+          "name": "SIZEOF"
+        },
+        {
+          "name": "c_cc"
+        },
+        {
+          "name": "c_cflag"
+        },
+        {
+          "name": "c_iflag"
+        },
+        {
+          "name": "c_ispeed"
+        },
+        {
+          "name": "c_lflag"
+        },
+        {
+          "name": "c_oflag"
+        },
+        {
+          "name": "c_ospeed"
+        }
+      ]
+    },
+    {
+      "type": "org.jline.nativ.CLibrary$WinSize",
+      "jniAccessible": true,
+      "fields": [
+        {
+          "name": "SIZEOF"
+        },
+        {
+          "name": "ws_col"
+        },
+        {
+          "name": "ws_row"
+        },
+        {
+          "name": "ws_xpixel"
+        },
+        {
+          "name": "ws_ypixel"
+        }
+      ]
+    },
+    {
+      "type": "org.jline.terminal.impl.exec.ExecTerminalProvider",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "org.jline.terminal.impl.ffm.FfmTerminalProvider"
+    },
+    {
+      "type": "org.jline.terminal.impl.jansi.JansiTerminalProvider",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "org.jline.terminal.impl.jna.JnaTerminalProvider",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "org.jline.terminal.impl.jni.JniTerminalProvider",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "org.slf4j.Logger"
+    },
+    {
+      "type": "org.slf4j.nop.NOPServiceProvider"
+    },
+    {
+      "type": "org.sqlite.BusyHandler",
+      "jniAccessible": true,
+      "methods": [
+        {
+          "name": "callback",
+          "parameterTypes": [
+            "int"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "org.sqlite.Collation",
+      "jniAccessible": true,
+      "methods": [
+        {
+          "name": "xCompare",
+          "parameterTypes": [
+            "java.lang.String",
+            "java.lang.String"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "org.sqlite.Function",
+      "jniAccessible": true,
+      "fields": [
+        {
+          "name": "args"
+        },
+        {
+          "name": "context"
+        },
+        {
+          "name": "value"
+        }
+      ],
+      "methods": [
+        {
+          "name": "xFunc",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "org.sqlite.Function$Aggregate",
+      "jniAccessible": true,
+      "methods": [
+        {
+          "name": "clone",
+          "parameterTypes": []
+        },
+        {
+          "name": "xFinal",
+          "parameterTypes": []
+        },
+        {
+          "name": "xStep",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "org.sqlite.Function$Window",
+      "jniAccessible": true,
+      "methods": [
+        {
+          "name": "xInverse",
+          "parameterTypes": []
+        },
+        {
+          "name": "xValue",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "org.sqlite.JDBC"
+    },
+    {
+      "type": "org.sqlite.ProgressHandler",
+      "jniAccessible": true,
+      "methods": [
+        {
+          "name": "progress",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "org.sqlite.core.DB",
+      "jniAccessible": true,
+      "methods": [
+        {
+          "name": "onCommit",
+          "parameterTypes": [
+            "boolean"
+          ]
+        },
+        {
+          "name": "onUpdate",
+          "parameterTypes": [
+            "int",
+            "java.lang.String",
+            "java.lang.String",
+            "long"
+          ]
+        },
+        {
+          "name": "throwex",
+          "parameterTypes": []
+        },
+        {
+          "name": "throwex",
+          "parameterTypes": [
+            "int"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "org.sqlite.core.DB$ProgressObserver",
+      "jniAccessible": true,
+      "methods": [
+        {
+          "name": "progress",
+          "parameterTypes": [
+            "int",
+            "int"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "org.sqlite.core.NativeDB",
+      "jniAccessible": true,
+      "fields": [
+        {
+          "name": "busyHandler"
+        },
+        {
+          "name": "commitListener"
+        },
+        {
+          "name": "pointer"
+        },
+        {
+          "name": "progressHandler"
+        },
+        {
+          "name": "updateListener"
+        }
+      ],
+      "methods": [
+        {
+          "name": "stringToUtf8ByteArray",
+          "parameterTypes": [
+            "java.lang.String"
+          ]
+        },
+        {
+          "name": "throwex",
+          "parameterTypes": [
+            "java.lang.String"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "picocli.CommandLine$AutoHelpMixin",
+      "fields": [
+        {
+          "name": "helpRequested"
+        },
+        {
+          "name": "versionRequested"
+        }
+      ]
+    },
+    {
+      "type": "sun.misc.Signal",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "java.lang.String"
+          ]
+        },
+        {
+          "name": "handle",
+          "parameterTypes": [
+            "sun.misc.Signal",
+            "sun.misc.SignalHandler"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "sun.misc.SignalHandler"
+    },
+    {
+      "type": "sun.net.www.protocol.http.Handler",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "sun.security.pkcs12.PKCS12KeyStore",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "sun.security.pkcs12.PKCS12KeyStore$DualFormatPKCS12",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "sun.security.provider.DSA$SHA224withDSA",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "sun.security.provider.DSA$SHA256withDSA",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "sun.security.provider.JavaKeyStore$DualFormatJKS",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "sun.security.provider.JavaKeyStore$JKS",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "sun.security.provider.NativePRNG",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "java.security.SecureRandomParameters"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "sun.security.provider.SHA",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "sun.security.provider.SHA2$SHA224",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "sun.security.provider.SHA2$SHA256",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "sun.security.provider.SHA5$SHA384",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "sun.security.provider.SHA5$SHA512",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "sun.security.provider.X509Factory",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "sun.security.provider.certpath.PKIXCertPathValidator",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "sun.security.rsa.PSSParameters",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "sun.security.rsa.RSAKeyFactory$Legacy",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "sun.security.rsa.RSAPSSSignature",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "sun.security.rsa.RSASignature$SHA224withRSA",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "sun.security.ssl.KeyManagerFactoryImpl$SunX509",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "sun.security.ssl.SSLContextImpl$DefaultSSLContext",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "sun.security.ssl.TrustManagerFactoryImpl$PKIXFactory",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "sun.security.x509.AuthorityInfoAccessExtension",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "java.lang.Boolean",
+            "java.lang.Object"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "sun.security.x509.AuthorityKeyIdentifierExtension",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "java.lang.Boolean",
+            "java.lang.Object"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "sun.security.x509.BasicConstraintsExtension",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "java.lang.Boolean",
+            "java.lang.Object"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "sun.security.x509.CRLDistributionPointsExtension",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "java.lang.Boolean",
+            "java.lang.Object"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "sun.security.x509.CertificatePoliciesExtension",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "java.lang.Boolean",
+            "java.lang.Object"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "sun.security.x509.ExtendedKeyUsageExtension",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "java.lang.Boolean",
+            "java.lang.Object"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "sun.security.x509.KeyUsageExtension",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "java.lang.Boolean",
+            "java.lang.Object"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "sun.security.x509.NetscapeCertTypeExtension",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "java.lang.Boolean",
+            "java.lang.Object"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "sun.security.x509.PrivateKeyUsageExtension",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "java.lang.Boolean",
+            "java.lang.Object"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "sun.security.x509.SubjectAlternativeNameExtension",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "java.lang.Boolean",
+            "java.lang.Object"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "sun.security.x509.SubjectKeyIdentifierExtension",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "java.lang.Boolean",
+            "java.lang.Object"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "sun.text.resources.BreakIteratorInfo"
+    },
+    {
+      "type": "sun.text.resources.BreakIteratorResources"
+    },
+    {
+      "type": "sun.text.resources.BreakIteratorResources_en"
+    },
+    {
+      "type": "sun.text.resources.cldr.FormatData"
+    },
+    {
+      "type": "sun.text.resources.cldr.FormatData_en"
+    },
+    {
+      "type": "sun.text.resources.cldr.FormatData_en_US"
+    },
+    {
+      "type": "sun.util.resources.cldr.CalendarData"
+    },
+    {
+      "type": {
+        "proxy": [
+          "sun.misc.SignalHandler"
+        ]
+      }
+    }
+  ],
+  "resources": [
+    {
+      "glob": "META-INF/maven/org.jline/jline-native/pom.properties"
+    },
+    {
+      "glob": "META-INF/maven/org.xerial/sqlite-jdbc/pom.properties"
+    },
+    {
+      "glob": "META-INF/services/dev.langchain4j.http.client.HttpClientBuilderFactory"
+    },
+    {
+      "glob": "META-INF/services/dev.langchain4j.model.ollama.spi.OllamaChatModelBuilderFactory"
+    },
+    {
+      "glob": "META-INF/services/dev.langchain4j.model.ollama.spi.OllamaStreamingChatModelBuilderFactory"
+    },
+    {
+      "glob": "META-INF/services/dev.langchain4j.model.openai.internal.spi.OpenAiClientBuilderFactory"
+    },
+    {
+      "glob": "META-INF/services/dev.langchain4j.model.openai.spi.OpenAiChatModelBuilderFactory"
+    },
+    {
+      "glob": "META-INF/services/dev.langchain4j.model.openai.spi.OpenAiStreamingChatModelBuilderFactory"
+    },
+    {
+      "glob": "META-INF/services/dev.langchain4j.spi.json.ProviderJsonCodecFactory"
+    },
+    {
+      "glob": "META-INF/services/dev.tamboui.terminal.BackendProvider"
+    },
+    {
+      "glob": "META-INF/services/java.net.spi.InetAddressResolverProvider"
+    },
+    {
+      "glob": "META-INF/services/java.net.spi.URLStreamHandlerProvider"
+    },
+    {
+      "glob": "META-INF/services/java.nio.channels.spi.SelectorProvider"
+    },
+    {
+      "glob": "META-INF/services/java.nio.charset.spi.CharsetProvider"
+    },
+    {
+      "glob": "META-INF/services/java.sql.Driver"
+    },
+    {
+      "glob": "META-INF/services/java.time.zone.ZoneRulesProvider"
+    },
+    {
+      "glob": "META-INF/services/org.slf4j.spi.SLF4JServiceProvider"
+    },
+    {
+      "glob": "META-INF/services/org/jline/terminal/provider/exec"
+    },
+    {
+      "glob": "META-INF/services/org/jline/terminal/provider/ffm"
+    },
+    {
+      "glob": "META-INF/services/org/jline/terminal/provider/jansi"
+    },
+    {
+      "glob": "META-INF/services/org/jline/terminal/provider/jna"
+    },
+    {
+      "glob": "META-INF/services/org/jline/terminal/provider/jni"
+    },
+    {
+      "glob": "dev/tamboui/tui/bindings/emacs.properties"
+    },
+    {
+      "glob": "dev/tamboui/tui/bindings/intellij.properties"
+    },
+    {
+      "glob": "dev/tamboui/tui/bindings/standard.properties"
+    },
+    {
+      "glob": "dev/tamboui/tui/bindings/vim.properties"
+    },
+    {
+      "glob": "dev/tamboui/tui/bindings/vscode.properties"
+    },
+    {
+      "glob": "i18n/pt.tsv"
+    },
+    {
+      "glob": "org/jline/nativ/Linux/x86_64/libjlinenative.so"
+    },
+    {
+      "glob": "org/jline/utils/capabilities.txt"
+    },
+    {
+      "glob": "org/sqlite/native/Linux/x86_64/libsqlitejdbc.so"
+    },
+    {
+      "module": "java.base",
+      "glob": "jdk/internal/icu/impl/data/icudt76b/nfkc.nrm"
+    },
+    {
+      "module": "java.base",
+      "glob": "jdk/internal/icu/impl/data/icudt76b/uprops.icu"
+    },
+    {
+      "module": "java.base",
+      "glob": "sun/net/idn/uidna.spp"
+    },
+    {
+      "module": "java.base",
+      "glob": "sun/text/resources/LineBreakIteratorData"
+    },
+    {
+      "module": "jdk.jfr",
+      "glob": "jdk/jfr/internal/types/metadata.bin"
+    }
+  ]
+}
