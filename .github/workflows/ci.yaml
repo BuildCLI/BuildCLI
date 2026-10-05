@@ -1,0 +1,80 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build and test (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@c5195efecf7bdfc987ee8bae7a71cb8b11521c00 # v4.7.1
+        with:
+          java-version: '21'
+          distribution: temurin
+          cache: maven
+
+      # verify = compile + unit tests + Checkstyle + shaded jar
+      - name: Build, test and lint
+        run: mvn -B --no-transfer-progress verify
+
+      # The rewrite is reviewed as a stack of PRs and the command line arrives in a late part: the steps that run
+      # the jar or the installers wait for it, so the earlier parts are judged on build and tests alone.
+      - name: Smoke test the packaged jar
+        if: hashFiles('src/main/java/dev/buildcli/cli/BuildCli.java') != ''
+        run: java -jar target/buildcli.jar --help
+
+      - name: Smoke test the CLI (init, agent list, doctor)
+        if: hashFiles('src/main/java/dev/buildcli/cli/BuildCli.java') != ''
+        shell: bash
+        run: |
+          work="$(mktemp -d)"
+          export BUILDCLI_HOME="$work/home"
+          cd "$work"
+          java -jar "$GITHUB_WORKSPACE/target/buildcli.jar" init
+          java -jar "$GITHUB_WORKSPACE/target/buildcli.jar" agent list
+          java -jar "$GITHUB_WORKSPACE/target/buildcli.jar" doctor
+
+      - name: Test the Unix installer
+        if: runner.os != 'Windows' && hashFiles('src/main/java/dev/buildcli/cli/BuildCli.java') != ''
+        run: |
+          export HOME="$RUNNER_TEMP/installhome"
+          mkdir -p "$HOME"
+          BUILDCLI_BIN_DIR="$HOME/bin" sh scripts/install.sh --from-file target/buildcli.jar
+          "$HOME/bin/buildcli" --version
+
+      - name: Test the Windows installer
+        if: runner.os == 'Windows' && hashFiles('src/main/java/dev/buildcli/cli/BuildCli.java') != ''
+        shell: pwsh
+        run: |
+          $env:BUILDCLI_HOME = Join-Path $env:RUNNER_TEMP "bc"
+          ./scripts/install.ps1 -FromFile target/buildcli.jar
+          & (Join-Path $env:BUILDCLI_HOME "bin/buildcli.cmd") --version
+
+      - name: Upload the jar
+        if: matrix.os == 'ubuntu-latest'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: buildcli-jar
+          path: target/buildcli.jar
+          retention-days: 7
