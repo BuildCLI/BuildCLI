@@ -6,12 +6,18 @@ on:
   issues:
     types: [opened]
 
-permissions:
-  issues: write
+permissions: {}
+
+concurrency:
+  group: auto-assign-${{ github.event.issue.number }}
+  cancel-in-progress: false
 
 jobs:
   auto-assign:
+    name: Assign the commenter
     runs-on: ubuntu-latest
+    permissions:
+      issues: write # assign users and comment
     steps:
       - name: Check comment and assign user
         uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1

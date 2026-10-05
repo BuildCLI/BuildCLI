@@ -1,13 +1,22 @@
 name: Greetings
 
-on: [pull_request_target, issues]
+# pull_request_target so first-time contributors from forks get the message. This is safe here because the job never
+# checks out or runs code from the PR.
+on: [pull_request_target, issues] # zizmor: ignore[dangerous-triggers]
+
+permissions: {}
+
+concurrency:
+  group: greetings-${{ github.event.pull_request.number || github.event.issue.number }}
+  cancel-in-progress: false
 
 jobs:
   greeting:
+    name: Greet first-time contributors
     runs-on: ubuntu-latest
     permissions:
-      issues: write
-      pull-requests: write
+      issues: write # comment on a first issue
+      pull-requests: write # comment on a first pull request
     steps:
     - uses: actions/first-interaction@3c71ce730280171fd1cfb57c00c774f8998586f7 # v1
       with:
