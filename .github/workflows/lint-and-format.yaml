@@ -27,7 +27,7 @@ jobs:
         with:
           persist-credentials: false
       - name: Run actionlint
-        uses: reviewdog/action-actionlint@a5524e1c19e62881d79c1f1b9b6f09f16356e281 # v1.65.2
+        uses: reviewdog/action-actionlint@1758727be30241166609dad4c97588b6ad411f32 # v1.79.1
         env:
           SHELLCHECK_OPTS: -e SC2001 -e SC2035 -e SC2046 -e SC2061 -e SC2086 -e SC2156
         with:
