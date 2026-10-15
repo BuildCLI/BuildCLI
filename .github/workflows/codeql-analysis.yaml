@@ -50,4 +50,4 @@ jobs:
         run: mvn clean compile --no-transfer-progress
 
       - name: Analyze Code
-        uses: github/codeql-action/analyze@28deaeda66b76a05916b6923827895f2b14ab387 # v3.28.16
+        uses: github/codeql-action/analyze@24c54180a607b1449ed407dd24f251e4e9147c8d # v4.38.3
