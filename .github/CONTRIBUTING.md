@@ -6,8 +6,7 @@ Contributions are welcome! Feel free to open **Issues** and submit **Pull Reques
 
 ### 1\. Check for an Existing Issue (Required Before Starting Work)
 
-Before you begin working on an issue, ensure that it is not already assigned or actively worked on by another
-contributor. This helps prevent duplicate efforts and frustration.
+Before you begin working on an issue, ensure that it is not already assigned or actively worked on by another contributor. This helps prevent duplicate efforts and frustration.
 
 #### Steps to Follow
 
@@ -21,8 +20,7 @@ contributor. This helps prevent duplicate efforts and frustration.
 
 - Wait for confirmation from maintainers or the assigned contributor before proceeding.
 
-If you're unsure about whether you should work on an issue, especially if the assignment is recent, ask a maintainer for
-clarification.
+If you're unsure about whether you should work on an issue, especially if the assignment is recent, ask a maintainer for clarification.
 
 ### 2\. Fork the Project
 
@@ -58,14 +56,12 @@ clarification.
 
 - Provide a clear description of the changes, referencing the issue number if applicable.
 
-- (Optional but Recommended) Use the PR template available at `.github/PULL_REQUEST_TEMPLATE/default.md` to structure
-  your PR effectively.
+- (Optional but Recommended) Use the PR template available at `.github/PULL_REQUEST_TEMPLATE/default.md` to structure your PR effectively.
 
 Close Issue on PR Merge
 -----------------------
 
-To ensure that issues are automatically closed when a related PR is merged, include one of the following keywords in
-your PR description:
+To ensure that issues are automatically closed when a related PR is merged, include one of the following keywords in your PR description:
 
 - `Closes #ISSUE_NUMBER`
 
@@ -73,8 +69,7 @@ your PR description:
 
 ### Automation Workflow
 
-A GitHub Actions workflow will automatically close the linked issue upon PR merge. For more details checkout
-`.github\workflows\close-issue-on-pr-merge.yaml`.
+A GitHub Actions workflow will automatically close the linked issue upon PR merge. For more details checkout `.github\workflows\close-issue-on-pr-merge.yaml`.
 
 Project Environment
 -------------------
@@ -111,5 +106,23 @@ Maintaining Visibility of Contribution Guidelines
 
 - A checklist will be included in new issues to remind contributors to verify issue assignments.
 
-By following these guidelines, we aim to foster a more collaborative, efficient, and positive experience for all
-contributors.
+By following these guidelines, we aim to foster a more collaborative, efficient, and positive experience for all contributors.
+Development
+-----------
+
+BuildCLI 1.0 is a rebuild; the previous CLI lives on the `legacy` branch (tag `v0.14.0`). Read the design in
+[`docs/rfc/0001-buildcli-1.0.md`](../docs/rfc/0001-buildcli-1.0.md) before starting on a larger change.
+
+```bash
+mvn verify                     # compile, unit tests, architecture tests, Checkstyle, shaded jar
+java -jar target/buildcli.jar --help
+java -jar target/buildcli.jar               # open the chat (AgentFather works without a model)
+```
+
+- **Architecture is enforced by tests** (`ArchitectureTest`, ArchUnit): `domain` knows nothing internal, `ports`
+  only the domain, `application` only domain and ports; LangChain4j, TamboUI, JDBC and Jackson stay in
+  `infrastructure`. If a rule blocks you, the design probably needs a port.
+- **The runtime is deterministic, the LLM is not.** Test runtime behaviour with `ScriptedGateway` and `HeadlessUi`
+  (no model, no terminal). Changes to policies, approvals or limits need a test that proves the rule.
+- **Style** is checked by Checkstyle (`checkstyle.xml`) as part of `mvn verify`.
+- Do not run `mvn` with `-DskipTests` in a PR; CI runs on Linux, macOS and Windows.
