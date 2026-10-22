@@ -1,411 +1,180 @@
-```
-,-----.          ,--.,--.   ,--. ,-----.,--.   ,--.
-|  |) /_ ,--.,--.`--'|  | ,-|  |'  .--./|  |   |  |
-|  .-.  \|  ||  |,--.|  |' .-. ||  |    |  |   |  |       Built by the community, for the community
-|  '--' /'  ''  '|  ||  |\ `-' |'  '--'\|  '--.|  |
-`------'  `----' `--'`--' `---'  `-----'`-----'`--'
-
-Welcome to BuildCLI - Java Project Management!
-```
-
 # BuildCLI
 
-**BuildCLI** is a command-line interface (CLI) tool for managing and automating common tasks in Java project development. It allows you to create, compile, manage dependencies, and run Java projects directly from the terminal, simplifying the development process.
+> **Your local AI engineering team.**
+> An open-source runtime that lets you chat with a set of AI agents that work on your project from your terminal. 100% local: no
+> account, no server, no telemetry. With a local model (Ollama) everything runs offline.
 
-- **Repository:** [https://github.com/BuildCLI/BuildCLI](https://github.com/BuildCLI/BuildCLI)
-- **License:** [MIT](https://opensource.org/licenses/MIT)
+**Status: pre-1.0.** BuildCLI is being rebuilt from scratch as a runtime for agents you chat with (the previous CLI is on the
+[`legacy`](../../tree/legacy) branch, tag `v0.14.0`). The design is in [`docs/rfc/0001-buildcli-1.0.md`](docs/rfc/0001-buildcli-1.0.md).
+Read [Known limitations](#known-limitations) before relying on it.
 
----
+![AgentFather, the built-in helper, creating an agent called rita step by step; rita then appears in the chat list](docs/images/agentfather.png)
 
-## Table of Contents
+*AgentFather creating an agent, step by step, with no model connected: it asks, shows what it is about to do, and only creates
+the agent after you say yes. The new agent shows up in the chat list.*
 
-- [Features](#features)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Examples](#examples)
-- [Contribution](#contribution)
-- [License](#license)
+## The idea
 
----
-
-## Features
-
-- **Initialize Project**: Creates the basic structure of directories and files for a Java project.
-- **Compile Project**: Compiles the project source code using Maven.
-- **Add Dependency**: Adds new dependencies to the `pom.xml`.
-- **Remove Dependency**: Remove dependencies from `pom.xml`.
-- **Document Code**: [Beta] Generates documentation for a Java file using AI.
-- **Manage Configuration Profiles**: Creates specific configuration files for profiles (`application-dev.properties`, `application-test.properties`, etc.).
-- **Run Project**: Starts the project directly from the CLI using Spring Boot.
-- **Dockerize Project**: Generates a Dockerfile for the project, allowing easy containerization.
-- **Build and Run Docker Container**: Builds and runs the Docker container using the generated Dockerfile.
-- **CI/CD Integration**: Automatically generates configuration files por CI/CD tools (e.g., Jenkins, GitHub Actions) and triggers pipelines based on project changes.
-- **Changelog Generation**: Automatically generates a structured changelog by analyzing the Git commit history, facilitating the understanding of changes between releases.
-- **Orchestration Commands**: BuildCLI now includes orchestration commands to automate Docker Compose configuration generation and manage container lifecycles.
----
-
-## Installation
-
-1. **Script Installation**:
-Just download the .sh or .bat file and execute.
-
-     - On a Unix-like system (Linux, macOS), simply give execution permission to `install.sh` and run it:  
-
-     ```bash
-     sudo chmod +x install.sh  
-     ./install.sh  
-     ```
-
-     - On Windows: Run `install.bat` by double-clicking it or executing the following command in the Command Prompt (cmd):  
-
-     ```cmd
-     install.bat
-     ```
-
-Now `BuildCLI` is ready to use. Test the `buildcli` command in the terminal.
-
----
-
-## Usage
-
-We made a major refactor of the `BuildCLI` architecture. Please use the `buildcli help` command to see all available options. Also, refer to issue [#89](https://github.com/wheslleyrimar/BuildCLI/issues/89) and pull request [#79](https://github.com/wheslleyrimar/BuildCLI/pull/79) for more details.
-
----
-
-## Examples
-
-### 1. Initialize a New Project
-
-Creates the basic Java project structure, including `src/main/java`, `pom.xml`, and `README.md`.
-You can specify a project name to dynamically set the package structure and project artifact.
-
-#### Example Commands
-
-- To initialize a project with a specific name:
-
-```bash
-buildcli project init MyProject
+```text
+You ── chat ──▶ BuildCLI Runtime ──┬── wheslley (architect)
+                                   ├── matheus  (developer)
+                                   ├── breno    (devops)
+                                   └── dumildes (innovator) ...
 ```
 
-This will create the project structure with `MyProject` as the base package name, resulting in a directory like `src/main/java/org/myproject`.
+You open a chat, like a messaging app, with your agents: a **group** for several of them and a **direct chat** with each
+agent. Agents are people-like: each reads one conversation at a time, different agents work **in parallel**, they
+**@mention** and **hand off** work to each other, and you see who is reading, thinking, typing or waiting for you. The
+**runtime, not the LLM,** enforces what each agent may do: permissions, approvals, limits, and when a task has failed.
 
-- To initialize a project without specifying a name:
+- **Handoffs instead of chatter:** an agent delegates a task with an objective and a short brief, not a transcript.
+- **Policies, not prompts:** "the reviewer cannot modify code" is enforced by the runtime ([security model](docs/security-model.md)).
+- **You stay in control:** file writes are shown as diffs, commands outside the allow list ask first, and a task that
+  fails is retried three times and then handed to you.
+- **Everything is an event:** one append-only log in a local database (SQLite by default; H2 or memory if you prefer,
+  see [Settings](#settings)) feeds the UI, history and usage.
+
+## Install
+
+Requires **JDK 21 or newer**.
 
 ```bash
-buildcli project init
+# Linux and macOS
+curl -fsSL https://github.com/BuildCLI/BuildCLI/releases/latest/download/install.sh | sh
+
+# Windows (PowerShell)
+irm https://github.com/BuildCLI/BuildCLI/releases/latest/download/install.ps1 | iex
 ```
 
-This will create the project structure with `buildcli` as the base package name, resulting in a directory like `src/main/java/org/buildcli`.
+The installer verifies the jar's SHA-256, installs it under `~/.buildcli/bin` and adds a `buildcli` launcher; it needs
+no administrator rights. Or build it yourself: `mvn verify` produces `target/buildcli.jar` (`java -jar target/buildcli.jar`).
 
-### 2. Compile the Project
-
-Compiles the Java project using Maven:
+## Quick start
 
 ```bash
-buildcli project build --compile
+cd my-project
+buildcli               # opens the chat; on first run it offers to connect a model and to add the sample agents
 ```
 
-### 3. Add a Dependency to `pom.xml`
+Everything can be done **inside the app**: `/connect` picks a provider (OpenRouter, DeepSeek, Ollama, ...), asks for the
+API key (typed hidden, checked before it is saved, stored owner-only on your computer, or taken from the usual environment
+variable) and lets you choose a model; the empty chat has buttons for the sample agents, to create your own agent, and to talk to [AgentFather](#agentfather).
+From the shell, the same setup is `buildcli init` (the sample agents and an `AGENTS.md`), `buildcli provider login <name>`
+and `buildcli doctor` (checks Java, your configuration and whether Ollama has the model).
 
-Adds a dependency to the project in the `groupId:artifactId` format. You can also specify a version using the format `groupId:artifactId:version`. If no version is specified, the dependency will default to the latest version available.
+The sample agents are **wheslley** (architect, leads the group), **matheus** (developer), **breno** (devops) and
+**dumildes** (innovator) in the group `maintainers`. Their files are drafts based on each maintainer's git history; edit
+them in `.buildcli/agents/`.
 
-#### Example Commands
-
-- To add a dependency with the latest version:
+Without the chat:
 
 ```bash
-  buildcli project add dependency org.springframework:spring-core
+buildcli run --group maintainers --headless --approve ask "add a health endpoint to the API"
+buildcli run --agent matheus --headless "fix the typo in the README"
+buildcli runs          # the runs of this project
+buildcli task list     # the tasks and handoffs of the latest run
+buildcli usage         # tokens per agent
 ```
 
-- To add a dependency with a specified version:
+`init` uses `ollama / qwen2.5:7b` by default (`buildcli init --model provider:model` to change it); pull the model first
+(`ollama pull qwen2.5:7b`), use `/connect`, or point agents at any OpenAI-compatible endpoint. Every command is documented
+in the [CLI reference](docs/reference/cli.md); agent files in [agents](docs/reference/agents.md);
+ready-to-copy agents in [`examples/`](examples). New to the ideas? Read [concepts](docs/concepts.md); stuck? [troubleshooting](docs/troubleshooting.md).
 
-```bash
-  buildcli p a d org.springframework:spring-core:5.3.21
+## AgentFather
+
+Like Telegram's BotFather, **AgentFather** is a contact that is always in your chat list and creates and manages agents by
+conversation. It is not a model: it follows a script, so it works before you have connected anything, and it never creates or
+deletes anything until you reply *yes*.
+
+- `/newagent [name]` asks for a name, a role, what the agent may do (a list to pick from) and one sentence on how it should
+  work, shows a summary, and creates it. `back` goes one question back, `cancel` stops.
+- `/agents` lists your agents with their model and capabilities; `/deleteagent <name>` deletes one (after a yes);
+  `/samples` adds the sample agents.
+- `/editagent <name>` changes an agent you already have, one setting at a time (each after a yes): its role, what it may do, how
+  it works, the folders it may write in and the commands it may run **without asking**. Folders must be inside the project (never
+  `.buildcli/` or `.git/`). It rewrites the agent's file, so comments in the file's header are lost.
+- A new agent can read the whole project and has no folder to write in and no command allowed; give it more with `/editagent`.
+  Every write still shows you a diff and asks first.
+
+## In the chat
+
+- **Groups, direct chats and notes**: `/newgroup`, `/dm @agent`, members and admins; a message with no @mention goes to an
+  admin, one with @mentions goes to those agents. "You (notes)" is a private chat that no agent reads.
+- **Agents that speak for you**: give an agent the `chat.post` capability and ask it, in a direct chat, to write in a group
+  or to a teammate. A private chat between two agents shows up as `ana ↔ bruno`: you can read it, not write in it.
+- **Who may contact whom**: `/reach @bruno @ana off` stops one agent from contacting another (they are told they cannot).
+- **You stay in control**: file writes show as diffs; `/review` lists what agents changed and `/undo` puts it back (files
+  changed since are left alone); approvals can be allowed "always here" and taken back with `/revoke`.
+- **Search your chats** (`Ctrl+K`, or click the box above the list): by name, role or something said in a chat, like a
+  messaging app; an agent you have no chat with yet is offered as "Start a chat".
+- **Work with the output**: `/copy` copies a code block, `Ctrl+F` searches the chat, `/diff`, `/status`, `/log`, `/open`,
+  image and audio attachments, a title and bell when an agent needs you, mouse support (Windows included).
+- **Models**: `/model` shows or changes the default model, or one agent's.
+- **Modes**: `manual` asks before every write, command and commit; `edits` writes files without asking (you can undo) and still
+  asks for commands; `auto` asks for nothing. Shift+Tab or `/mode` changes it; the pill in the chat header shows it. Starting mode
+  in Settings. What an agent may touch is still set by its own permissions, and trusting a project is always asked.
+- **Messages**: right-click a message (or Alt+M for the newest) to mark it, click more, then copy, forward to another chat or
+  delete (the agents forget deleted messages too). Unsent text waits in its chat as a "Draft:" in the list.
+- **About you and your groups**: `/me name|about|style` tells every agent who you are and how to deal with you (kept on this
+  computer). `/context` gives a group background to read: a text and text files.
+- **English and Portuguese**: Settings › General › Language (`auto` follows your computer). The screens, menus, commands, dialogs and
+  AgentFather are translated; some messages from providers and errors stay in English. Agents answer in the language you write in.
+- **Not only for code**: `/samples writing` and `/samples office` add teams for writing and office work (no commands, no git).
+
+## Settings
+
+`F2` (or `/settings`): providers, a model per agent, agents (a step-by-step form where `Esc` goes back and capabilities
+are ticked from a list), theme, and **State database**: `sqlite` (default, a file readable from several terminals), `h2`
+(a file, one BuildCLI at a time) or `memory` (fastest, forgotten when BuildCLI closes). Writes go to the database in the
+background in batches; in a synthetic load test that took the event log from about 7 000 to about 90 000 events/s with
+SQLite (see [`docs/storage.md`](docs/storage.md)). `BUILDCLI_STORAGE` overrides the setting.
+
+**Your own colours.** Put variables in `~/.buildcli/theme.css` (read when BuildCLI starts):
+
+```css
+$accent: #ff8800;        /* every theme */
+$light-bg: #fffdf5;      /* only the light theme; also $dark-… and $contrast-… */
+$agent-1: #4dd0e1;       /* the colours agents get, 1 to 8 */
 ```
 
-After executing these commands, the dependency will be appended to your pom.xml file under the `<dependencies>` section.
-
-### 4. Create a Configuration Profile
-
-Creates a configuration file with the specified profile, for example, `application-dev.properties`:
-
-```bash
-buildcli project add profile dev
-```
-
-### 5. Run the Project
-
-Runs the Java project using Spring Boot:
-
-```bash
-buildcli run
-```
-
-### 6. Generate Documentation for Java Code
-
-Automatically generates inline documentation for a Java file using AI:
-
-```bash
-# File or directory
-buildcli ai code document File.java 
-```
-
-This command sends the specified Java file to the local Ollama server, which generates documentation and comments directly within the code. The modified file with documentation will be saved back to the same location.
-
-### 7. Set Active Environment Profile
-
-Sets the active environment profile, saving it to the `environment.config` file. The profile is referenced during project execution, ensuring that the correct configuration is loaded.
-
-```bash
-buildcli p set env dev
-```
-
-After running this command, the active profile is set to dev, and the `environment.config` file is updated accordingly.
-
-#### Active Profile Display During Project Execution
-
-With the `--set-environment` functionality, you can set the active environment profile. When running the project with `buildcli --run`, the active profile will be displayed in the terminal.
-
-### 8. Dockerize Command
-
-This command generates a `Dockerfile` for your Java project, making it easier to containerize your application.
-
-```bash
-buildcli p add dockerfile
-```
-
-### 9. Docker Build Command
-
-This command automatically builds and runs the Docker container for you. After running the command, the Docker image will be created, and your project will run inside the container.
-
-```bash
-buildcli project run docker
-```
-
-### 10. Set Up CI/CD Integration
-
-Generates configuration files for CI/CD tools and prepares the project for automated pipelines. Supports Jenkins, Gitlab and GitHub Actions.
-
-```bash
-buildcli project add pipeline github
-```
-
-```bash
-buildcli project add pipeline gitlab
-```
-
-```bash
-buildcli project add pipeline jenkins
-```
-
-### 11. Changelog Generation
-
-BuildCLI now includes an automatic changelog generation feature that analyzes your Git commit history and produces a structured changelog.
-This helps developers and end-users easily track changes between releases.
-
-### Usage Instructions
-
-To generate a changelog, run:
-   ```bash
-   buildcli changelog [OPTIONS]
-   ```
-Or use the alias:
-```bash
-   buildcli cl [OPTIONS]
-   ```
-### Options:
-
-- `--version, -v <version>:`
-  Specify the release version for the changelog. If omitted, BuildCLI attempts to detect the latest Git tag. If no tag is found, it defaults to "Unreleased".
-
-- `--format, -f <format>:`
-  Specify the output format. Supported formats:
-
-    - markdown (default)
-    - html
-    - json
-- `--output, -o <file>:`
-  Specify the output file name. If not provided, defaults to CHANGELOG.<extension>.
-
-- `--include, -i <commit types>:`
-  Provide a comma-separated list of commit types to include (e.g., feat,fix,docs,refactor).
-
-### Example Command
-
-```bash
-buildcli changelog --version v1.0.0 --format markdown --include feat,fix --output CHANGELOG.md
-````
-#### or
-
-```bash
-buildcli changelog -v v1.0.0 -f markdown -i feat,fix -o CHANGELOG.md
-````
-
-### 12. Orchestration Commands
-BuildCLI now includes orchestration commands to automate Docker compose configuration generation and manage 
-container lifecycles.
-Below, you'll find a Quick Start Guide and usage examples for the new feature.
-
----
-
-### Quick Start Guide
-
-### 1. Generate a Docker Compose file for your project:
-
-```bash
-buildcli project add dockerCompose
-```
-or
-
-```bash
-buildcli p add dc
-```
-This command creates a docker-compose.yml file with a primary service for your java application, using the 
-image built from the enhanced Dockerfile.
-
-
-### 2. Customize Essential Parameters:
-
-You can customize ports, volumes, and resource limits (CPU and memory) using CLI flag. For example:
-
-#### Options:
-
-- `--port, -p <ports>:`
-  Specify the ports to expose for the container. Format: `<host_port>:<container_port>`.
-
-- `--volume, -v <volume>:`
-  Specify the volume to mount for the container. Format: `<host_path>:<container_path>`.
-
-- `--cpu, -c <cpu_limit>:`
-  Specify the CPU limit for the container.
-
-- `--memory, -m <memory_limit>:`
-  Specify the memory limit for the container. Format: `<value><unit>` (e.g., `512m`).
-
-- `--dockerfile, -d <dockerfile_path>:`
-- Specify the path to the Dockerfile for the container.
-
-#### Example Command
-
-```bash
-buildcli project add docker-compose --ports 8080:8080 --volumes /data:/app/data --cpu 2 --memory 512m --dockerfile /path/to/Dockerfile
-```
-or
-
-```bash
-buildcli p add dc -p 8080:8080 -v /data:/app/data -c 2 -m 512m -d /path/to/Dockerfile
-```
-
-### 3. Start the Containers:
-
-Use the following command to start the containers:
-
-```bash
-buildcli run orchrestration up
-```
-or
-
-```bash
-buildcli run oc up
-```
-
-
-To force a rebuild of the images, add the `--build` flag:
-
-```bash
-buildcli run orchestration up --build
-```
-or 
-
-```bash
-buildcli run oc up -b
-```
-
-
-### 4. Stop the Containers:
-To stop the containers, use the following command:
-
-```bash
-buildcli run orchestration down
-``` 
-or 
-
-```bash
-buildcli run oc down
-```
-
-
-### 5. Stop a specific container:
-
-To stop a specific container, use the following command:
-
-```bash
-buildcli orchestration down --name <container_name>
-``` 
-or 
-
-```bash
-buildcli oc down -n <container_name>
-```
-
----
-
-## Prerequisites
-
-### Local Ollama API
-
-Ensure you have the Ollama server running locally, as the `docs` functionality relies on an AI model accessible via a local API.
-
-- [Download Ollama](https://ollama.com/download)
-
-You can start the Ollama server by running:
-
-```bash
-ollama run llama3.2
-```
-
-### Prerequisites for CI/CD Integration
-
-- **Jenkins**: Ensure Jenkins is installed and accessible in your environment.
-- **GitHub Actions**: Ensure your repository is hosted on GitHub with Actions enabled.
-
----
-
-## Contribution
-
-Contributions are welcome! Feel free to open **Issues** and submit **Pull Requests**.
-See the [CONTRIBUTING.md](CONTRIBUTING.md) file for more details.
-
-Quick steps to contribute:
-
-1. Fork the project.
-2. Create a branch for your changes:
-
-   ```bash
-   git checkout -b feature/my-feature
-   ```
-
-3. Commit your changes:
-
-   ```bash
-   git commit -m "My new feature"
-   ```
-
-4. Push to your branch:
-
-   ```bash
-   git push origin feature/my-feature
-   ```
-
-5. Open a Pull Request in the main repository.
-
----
+The names are `bg sidebar panel field selected me them pill code error-bg dialog text dim faint accent green blue red amber
+on-me on-me-dim tick code-text line on-accent add-bg add-fg del-bg del-fg danger`. Anything it does not understand is
+reported on the first screen and skipped.
+
+There is also an experimental **native executable** (GraalVM): about half the memory and 5 to 10 times faster to start, built
+on Linux only so far. See [`docs/native-image.md`](docs/native-image.md).
+
+## Known limitations
+
+Be aware of these, they are stated plainly on purpose:
+
+- **Model quality decides everything.** Tool-using agents need a capable model. `qwen2.5:3b` was unreliable in our
+  tests (see [`docs/m2-real-model-findings.md`](docs/m2-real-model-findings.md)); use 7B or larger, or a hosted model.
+  The runtime bounds what a weak model can do, but it cannot make it reliable. Support for specific models is not yet
+  claimed.
+- **Not a sandbox.** The command allow list reduces accidents; a command you allow still runs project code, and there is
+  no network permission until the sandbox planned for 1.2. See the [security model](docs/security-model.md).
+- **Terminals:** the TUI was driven on Linux, and on the Windows JVM through WSL; the maintainer confirmed the mouse in
+  Windows Terminal. It has not been driven on macOS, and the Windows ACL branch of the saved-keys file is untested. CI
+  builds and tests on Linux, macOS and Windows, including the installers.
+- **Real-model coverage is thin:** the chat, `send_message`, undo and the sample agents were tested mostly with scripted models;
+  a hosted model passed the scenario, and small local models are unreliable with tools.
+- **No cost figures:** usage is reported in tokens; no prices are assumed.
+- **Parallel agents share one workspace:** reads are shared, but writes and commands take an exclusive lock, so two agents
+  never change files at the same time. There are no sessions or long-term memory yet (see the RFC).
+- **Scale:** many agents are cheap to hold (one virtual thread each), but the model calls, not BuildCLI, are the real limit;
+  the measurements are in [`docs/storage.md`](docs/storage.md) and `LoadProbe`.
+
+## Architecture
+
+Ports and adapters, enforced by tests: `domain` ← `ports` ← `application` ← `infrastructure`, with LangChain4j, TamboUI,
+JDBC and Jackson confined to `infrastructure`. See [`.github/CONTRIBUTING.md`](.github/CONTRIBUTING.md).
+
+## Contributing
+
+Contributions are welcome. Read [`.github/CONTRIBUTING.md`](.github/CONTRIBUTING.md) and the RFC first.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-
-## Familiarizing Yourself with BuildCLI
-
-To get a deeper understanding of the BuildCLI project structure, key classes, commands, and how to contribute, check out our comprehensive guide in [PROJECT_FAMILIARIZATION.md](PROJECT_FAMILIARIZATION.md).
+[MIT](LICENSE)
