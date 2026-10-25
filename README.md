@@ -1,7 +1,7 @@
 # 🌦️ Weather API
 
 <p align="center">
-  <strong>Uma API REST em Go para consulta de informações meteorológicas por cidade.</strong>
+  <strong>Uma API REST desenvolvida em Go para consulta de informações meteorológicas por cidade.</strong>
 </p>
 
 <p align="center">
@@ -29,23 +29,29 @@
 <p align="center">
   <a href="#visão-geral">Visão Geral</a> •
   <a href="#funcionalidades">Funcionalidades</a> •
+  <a href="#tecnologias">Tecnologias</a> •
+  <a href="#arquitetura">Arquitetura</a> •
   <a href="#endpoints">Endpoints</a> •
   <a href="#instalação-e-execução">Instalação</a> •
+  <a href="#testes">Testes</a> •
   <a href="#utilização">Utilização</a> •
   <a href="#contribuição">Contribuição</a>
 </p>
 
 ---
 
-# Sumário
+# 📑 Sumário
 
 - #visão-geral
 - #funcionalidades
 - #tecnologias
 - #arquitetura
+- #dependências
+- #cache
 - #endpoints
 - #pré-requisitos
 - #instalação-e-execução
+- #testes
 - #utilização
 - #exemplo-de-resposta
 - #tratamento-de-erros
@@ -57,13 +63,13 @@
 
 # Visão Geral
 
-O Weather API é um projeto desenvolvido em Go que disponibiliza endpoints HTTP para consulta de informações meteorológicas por cidade.
+O Weather API é uma API REST desenvolvida em Go para consulta de informações meteorológicas por cidade.
 
-A API fornece informações como:
+A aplicação permite consultar:
 
 - 🌡️ Temperatura atual
 - 💨 Velocidade do vento
-- 🌤️ Descrição das condições climáticas
+- 🌤️ Condições climáticas
 - 📅 Previsão do tempo
 
 O projeto pode ser utilizado para:
@@ -71,59 +77,115 @@ O projeto pode ser utilizado para:
 - Estudos de APIs REST
 - Integração entre aplicações
 - Desenvolvimento em Go
+- Aplicações web e mobile
 - Consumo de dados meteorológicos
 
-## Repositório
+## Repositório Oficial
 
 https://github.com/robertoduessmann/weather-api
-
-> Observação: a disponibilidade do serviço público e o contrato exato das respostas dependem da implementação atual do projeto.
 
 ---
 
 # Funcionalidades
 
-- 🌡️ Consulta de temperatura por cidade
-- 💨 Consulta de velocidade do vento
-- 🌤️ Consulta das condições climáticas atuais
-- 📅 Consulta de previsão meteorológica
-- 🔌 Integração via HTTP REST
-- 📦 Resposta em formato JSON
-- 🖥️ Compatível com aplicações web, mobile e desktop
+- Consulta de temperatura por cidade
+- Consulta de velocidade do vento
+- Consulta das condições climáticas atuais
+- Consulta de previsão meteorológica
+- API REST baseada em HTTP
+- Respostas em JSON
+- Cache de respostas
+- Integração simples com aplicações externas
 
 ---
 
 # Tecnologias
 
+O projeto utiliza:
+
 - Go
 - HTTP REST
 - JSON
+- Gorilla Mux
+- GoQuery
 - Git
 - curl
+- wttr.in
 
 ---
 
 # Arquitetura
 
+A API utiliza o serviço **wttr.in** como fonte de dados meteorológicos.
+
 ```text
 Cliente HTTP
      │
      ▼
- Weather API
+Weather API
      │
      ▼
- Serviço Meteorológico
+wttr.in
      │
      ▼
- Resposta JSON
+Parser HTML
+     │
+     ▼
+Cache
+     │
+     ▼
+Resposta JSON
 ```
 
-Fluxo básico:
+Fluxo da aplicação:
 
-1. O cliente envia uma requisição contendo uma cidade.
-2. A API consulta o serviço meteorológico configurado.
-3. Os dados são processados.
-4. A resposta é retornada em JSON.
+1. O cliente envia uma cidade.
+2. A API consulta o serviço wttr.in.
+3. O HTML retornado é processado.
+4. Os dados são convertidos para JSON.
+5. O resultado é armazenado em cache.
+6. A resposta é enviada ao cliente.
+
+---
+
+# Dependências
+
+Principais dependências utilizadas:
+
+```text
+github.com/gorilla/mux
+github.com/PuerkitoBio/goquery
+```
+
+Instalação das dependências:
+
+```bash
+go mod download
+```
+
+ou
+
+```bash
+go mod tidy
+```
+
+---
+
+# Cache
+
+A API implementa cache em memória para reduzir consultas repetidas ao serviço meteorológico.
+
+Características:
+
+- Cache por cidade consultada
+- Armazenamento da resposta processada
+- Expiração automática após 2 minutos
+
+Benefícios:
+
+- Menor latência
+- Menor uso do serviço externo
+- Melhor desempenho geral
 
 ---
 
@@ -141,7 +203,7 @@ GET https://goweather.xyz/v2/weather/{city}
 GET https://goweather.xyz/v2/weather/Berlin
 ```
 
-### Exemplo com curl
+### Usando curl
 
 ```bash
 curl "https://goweather.xyz/v2/weather/Curitiba"
@@ -149,13 +211,11 @@ curl "https://goweather.xyz/v2/weather/Curitiba"
 
 Substitua `{city}` pelo nome da cidade desejada.
 
-> A disponibilidade do endpoint público deve ser validada antes do uso em produção.
-
 ---
 
 ## API Local
 
-Com a aplicação em execução:
+Quando executada localmente:
 
 ```http
 GET http://localhost:3000/weather/{city}
@@ -171,13 +231,13 @@ curl "http://localhost:3000/weather/Curitiba"
 
 # Pré-requisitos
 
-Instale os seguintes softwares:
+Instale:
 
 - Go
 - Git
 - curl
 
-Verifique as instalações:
+Verifique:
 
 ```bash
 go version
@@ -201,7 +261,21 @@ cd weather-api
 
 ---
 
-## 2. Compilar o projeto
+## 2. Instalar dependências
+
+```bash
+go mod download
+```
+
+ou
+
+```bash
+go mod tidy
+```
+
+---
+
+## 3. Compilar
 
 ```bash
 go build
@@ -209,9 +283,9 @@ go build
 
 ---
 
-## 3. Executar a aplicação
+## 4. Executar
 
-### Linux e macOS
+### Linux / macOS
 
 ```bash
 ./weather-api
@@ -225,28 +299,157 @@ go build
 
 ---
 
-## 4. Testar a API
+## 5. Testar
 
 ```bash
-curl "http://localhost:3000/weather/Curitiba"
+curl http://localhost:3000/weather/Curitiba
+```
+
+---
+
+# Testes
+
+O projeto possui testes automatizados para validar o comportamento dos componentes e endpoints da API.
+
+## Executar todos os testes
+
+```bash
+go test ./...
+```
+
+## Saída detalhada
+
+```bash
+go test -v ./...
+```
+
+## Cobertura de testes
+
+```bash
+go test -cover ./...
+```
+
+## Relatório detalhado de cobertura
+
+```bash
+go test -coverprofile=coverage.out ./...
+```
+
+Visualizar relatório:
+
+```bash
+go tool cover -html=coverage.out
+```
+
+---
+
+## Testes de Integração
+
+Inicie a aplicação:
+
+```bash
+go build
+./weather-api
+```
+
+Execute os testes:
+
+```bash
+go test -v ./...
+```
+
+### Cenário: Cidade válida
+
+Requisição:
+
+```http
+GET /weather/London
+```
+
+Validações esperadas:
+
+- Status HTTP 200
+- JSON válido
+- Campo `temperature`
+- Campo `wind`
+- Campo `description`
+- Campo `forecast`
+
+### Cenário: Cidade inexistente
+
+Requisição:
+
+```http
+GET /weather/invalid-city-name-123456
+```
+
+Validações esperadas:
+
+- Status HTTP 404
+- JSON válido
+- Campo `message`
+- Valor `NOT_FOUND`
+
+### Exemplo de teste de integração
+
+```go
+func TestWeatherEndpoint(t *testing.T) {
+
+	resp, err := http.Get(
+		"http://localhost:3000/weather/London",
+	)
+
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		t.Fatalf(
+			"status inesperado: %d",
+			resp.StatusCode,
+		)
+	}
+}
+```
+
+---
+
+## Verificação estática
+
+```bash
+go vet ./...
+```
+
+## Formatação
+
+```bash
+go fmt ./...
+```
+
+## Fluxo recomendado
+
+```bash
+go fmt ./...
+go vet ./...
+go test ./...
 ```
 
 ---
 
 # Utilização
 
-## Consultar uma cidade
-
-### Requisição
+## Consulta simples
 
 ```http
 GET /weather/Curitiba
 ```
 
-### Usando curl
+### curl
 
 ```bash
-curl -i "http://localhost:3000/weather/Curitiba"
+curl -i http://localhost:3000/weather/Curitiba
 ```
 
 ---
@@ -311,7 +514,8 @@ func main() {
 
 	var weather Weather
 
-	if err := json.NewDecoder(resp.Body).Decode(&weather); err != nil {
+	if err := json.NewDecoder(resp.Body).
+		Decode(&weather); err != nil {
 		panic(err)
 	}
 
@@ -353,19 +557,15 @@ Content-Type: application/json
 }
 ```
 
-> Os valores acima são fictícios e servem apenas para ilustrar o formato da resposta.
-
----
-
 ## Estrutura da Resposta
 
 | Campo | Tipo | Descrição |
 |---------|---------|---------|
 | `temperature` | string | Temperatura atual |
 | `wind` | string | Velocidade do vento |
-| `description` | string | Descrição das condições climáticas |
+| `description` | string | Condições climáticas |
 | `forecast` | array | Lista de previsões |
-| `forecast[].day` | string | Dia da previsão |
+| `forecast[].day` | string | Dia previsto |
 | `forecast[].temperature` | string | Temperatura prevista |
 | `forecast[].wind` | string | Velocidade prevista do vento |
 
@@ -373,46 +573,58 @@ Content-Type: application/json
 
 # Tratamento de Erros
 
-A API pode retornar códigos HTTP indicando o resultado da operação.
+Status identificados na implementação:
 
 | Status | Descrição |
-|----------|----------|
+|---------|---------|
 | `200 OK` | Consulta realizada com sucesso |
-| `404 Not Found` | Cidade não encontrada |
-| `500 Internal Server Error` | Erro interno do servidor |
+| `404 Not Found` | Cidade não encontrada ou falha na obtenção dos dados |
 
-## Exemplo de retorno de erro
+## Exemplo
 
 ```json
 {
-  "message": "city not found"
+  "message": "NOT_FOUND"
 }
 ```
-
-> Os códigos acima devem ser confirmados conforme a implementação atual da API.
 
 ---
 
 # Clientes Web
 
-Os seguintes projetos utilizam ou se inspiram nesta API:
-
 ## React Tempo
 
-- Aplicação: https://reacttempo.netlify.app/
-- Repositório: https://github.com/GabrielCampos99/appTempo
+Aplicação:
+
+https://reacttempo.netlify.app/
+
+Repositório:
+
+https://github.com/GabrielCampos99/appTempo
+
+---
 
 ## Weather App
 
-- Aplicação: https://emaniaditya.github.io/weather-app
-- Repositório: https://github.com/emaniaditya/weather-app
+Aplicação:
+
+https://emaniaditya.github.io/weather-app
+
+Repositório:
+
+https://github.com/emaniaditya/weather-app
+
+---
 
 ## Weather React TSX
 
-- Aplicação: https://weather-react-tsx.netlify.app/
-- Repositório: https://github.com/keissiant/weather-api-react.tsx
+Aplicação:
 
-> A compatibilidade desses clientes com a versão atual da API deve ser verificada individualmente.
+https://weather-react-tsx.netlify.app/
+
+Repositório:
+
+https://github.com/keissiant/weather-api-react.tsx
 
 ---
 
@@ -422,42 +634,40 @@ Contribuições são bem-vindas.
 
 ## Como contribuir
 
-1. Faça um fork do projeto.
-2. Clone seu fork.
-3. Crie uma branch para sua alteração.
-4. Implemente a melhoria ou correção.
+1. Faça um Fork.
+2. Clone o Fork.
+3. Crie uma branch.
+4. Faça suas alterações.
 5. Execute os testes.
-6. Atualize a documentação quando necessário.
+6. Atualize a documentação.
 7. Abra um Pull Request.
 
-### Criar uma branch
+### Criar branch
 
 ```bash
 git checkout -b feature/minha-melhoria
 ```
 
-### Registrar alterações
+### Commit
 
 ```bash
 git add .
 git commit -m "Improve weather API documentation"
 ```
 
-### Enviar alterações
+### Push
 
 ```bash
 git push origin feature/minha-melhoria
 ```
 
----
-
 ## Boas práticas
 
-- Mantenha alterações focadas.
-- Não inclua credenciais ou informações sensíveis.
-- Atualize a documentação quando necessário.
-- Adicione testes para novas funcionalidades.
-- Siga os padrões existentes do projeto.
+- Manter alterações pequenas e objetivas.
+- Atualizar a documentação.
+- Adicionar testes quando possível.
+- Não incluir credenciais.
+- Seguir o padrão do projeto.
 
 ---
 
@@ -475,13 +685,13 @@ para obter os termos completos.
 
 ---
 
-# Links Úteis
+# 🔗 Links Úteis
 
 - Código-fonte: https://github.com/robertoduessmann/weather-api
 - Issues: https://github.com/robertoduessmann/weather-api/issues
 - Releases: https://github.com/robertoduessmann/weather-api/releases
-- Go: https://go.dev/
-- Documentação do Go: https://go.dev/doc/
+- Go: https://go.dev
+- Documentação Go: https://go.dev/doc
 
 ---
 
