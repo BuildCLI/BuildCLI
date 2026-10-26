@@ -1,41 +1,50 @@
-Weather API — Java 17 + Maven
-API REST simples para consultar as condições meteorológicas atuais de uma cidade usando o provedor público Open-Meteo. Não requer chave de API para este uso básico.
-Requisitos
-JDK 17 ou superior
-Maven 3.9+
-Acesso à internet para consultar o provedor e baixar dependências Maven
-Executar testes e empacotar o JAR
-mvn clean verify
-O JAR executável, incluindo as dependências, será gerado em target/weather-api.jar.
-java -jar target/weather-api.jar
-A porta padrão é 8080. Para alterar:
-Linux/macOS:
-PORT=9090 java -jar target/weather-api.jar
-Windows PowerShell:
-$env:PORT=9090
-java -jar target/weather-api.jar
-Endpoints
-Saúde
-GET /health
-Exemplo de resposta:
-{"status":"UP","service":"weather-api"}
-Condições atuais
-GET /api/weather?city=Aracaju
-Resposta inclui cidade, país, coordenadas, temperatura, sensação térmica, umidade, velocidade do vento, código/descrição e horário de observação.
-Códigos HTTP
-200: consulta concluída.
-400: parâmetro ausente ou inválido.
-404: cidade não encontrada pelo provedor.
-405: método HTTP não permitido.
-502: erro ou resposta inválida do provedor.
-504: timeout do provedor.
-500: erro interno inesperado.
-Testes FIRST
-Os testes unitários usam um WeatherProvider falso por injeção de dependência, sem rede externa. Eles cobrem cidade válida, entradas nulas/vazias, caracteres inválidos, limite de tamanho, falhas do provedor e descrição de códigos meteorológicos.
-Fast: testes unitários sem chamadas de rede.
-Independent: cada teste constrói seus próprios objetos.
-Repeatable: resultados não dependem de um serviço externo.
-Self-validating: asserções automáticas.
-Timely: testes próximos da lógica implementada.
-Integração do provedor
-O cliente verifica o status HTTP antes de interpretar o corpo, aplica timeout, valida campos essenciais do JSON e distingue cidade não encontrada, timeout, indisponibilidade e resposta inválida. O serviço externo ainda pode mudar limites ou disponibilidade; erros são convertidos em respostas HTTP controladas.
+# 🌤️ Weather API
+
+> **API REST simples e resiliente desenvolvida em Java 17 e Spring Boot 3 para consulta de condições meteorológicas em tempo real através da integração com o provedor Open-Meteo.**
+
+![Java 17](https://img.shields.io/badge/Java-17-orange?style=for-the-badge&logo=openjdk)
+![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.3+-brightgreen?style=for-the-badge&logo=springboot)
+![Maven](https://img.shields.io/badge/Maven-3.9+-C71A36?style=for-the-badge&logo=apachemaven)
+![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)
+![Build Status](https://img.shields.io/badge/Tests-Passing-success?style=for-the-badge&logo=githubactions)
+
+---
+
+## 📌 Sobre o Projeto
+
+A **Weather API** é uma solução leve e moderna projetada para consultar dados meteorológicos atuais de qualquer cidade sem a necessidade de chaves de API (*API Keys*). O projeto adota princípios de **Arquitetura Limpa** (Hexagonal/Ports & Adapters) e **Testes FIRST**, garantindo isolamento de rede nos testes unitários e alta resiliência na comunicação com provedores externos via timeouts e tratamento refinado de exceções HTTP.
+
+### ✨ Principais Funcionalidades
+* **Consulta Meteorológica:** Temperatura, sensação térmica, umidade, velocidade do vento e tradução dos códigos WMO em português.
+* **Resiliência e Mapeamento HTTP:** Tratamento automático para *Timeouts* (504), *Cidade Não Encontrada* (404), *Validações de Entrada* (400) e *Falhas do Provedor* (502).
+* **Porta Configurável:** Suporte nativo à injeção da variável de ambiente `PORT` para fácil implantação em provedores Cloud (Render, Heroku, AWS).
+* **Health Check Integrado:** Endpoint `/health` para monitoramento contínuo da aplicação.
+
+---
+
+## 🏛️ Arquitetura e Boas Práticas
+
+O projeto foi desenvolvido seguindo os princípios da **Arquitetura Hexagonal (Ports & Adapters)** e **Clean Code**, garantindo um baixo acoplamento entre as regras de negócio da aplicação e as integrações externas (como a comunicação HTTP com a API do Open-Meteo).
+
+```text
+               +----------------------------------+
+               |         Camada de Entrada        |
+               | (WeatherController / REST API)   |
+               +----------------+-----------------+
+                                |
+                                v
+               +----------------------------------+
+               |        Regras de Negócio         |
+               |        (WeatherService)          |
+               +----------------+-----------------+
+                                |
+                                v  [Port]
+               +----------------------------------+
+               |         WeatherProvider          |
+               +----------------+-----------------+
+                                |
+                                v  [Adapter]
+               +----------------------------------+
+               |        OpenMeteoProvider         |
+               |      (RestClient / Open-Meteo)   |
+               +----------------+-----------------+
